@@ -9,5 +9,5 @@ Members list:
 4. Nguyễn Hoàng Nam - 19120595
 
 
-* Weblink deployed on heroku: [AntiCovid](https:/anticovid19.herokuapp.com/)
+* Weblink deployed on heroku: [AntiCovid](https://anticovid19.herokuapp.com/)
 ***
