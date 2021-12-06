@@ -2,8 +2,29 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const path = require('path');
+const session = require('express-session');
+const flash = require('express-flash');
+const passport = require('passport');
 
 const app = express();
+
+// flash
+app.use(flash());
+
+// session
+app.use(
+    session({
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true,
+    }),
+);
+
+// passport
+const initialize = require('./config/passport');
+initialize(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // port
 const port = process.env.PORT || 3000;
