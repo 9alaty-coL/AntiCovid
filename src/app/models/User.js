@@ -1,12 +1,34 @@
-const client = require('../../config/db');
+const db = require('../../config/db');
 
-class User {
+const tbName = 'Users';
+
+class Users {
     async all() {
         try {
-            let res = await client.query('SELECT * FROM "Users"');
+            const res = await db.all(tbName);
             return res;
-        } catch (error) {
-            console.log('error in User: ', error.message);
+        } catch (err) {
+            console.log('error in User: ' + err.message);
+        }
+    }
+
+    async one(colName, cprName) {
+        try {
+            const res = await db.one(colName, cprName, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User: ' + err.message);
+            return null;
+        }
+    }
+
+    async insert(value) {
+        try {
+            const res = await db.insert(value, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User: ' + err.message);
+            return null;
         }
     }
 
@@ -35,4 +57,4 @@ class User {
     }
 }
 
-module.exports = new User();
+module.exports = new Users();

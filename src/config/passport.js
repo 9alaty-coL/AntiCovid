@@ -4,7 +4,7 @@ const User = require('../app/models/User');
 
 function initialize(passport) {
     const authenticateUser = async (username, password, done) => {
-        const user = await User.getUserByUN(username);
+        const user = await User.one('username', username);
         if (user == null) {
             return done(null, false, { message: 'No user with that username' });
         }
@@ -24,7 +24,7 @@ function initialize(passport) {
     passport.use(new LocalStrategy(authenticateUser));
     passport.serializeUser((user, done) => done(null, user._id));
     passport.deserializeUser(async (_id, done) => {
-        let us = await User.getUserById(_id);
+        let us = await User.one('_id', _id);
         return done(null, us);
     });
 }

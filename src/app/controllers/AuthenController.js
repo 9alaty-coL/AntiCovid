@@ -2,7 +2,7 @@ const passport = require('passport');
 const User = require('../models/User');
 class AuthenController {
     signInG(req, res, next) {
-        res.render('authen/signin', { css: 'signin' });
+        res.render('authen/signin', { css: ['signin'] });
     }
 
     signInP(req, res, next) {}
