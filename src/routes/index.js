@@ -1,17 +1,18 @@
-const authenMiddleware = require('../middleware/authen');
+const { isLoggedIn } = require('../middleware/authen');
+const { isAdmin, isManager, isPatient } = require('../middleware/detectRole');
 const authenRoute = require('./authen');
 const adminRoute = require('./admin');
 const managerRoute = require('./manager');
 const patientRoute = require('./patient');
 
 function route(app) {
-    app.use(authenMiddleware.isLoggedIn);
+    app.use(isLoggedIn);
 
-    app.use('/admin', adminRoute);
+    app.use('/admin', isAdmin, adminRoute);
 
-    app.use('/manager', managerRoute);
+    app.use('/manager', isManager, managerRoute);
 
-    app.use('/patient', patientRoute);
+    app.use('/patient', isPatient, patientRoute);
 
     app.use('/', authenRoute);
 }
