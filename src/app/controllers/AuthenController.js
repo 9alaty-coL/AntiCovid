@@ -11,6 +11,11 @@ class AuthenController {
     signInG(req, res, next) {
         res.render('authen/signin', { layout: 'authen', css: ['signin'] });
     }
+
+    logout(req, res, next) {
+        req.logout();
+        res.redirect('/');
+    }
 }
 
 module.exports = new AuthenController();
