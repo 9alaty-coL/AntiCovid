@@ -19,6 +19,13 @@ class Detect {
         }
         res.redirect('/');
     }
+
+    isUser(req, res, next) {
+        if (req.user.role === 'user') {
+            return next();
+        }
+        res.redirect('/');
+    }
 }
 
 module.exports = new Detect();

@@ -1,0 +1,114 @@
+<div class="content row">
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+                        Thông tin cá nhân
+                    </div>
+                    <ul class="list">
+                        <li class="list-item active"><i class="fas fa-user"></i> Thông tin chung</li>
+                        <li class="list-item "><i class="fas fa-key"></i> Đổi mật khẩu</li>
+                        <li class="list-item "><i class="fas fa-history"></i> Lịch sử được quản lý</li>
+                        <li class="list-item "><i class="fas fa-search-dollar"></i> Số dư tài khoản</li>
+                        <li class="list-item "><i class="fas fa-dollar-sign"></i> Nạp tiền</li>
+                        <li class="list-item "><i class="fas fa-history"></i> Lịch sử thanh toán</li>
+                    </ul>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+                        Nhu yếu phẩm
+                    </div>
+                    <ul class="list">
+                        <li class="list-item "><i class="fas fa-list"></i> Danh sách các gói</li>
+                        <li class="list-item "><i class="fas fa-history"></i> Lịch sử mua hàng</li>
+                    </ul>
+                </div>
+                
+            </div>
+            <div class="col-9" style="flex:1;">
+                <div class="section general-information ">
+                    <div class="section-title">
+                       Thông tin chung
+                    </div>
+                    <div class="section-content mt-4">
+                        <div class="avatar text-center ">
+                            <div class="avatar-wrapper text-center">
+                                <img class="profile-pic" src="https://static.cdnno.com/user/default/200.jpg" />
+                                <div class="upload-button">
+                                    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                                </div>
+                                <input class="file-upload" type="file" accept="image/*"/>
+                            </div>
+                            <span class="text-muted">
+                                <em>Ấn vào ảnh trên để đổi ảnh đại diện</em>
+                            </span>
+                        </div>
+
+                        <div class="information">
+                            <form action="">
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="username" class="form-label" style="font-weight: 500;">Tên tài khoản</label>
+                                    <input type="text" class="form-control" name="username" id="username" value="User123" readonly style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="fullname" class="form-label" style="font-weight: 500;">Họ và tên</label>
+                                    <input type="text" class="form-control" name="fullname" id="fullname" value="Nguyễn Hoàng Nam" readonly style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="idcard" class="form-label" style="font-weight: 500;">CMND/CCCD</label>
+                                    <input type="text" class="form-control" name="idcard" id="idcard" value="1234567890"readonly  style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="birthdate" class="form-label" style="font-weight: 500;">Ngày sinh </label>
+                                    <input type="text" class="form-control" id="birthdate" name="birthdate" value="1/1/2022"readonly style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="address" class="form-label" style="font-weight: 500;">Địa chỉ</label>
+                                    <input type="text" class="form-control" name="address" id="address" value="123 Đường 456, P. 789, Q10, TP HCM" readonly style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="status" class="form-label" style="font-weight: 500;">Trạng thái hiện tại</label>
+                                    <input type="text" class="form-control" name="address" id="address" value="F4" readonly style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="quarantineaddress" class="form-label" style="font-weight: 500;">Nơi đang điều trị / cách ly</label>
+                                    <input type="text" class="form-control" name="quarantineaddress" id="quarantineaddress" value="123 Đường 456, P. 789, Q10, TP HCM" readonly style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section password d-none">
+                    <div class="section-title">
+                       Đổi mật khẩu
+                    </div>
+                    <div class="section-content mt-4">
+                        <div class="information">
+                            <form action="">
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="current-password" class="form-label" style="font-weight: 500;">Mật khẩu hiện tại</label>
+                                    <input type="password" class="form-control" id="current-password" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="new-password" class="form-label" style="font-weight: 500;">Mật khẩu mới </label>
+                                    <input type="password" class="form-control" id="new-password" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="confirm-password" class="form-label" style="font-weight: 500;">Xác nhân mật khẩu mới</label>
+                                    <input type="password" class="form-control" id="confirm-password"  style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="float: right;">
+                                    <button type="button" type="submit" class="btn submit" >Cập nhật</button>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
