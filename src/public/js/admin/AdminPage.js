@@ -83,3 +83,8 @@ const displayNovels = (novels) => {
     }
     novelLists.innerHTML = htmlString;
 };
+
+//logout
+$('#logout').click(()=>{
+    $('#logoutForm').submit();
+})

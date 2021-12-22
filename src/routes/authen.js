@@ -24,6 +24,6 @@ router.post(
 
 router.get('/', detectRole);
 
-router.get('/logout', authenMiddleware.isLoggedIn, AuthenController.logout);
+router.delete('/logout', authenMiddleware.isLoggedIn, AuthenController.logout);
 
 module.exports = router;

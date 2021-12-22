@@ -11,7 +11,7 @@
     {{#each css}}
        <link rel="stylesheet" href="/css/admin/{{this}}.css">
     {{/each}}
-    <title>AntiCovid_UserPage</title>
+    <title>AdminPage</title>
 </head>
 <body>
     <div class="main">
@@ -75,7 +75,7 @@
                                     <span class="user-name">User</span>
                                 </div>
                                 <div class="droplist droplist-normal">
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li><a id="logout" href="#" type="submit">Đăng xuất</a></li>
                                 </div>
                             </a>
                         </div>
@@ -113,6 +113,6 @@
        <script type="text/javascript" src="/js/admin/{{this}}.js"></script>
     {{/each}}
     
-    
+    <form action="/logout?_method=delete" method="post" id="logoutForm"></form>
 </body>
 </html>

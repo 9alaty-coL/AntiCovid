@@ -34,11 +34,8 @@ class Users {
 
     async getUserByUN(username) {
         try {
-            let res = await client.query(
-                'SELECT * FROM "Users" WHERE username = $1',
-                [username],
-            );
-            return res.rows[0];
+            let res = await db.one('username', username, tbName);
+            return res;
         } catch (error) {
             console.log('error in User: ', error.message);
         }
@@ -46,11 +43,8 @@ class Users {
 
     async getUserById(_id) {
         try {
-            let res = await client.query(
-                'SELECT * FROM "Users" WHERE _id = $1',
-                [_id],
-            );
-            return res.rows[0];
+            let res = await db.one('_id', _id, tbName);
+            return res;
         } catch (error) {
             console.log('error in User: ', error.message);
         }

@@ -407,6 +407,10 @@ a:hover {
     font-size: 2rem;
 }
 
+.section .flash{
+    font-size: 1.7rem;
+}
+
 .section-title {
     font-weight: 500;
     padding: .6rem;

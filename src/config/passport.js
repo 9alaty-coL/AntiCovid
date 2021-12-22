@@ -10,8 +10,8 @@ function initialize(passport) {
         }
 
         try {
-            // if (await bcrypt.compare(password, user.password)) {
-            if (password == user.password) {
+            if (await bcrypt.compare(password, user.password)) {
+            // if (password == user.password) {
                 return done(null, user);
             } else {
                 return done(null, false, { message: 'Password incorrect' });
