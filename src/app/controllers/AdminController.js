@@ -8,7 +8,7 @@ class AdminController {
     }
 
     create(req, res, next) {
-        res.render('admin/create', { layout: 'admin', css: ['create'] });
+        res.render('admin/create', { layout: 'admin', css: ['create'], js: ['AdminPage']});
     }
 }
 
