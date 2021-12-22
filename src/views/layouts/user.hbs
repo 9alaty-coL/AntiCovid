@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="main">
-        <header id="header">
+         <header id="header">
             <div class="container-xl">
                 <div class="searchbar">               
                     <div class="searchbar-item">
@@ -62,9 +62,9 @@
                             <a href="#" >   
                                 <i class="fas fa-history"></i>
                                 <div class="droplist droplist-normal">
-                                    <li><a href="#">Lịch sử quản lý</a></li>
-                                    <li><a href="#">Lịch sử mua nhu yếu phẩm</a></li>
-                                    <li><a href="#">Lịch sử thanh toán</a></li>
+                                    <li class="border-bottom"><a href="#">Lịch sử quản lý</a></li>
+                                    <li class="border-bottom"><a href="#">Lịch sử mua nhu yếu phẩm</a></li>
+                                    <li class="border-bottom"><a href="#">Lịch sử thanh toán</a></li>
                                 </div>
                             </a>
                         </div>
@@ -85,7 +85,62 @@
             </div>
         </header>
 
-        {{{body}}}
+        <div class="content row">
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+                        Thông tin cá nhân
+                    </div>
+                    <ul class="list d-none">
+                        <li class="list-item general-information ">
+                            <a href="/user/infor" class="d-block" ><i class="fas fa-user"></i> Thông tin chung</a>
+                        </li>
+                        <li class="list-item password">
+                            <a href="/user/pwd" class="d-block"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                        </li>
+                        <li class="list-item managed-history">
+                            <a href="/user/mHistory" class="d-block"><i class="fas fa-history"></i> Lịch sử được quản lý</a>
+                        </li>
+                        <li class="list-item accountbalance">
+                            <a href="/user/accBal" class="d-block"><i class="fas fa-search-dollar"></i> Số dư tài khoản</a>
+                        </li>
+                        <li class="list-item deposit">
+                            <a href="/user/deposit" class="d-block"><i class="fas fa-dollar-sign"></i> Nạp tiền</a>
+                        </li>
+                        <li class="list-item paid-history">
+                            <a href="/user/pHistory" class="d-block"><i class="fas fa-history"></i> Lịch sử thanh toán</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+                        Nhu yếu phẩm
+                    </div>
+                    <ul class="list d-none">
+                         <li class="list-item ">
+                            <a href="#" class="d-block">
+                                <i class="fas fa-list"></i> Danh sách các gói
+                            </a>
+                        </li>
+                        <li class="list-item ">
+                            <a href="#" class="d-block">
+                                <i class="fas fa-history"></i> Lịch sử mua hàng
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+            <div class="col-9" style="flex:1;">
+                {{{body}}}
+            </div>
+            
+        </div>
+        
 
         <footer id="footer">
             <div class="social-list">
@@ -102,7 +157,6 @@
             </p>
         </footer>
       
-
     </div>
 
 
@@ -112,7 +166,7 @@
     {{#each js}}
        <script type="text/javascript" src="/js/user/{{this}}.js"></script>
     {{/each}}
-    
+
     
 </body>
 </html>

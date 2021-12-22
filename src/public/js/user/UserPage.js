@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 var readURL = function (input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -14,6 +15,8 @@ $('.upload-button').on('click', function () {
     $('.file-upload').click();
 });
 
+=======
+>>>>>>> Stashed changes
 $('.title').click(function () {
     $(this).children().toggleClass('d-none');
     $(this).parent().children('.list').toggleClass('d-none');
