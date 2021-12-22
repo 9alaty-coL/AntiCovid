@@ -1,0 +1,59 @@
+<div class="content row">
+
+    {{!-- sidebar --}}
+<div class="sidebar">
+    <div class="sidebar-item">
+        <div class="title">
+            <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+            <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+            Quản lý
+        </div>
+        <ul class="list">
+            <a class="text-dark" href="/"></a><li class="list-item active"><i class="fas fa-home"></i> Trang chủ</li></a>
+            <a class="text-dark" href="/admin/create"><li class="list-item "><i class="fas fa-user"></i> Tạo tài khoản</li></a>
+            <a class="text-dark" href="/admin/manage"><li class="list-item "><i class="fas fa-cog"></i> Quản lý manager</li></a>
+            <a class="text-dark" href="/admin/hospital"><li class="list-item "><i class="fas fa-hospital"></i> Địa điểm cách ly</li></a>
+        </ul>
+    </div>
+</div>
+    {{!-- end sidebar --}}
+
+    <div class="col-9" style="flex:1;">
+        <div class="section">
+            <div class="row" style="margin: auto">
+                <div class="col-3"></div>
+                <div class="col-4 mt-5">
+                    <form action="/admin/create" method="post">
+                        <div class="card col-4 p-0 pb-3 w-100">
+                            <div class="card-header bg-warning text-dark m-auto w-100">
+                                Create manager account
+                            </div>
+                            <div class="col-auto mt-3">
+                                <div class="input-group mb-2">
+                                    <input type="text" name="username" class="form-control" id="inlineFormInputGroup"  placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="col-auto mt-3">
+                                <div class="input-group mb-2">
+                                    <input type="password" name="password" class="form-control" id="inlineFormInputGroup"  placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="col-auto mt-3 text-right">
+                                <button type="submit" class="btn btn-warning">Sign up</button>
+                            </div>
+                            {{#if message}}
+                            <div class="alert alert-{{color}} col-auto p-2 m-3" role="alert">
+                                {{message}}
+                            </div>
+                            {{/if}}
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

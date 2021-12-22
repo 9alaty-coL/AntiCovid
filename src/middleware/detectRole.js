@@ -13,13 +13,6 @@ class Detect {
         res.redirect('/');
     }
 
-    isPatient(req, res, next) {
-        if (req.user.role === 'patient') {
-            return next();
-        }
-        res.redirect('/');
-    }
-
     isUser(req, res, next) {
         if (req.user.role === 'user') {
             return next();

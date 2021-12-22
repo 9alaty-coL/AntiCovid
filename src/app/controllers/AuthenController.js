@@ -5,6 +5,7 @@ class AuthenController {
         let user = req.user;
         if (user.role == 'admin') res.redirect('/admin');
         else if (user.role == 'manager') res.redirect('/manager');
+        else if (user.role == 'user') res.redirect('/user');
         else res.redirect('/patient');
     }
 

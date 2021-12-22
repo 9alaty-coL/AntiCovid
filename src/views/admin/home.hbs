@@ -1,89 +1,64 @@
-<div class="row" style="margin: auto">
+<div class="content row">
 
     {{!-- sidebar --}}
-    <div class="col-2 mt-5" >      
-        <div>
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-dark" style=" background:#ccc">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32"><use xlink:href="/"/></svg>
-                    <span class="fs-4">Admin</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a href="/" class="nav-link text-dark" aria-current="page">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                        Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-dark">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                        Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-dark">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                        Orders
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-dark">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                        Products
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-dark">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                        Customers
-                        </a>
-                    </li>
-                </ul>
-                <hr>
-            </div>
+<div class="sidebar">
+    <div class="sidebar-item">
+        <div class="title">
+            <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+            <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+            Quản lý
         </div>
+        <ul class="list">
+            <a class="text-dark" href="/"></a><li class="list-item active"><i class="fas fa-home"></i> Trang chủ</li></a>
+            <a class="text-dark" href="/admin/create"><li class="list-item "><i class="fas fa-user"></i> Tạo tài khoản</li></a>
+            <a class="text-dark" href="/admin/manage"><li class="list-item "><i class="fas fa-cog"></i> Quản lý manager</li></a>
+            <a class="text-dark" href="/admin/hospital"><li class="list-item "><i class="fas fa-hospital"></i> Địa điểm cách ly</li></a>
+        </ul>
     </div>
+</div>
     {{!-- end sidebar --}}
 
-    <div class="col-10">
-        <div class="container pb-5">
-            <div class="row pb-5" style="margin: auto">
+    <div class="col-9" style="flex:1;">
+        <div class="section general-information">
+            <div class="row" style="margin: auto">
 
         {{!-- 1 cái div này là 1 cục chức năng --}}
                 <div class="col-3 mt-5 mx-5 "> 
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg" class="" alt="..." style="object-fit: contain;width: 100%;height: 150px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Tạo tài khoản mới</h5>
-                            <p class="card-text">Tạo tài khoản người quản lý, người bệnh để thêm vào hệ thống</p>
-                            <a href="#" class="btn btn-primary">GO</a>
+                    <a href="#" class="text-dark">
+                        <div class="card" style="width: 30rem;">
+                            <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg" class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                            <div class="card-body">
+                                <h5 class="card-title">Tạo tài khoản mới</h5>
+                                <p class="card-text">Tạo tài khoản người quản lý, người bệnh để thêm vào hệ thống</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
         {{!-- end --}}
 
                 <div class="col-3 mt-5 mx-5 ">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg" class="" alt="..." style="object-fit: contain;width: 100%;height: 150px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Quản lý thông tin tài khoản người quản lý</h5>
-                            <p class="card-text">Khóa tài khoản, xem lịch sử hoạt động của tài khoản</p>
-                            <a href="#" class="btn btn-primary">GO</a>
+                    <a href="#" class="text-dark">
+                        <div class="card" style="width: 30rem;">
+                            <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg" class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                            <div class="card-body">
+                                <h5 class="card-title">Quản lý thông tin tài khoản người quản lý</h5>
+                                <p class="card-text">Khóa tài khoản, xem lịch sử hoạt động của tài khoản</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-3 mt-5 mx-5 ">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg" class="" alt="..." style="object-fit: contain;width: 100%;height: 150px;">
+                    <a href="#" class="text-dark">
+
+                    <div class="card" style="width: 30rem;">
+                        <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg" class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                         <div class="card-body">
                             <h5 class="card-title">Quản lý địa điểm điều trị/cách ly</h5>
                             <p class="card-text">Thêm, xóa sửa thông tin các địa điểm điều trị cách ly y tế</p>
-                            <a href="#" class="btn btn-primary">GO</a>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>
