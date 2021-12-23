@@ -35,6 +35,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // express-handlebars
 const hbs = exphbs.create({
     extname: 'hbs',
+    helpers: {
+        sum: function (a, b) {
+            return a + b;
+        },
+    },
 });
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');

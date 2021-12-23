@@ -1,0 +1,113 @@
+<div class="content row">
+
+    {{!-- sidebar --}}
+<div class="sidebar">
+    <div class="sidebar-item">
+        <div class="title">
+            <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+            <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+            Quản lý
+        </div>
+        <ul class="list">
+            <li class="list-item ">
+                <a class="d-block" href="/admin"><i class="fas fa-home"></i> Trang chủ</a>
+            </li>
+            <li class="list-item">
+                <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Tạo tài khoản</a>
+            </li>
+            <li class="list-item">
+                  <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Quản lý manager</a>
+            </li>
+            <li class="list-item active">
+                <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Địa điểm cách ly</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    {{!-- end sidebar --}}
+
+    <div class="col-9" style="flex:1;">
+        <div class="section">
+            <div class="row" style="margin: auto">
+                <div class="col-1"></div>
+                <div class="col-9 mt-5">
+                    <a href="/admin/treatment/create" class="btn btn-success">Thêm địa điểm</a>
+                    <table class="table mt-4 table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên địa điểm</th>
+                                <th scope="col">Sức chứa</th>
+                                <th scope="col">Đang tiếp nhận</th>
+                                <th scope="col">Tùy chỉnh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each treatment}}
+                            <tr>
+                                <th scope="row">{{sum @index 1}}</th>
+                                <td>{{this.name}}</td>
+                                <td>{{this.capacity}}</td>
+                                <td>{{this.current}}</td>
+                                <td>
+                                    <a href="/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Edit</button></a>
+                                    <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Delete</button></a>
+                                </td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                            <td colspan="4" class="text-center">
+                                Hiện không có địa điểm điều trị/cách ly nào
+                                <a href="/admin/treatment/create">Thêm địa điểm</a>
+                            </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- delete form --}}
+<!-- Modal -->
+<div class="alert-delete modal fade" id="delete-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Xóa địa điểm</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          Xóa địa điểm điều trị/cách ly y tế? Bạn sẽ không thể khôi phục sau khi xóa
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+<form action="#" method="post" id="deleteForm"></form>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+    $(document).ready(function(){
+
+        $('#delete-form').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var _id = button.data('id')
+        $('#deleteForm').attr('action',`/admin/${_id}?_method=DELETE`);
+        })
+
+        $('#delete-confirm').on('click', ()=>{
+        $('#deleteForm').submit();
+        })
+    })
+})
+</script>
+
+

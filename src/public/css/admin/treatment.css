@@ -503,5 +503,25 @@ a:hover {
     background-color: var(--header-color);
 }
 
+.alert-delete{
+    font-size: 1.7rem;
+}
+
+.alert-delete button{
+    font-size: 1.6rem;
+}
+
+.section a.btn{
+    font-size: 2rem;
+}
+
+.section table{
+    font-size: 1.8rem;
+}
+
+.section button{
+    font-size: 1.6rem;
+}
+
 
 
