@@ -11,6 +11,10 @@ router.get('/treatment', AdminController.treatment);
 
 router.get('/treatment/create', AdminController.createTreatment);
 
+router.post('/treatment/create', AdminController.newTreatment);
+
+router.delete('/:id', AdminController.deleteTreatment)
+
 router.get('/', AdminController.home);
 
 module.exports = router;

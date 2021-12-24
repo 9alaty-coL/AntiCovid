@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const UserM = require('../models/User')
+const Treatment = require('../models/Treatment')
 
 class AdminController {
 
@@ -43,12 +44,14 @@ class AdminController {
     }
 
     // [GET] admin/treatment
-    treatment(req, res, next) {
+    async treatment(req, res, next) {
+        let treatment = await Treatment.all();
+
         res.render('admin/treatment', {
              layout: 'admin', 
              css: ['treatment'], 
              js: ['AdminPage'],
-             treatment: [{name:'Bệnh viện dã chiến', capacity:20000, current:15000}]
+             treatment: treatment
         });
     }
 
@@ -56,14 +59,37 @@ class AdminController {
     createTreatment(req, res, next){
         res.render('admin/treatment_create', {
             layout: 'admin', 
-            css: ['treatment'], 
+            css: ['treatment_create'], 
             js: ['AdminPage'],
         })
     }
 
     // [POST] admin/treatment/create
-    newTreatment(req, res, next){
+    async newTreatment(req, res, next){
+        let place = await Treatment.insert(req.body);
+        let message = "";
+        let color = "";
+        if (place){
+            message = "Thêm thành công";
+            color = "success";
+        }
+        else{
+            message = "Có lỗi xảy ra :(("
+            color = "danger";
+        }
+        res.render('admin/treatment_create', {
+            layout: 'admin', 
+            css: ['treatment_create'], 
+            js: ['AdminPage'],
+            message:message,
+            color:color
+        })
+    }
 
+    // [DELETE] admin/:id
+    async deleteTreatment(req, res, next){
+        let response = await Treatment.delete('_id', req.params.id);
+        res.redirect('back')
     }
 }
 

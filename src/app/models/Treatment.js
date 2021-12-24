@@ -1,6 +1,6 @@
 const db = require('../../config/db');
 
-const tbName = 'Users';
+const tbName = 'Treatment';
 
 class Users {
     
@@ -29,6 +29,16 @@ class Users {
             return res;
         } catch (err) {
             console.log('error in User: ' + err.message);
+            return null;
+        }
+    }
+
+    async delete(colName, cprName){
+        try{
+            let res = await db.delete(colName, cprName, tbName);
+            return res;
+        }catch(err){
+            console.log('error: ' + err.message);
             return null;
         }
     }

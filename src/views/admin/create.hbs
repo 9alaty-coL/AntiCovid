@@ -29,35 +29,56 @@
     <div class="col-9" style="flex:1;">
         <div class="section">
             <div class="row" style="margin: auto">
-                <div class="col-3"></div>
-                <div class="col-4 mt-5">
-                    <form action="/admin/create" method="post">
-                        <div class="card col-4 p-0 pb-3 w-100">
-                            <div class="card-header bg-warning text-dark m-auto w-100">
-                                Create manager account
-                            </div>
-                            <div class="col-auto mt-3">
-                                <div class="input-group mb-2">
-                                    <input type="text" name="username" class="form-control" id="inlineFormInputGroup"  placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="col-auto mt-3">
-                                <div class="input-group mb-2">
-                                    <input type="password" name="password" class="form-control" id="inlineFormInputGroup"  placeholder="Password">
-                                </div>
-                            </div>
+                <div class="col-0"></div>
+                <div class="col-12 mt-5">
+                    <div class="create-account">
 
-                            <div class="col-auto mt-3 text-right">
-                                <button type="submit" class="btn btn-warning">Sign up</button>
-                            </div>
-                            {{#if message}}
-                            <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
-                                {{message}}
-                            </div>
-                            {{/if}}
 
+                        <div class="input">
+                                    
+                            <form action="/admin/create" method="post">
+                                <div class="card info">
+                                    <div class="card-header bg text-white m-auto w-100">
+                                        Create manager account
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="input-group">
+                                            <input type="text" name="username" class="form-control" id="inlineFormInputGroup"  placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class=" mt-3">
+                                        <div class="input-group">
+                                            <input type="password" name="password" class="form-control" id="inlineFormInputGroup"  placeholder="Password">
+                                        </div>
+                                    </div>
+
+                                    <div class=" mt-3">
+                                        <button type="submit" class="btn btn-warning">Sign up</button>
+                                    </div>
+                                    <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
+                                    {{#if message}}
+                                        {{message}}
+                                    {{/if}}
+                                    </div>
+                                    <div class="line"></div>
+
+                                    <div class="second">
+                                        <img src="https://media.slidesgo.com/storage/140626/conversions/0-covid-19-thumb.jpg" alt="">
+                                    </div>
+
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                        <div class="img">
+                            <img src="https://pngfile.net/download/Ot7EVvckNDNuYc6NG5Vt93ArNwKLUgTy0LS5A6p82h5DLMGMLcoNW00bdqmI5bTWm1y0NNLltsOH8pBcfHqtG34XVgU2bXrT4TtrIdoXT0Qx8tSOzaRqO6jndlnWy3twsZJm8SUOtvtwPOEm8G0QcGUd7gK1jhQifOOYYaWFeuuFwYH7zXC3V8kOQTiZhS2PpdgjkntS/large" alt="">
+                        </div>
+                    </div>
+
+
+
+
+
+
                 </div>
 
             </div>

@@ -84,7 +84,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger">Xóa</button>
+        <button type="button" id="delete-confirm" class="btn btn-danger">Xóa</button>
       </div>
     </div>
   </div>
@@ -92,7 +92,7 @@
 
 
     
-<form action="#" method="post" id="deleteForm"></form>
+<form  method="post" id="deleteForm"></form>
 <script>
     document.addEventListener('DOMContentLoaded', ()=>{
     $(document).ready(function(){
@@ -103,8 +103,8 @@
         $('#deleteForm').attr('action',`/admin/${_id}?_method=DELETE`);
         })
 
-        $('#delete-confirm').on('click', ()=>{
-        $('#deleteForm').submit();
+            $('#delete-confirm').on('click', ()=>{
+            $('#deleteForm').submit();
         })
     })
 })
