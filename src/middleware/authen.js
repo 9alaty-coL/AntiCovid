@@ -1,4 +1,4 @@
-const userM = require('../app/models/User');
+const userM = require('../app/models/Authen');
 
 class Authen {
     isLoggedIn(req, res, next) {

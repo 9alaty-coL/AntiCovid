@@ -1,53 +1,77 @@
+const Users = require('../models/User');
+const Authens = require('../models/Authen');
+
+let id;
+let acc;
+let user;
 class UserController {
-    home(req, res, next) {
-        res.redirect('/user/infor');
+    async home(req, res, next) {
+        id = req.params.id;
+        acc = await Authens.one('_id', id);
+        user = await Users.one('P_AccountID', id);
+        res.redirect(`/user/${id}/infor`);
     }
 
-    information(req, res, next) {
+    async information(req, res, next) { 
+        let relatedPeople = [];
+        let list = user.P_RelatedPersonID;
+        for(let x of list) { 
+            let person =  await Users.one('P_ID', x);
+            relatedPeople.push(person);
+        }
+
         res.render('user/information', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'information'],
+            account: acc,
+            user: user,
+            relatedPeople: relatedPeople,
         });
     }
 
-    password(req, res, next) {
+    async password(req, res, next) {
         res.render('user/password', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'password'],
+            user: user,
         });
     }
 
-    managedHistory(req, res, next) {
+    async managedHistory(req, res, next) {
         res.render('user/managedHistory', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'managedHistory'],
+            user: user,
         });
     }
 
-    accountBalance(req, res, next) {
+    async accountBalance(req, res, next) {
         res.render('user/accountBalance', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'accountBalance'],
+            user: user,
         });
     }
 
-    deposit(req, res, next) {
+    async deposit(req, res, next) {
         res.render('user/deposit', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'deposit'],
+            user: user,
         });
     }
 
-    paidHistory(req, res, next) {
+    async paidHistory(req, res, next) {
         res.render('user/paidHistory', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'paidHistory'],
+            user: user,
         });
     }
 }

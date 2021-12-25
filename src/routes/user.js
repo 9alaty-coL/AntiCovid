@@ -3,18 +3,18 @@ const router = express.Router();
 
 const UserController = require('../app/controllers/UserController');
 
-router.get('/infor', UserController.information);
+router.get('/:id/infor', UserController.information);
 
-router.get('/pwd', UserController.password);
+router.get('/:id/pwd', UserController.password);
 
-router.get('/mHistory', UserController.managedHistory);
+router.get('/:id/mHistory', UserController.managedHistory);
 
-router.get('/accBal', UserController.accountBalance);
+router.get('/:id/accBal', UserController.accountBalance);
 
-router.get('/deposit', UserController.deposit);
+router.get('/:id/deposit', UserController.deposit);
 
-router.get('/pHistory', UserController.paidHistory);
+router.get('/:id/pHistory', UserController.paidHistory);
 
-router.get('/', UserController.home);
+router.get('/:id', UserController.home);
 
 module.exports = router;

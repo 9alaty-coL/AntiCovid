@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const UserM = require('../models/User')
+const UserM = require('../models/Authen')
 const Treatment = require('../models/Treatment')
 
 class AdminController {
