@@ -6,7 +6,7 @@ const managerRoute = require('./manager');
 const userRoute = require('./user');
 
 function route(app) {
-    // app.use(isLoggedIn);
+    app.use(isLoggedIn);
 
     app.use('/admin', adminRoute);
 

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
 const UserController = require('../app/controllers/UserController');
 
 router.get('/:id/infor', UserController.information);
 
 router.get('/:id/pwd', UserController.password);
+
+router.post('/:id/pwd', UserController.changePassword);
 
 router.get('/:id/mHistory', UserController.managedHistory);
 
