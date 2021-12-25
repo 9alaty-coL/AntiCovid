@@ -503,12 +503,14 @@ a:hover {
 .section .create-account{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    border-radius: 1rem;
 }
 
 .section .input{
     grid-column: 1/2;
     display:flex;
     justify-content: center;
+    
 }
 
 .section .input form{
@@ -520,7 +522,7 @@ a:hover {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 3rem;
+    border-radius: 1rem;
     overflow: hidden;
 }
 
@@ -531,7 +533,7 @@ a:hover {
 .section .input .bg{
     background-color: var(--header-color);
     text-align: center;
-    border-radius: 3rem 3rem 0rem 0rem;
+    border-radius: 1rem 1rem 0rem 0rem;
 }
 
 .section .input .input-group{

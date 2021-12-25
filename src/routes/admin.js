@@ -13,7 +13,11 @@ router.get('/treatment/create', AdminController.createTreatment);
 
 router.post('/treatment/create', AdminController.newTreatment);
 
-router.delete('/:id', AdminController.deleteTreatment)
+router.delete('/:id', AdminController.deleteTreatment);
+
+router.get('/treatment/:id/edit', AdminController.editTreatment);
+
+router.put('/treatment/:id/edit', AdminController.updateTreatment);
 
 router.get('/', AdminController.home);
 

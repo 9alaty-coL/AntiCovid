@@ -91,6 +91,49 @@ class AdminController {
         let response = await Treatment.delete('_id', req.params.id);
         res.redirect('back')
     }
+
+    // [GET] admin/treatment/:id/edit
+    async editTreatment(req, res, next){
+        let message = "";
+        let color = "";
+        let treatment = await Treatment.getTreatmentById(req.params.id);
+        if (!treatment) {
+            message = "Treatment no found";
+            color = "danger";
+        }
+        res.render('admin/treatment_edit',{
+            treatment: treatment,
+            layout: 'admin', 
+            css: ['treatment_edit'], 
+            js: ['AdminPage'],
+            message:message,
+            color:color
+        })
+    }
+
+    // [PUT] admin/treatment/:id/editTreatment
+    async updateTreatment(req, res, next) {
+        let message = "";
+        let color = "";
+        req.body._id = req.params.id;
+        let treatment = await Treatment.update( req.body);
+        if (!treatment) {
+            message = "Update failed";
+            color = "danger";
+        }
+        else{
+            message = "Update successfully"
+            color="success";
+        }
+        res.render('admin/treatment_edit',{
+            treatment: treatment,
+            layout: 'admin', 
+            css: ['treatment_edit'], 
+            js: ['AdminPage'],
+            message:message,
+            color:color
+        })
+    }
 }
 
 module.exports = new AdminController();

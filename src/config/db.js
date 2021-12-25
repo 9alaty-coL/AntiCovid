@@ -82,8 +82,8 @@ class dbQuery {
                 'WHERE "' + idName + '" = ${' + idName + '}',
                 value,
             );
-            let qr = pgp.helpers.update(value, null, tbName) + condition;
-            let res = await db.none(qr);
+            let qr = pgp.helpers.update(value, null, tbName) + condition + ' RETURNING *';
+            let res = await db.one(qr);
             return res;
         } catch (err) {
             console.log('error in db: ' + err.message);

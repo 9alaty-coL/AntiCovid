@@ -523,5 +523,9 @@ a:hover {
     font-size: 1.6rem;
 }
 
+.section table{
+    vertical-align: middle;
+}
+
 
 

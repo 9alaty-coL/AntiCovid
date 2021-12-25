@@ -43,6 +43,25 @@ class Users {
         }
     }
 
+    async getTreatmentById(_id) {
+        try {
+            let res = await db.one('_id', _id, tbName);
+            return res;
+        } catch (error) {
+            console.log('error in Treatment getTreatmentById: ', error.message);
+        }
+    }
+
+    async update(value){
+        try{
+            const res = await db.update('_id', value, tbName);
+            return res;
+        }catch(err){
+            console.log('error in treatment update: ' + err.message);
+            return null;
+        }
+    }
+
 }
 
 module.exports = new Users();
