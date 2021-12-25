@@ -1,6 +1,6 @@
 const db = require('../../config/db');
 
-const tbName = 'Patient';
+const tbName = 'Users';
 
 class Users {
     

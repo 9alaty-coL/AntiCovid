@@ -1,6 +1,6 @@
 const db = require('../../config/db');
 
-const tbName = 'Users';
+const tbName = 'Accounts';
 
 class Users {
     async all() {
