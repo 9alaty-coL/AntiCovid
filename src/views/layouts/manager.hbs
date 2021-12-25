@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    {{#each css}}
+       <link rel="stylesheet" href="/css/manager/{{this}}.css">
+    {{/each}}
+    <title>ManagerPage</title>
+</head>
+<body>
+    <div class="main">
+        <header id="header">
+            <div class="container-xl">
+                <div class="searchbar">               
+                    <div class="searchbar-item">
+                        <a href="#" class="logo"><h1>Anti<span style="color: #F18121;">Covid</span></h1></a>
+                    </div>
+                    <div class="searchbar-item search-packet d-none d-lg-flex">
+                        <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
+                            <input type="text" id="searchBar" class="form-control search-input" placeholder="Bạn cứ nhập từ khóa, còn lại để SimplePoLL lo nè">
+                            <div class="search-select-btn"><i class="fas fa-search"></i></div>
+                        </div>
+                        <ul class="search-menu">
+                            <!-- <li class="">
+                                <a href="#" class="">
+                                    Gói A
+                                </a> 
+                            </li>
+                            <li class="">
+                                <a href="#" class="">
+                                    Gói B
+                                </a> 
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="searchbar-item ">
+                        <div class="searchbar-btn notification-btn">
+                                <a href="#">
+                                    <span><i class="fas fa-bell"></i></span>
+                                    <span class="notification-badge">1</span>
+                                </a>
+                                <ul class="notification-menu d-none">
+                                    <li class="d-flex ">
+                                        <div class="notification-content text-ellipsis--3">
+                                            <p>Thông báo 1</p>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex ">
+                                        <div class="notification-content text-ellipsis--3">
+                                            <p>Thông báo 2</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </div>
+                        <div class="searchbar-btn Dropdown">
+                            <a href="#" >   
+                                <i class="fas fa-history"></i>
+                                <div class="droplist droplist-normal">
+                                    <li><a href="#">Lịch sử quản lý</a></li>
+                                    <li><a href="#">Lịch sử mua nhu yếu phẩm</a></li>
+                                    <li><a href="#">Lịch sử thanh toán</a></li>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="searchbar-btn Dropdown">
+                            <a href="#">   
+                                <div class="user">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span class="user-name">User</span>
+                                </div>
+                                <div class="droplist droplist-normal">
+                                    <li><a id="logout" href="#" type="submit">Đăng xuất</a></li>
+                                </div>
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {{{body}}}
+
+        <footer id="footer">
+            <div class="social-list">
+                <a href=""><i class="fab fa-facebook-square"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-pinterest-p"></i></a>
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="copy-right"> 
+                Đồ án cuối kì môn Phát triển ứng dụng Web <br>
+                Maded by <a href="#">19120479 - 19120502 - 19120564 - 19120595</a>
+            </p>
+        </footer>
+      
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    {{#each js}}
+       <script type="text/javascript" src="/js/manager/{{this}}.js"></script>
+    {{/each}}
+    
+    <form action="/logout?_method=delete" method="post" id="logoutForm"></form>
+</body>
+</html>
