@@ -62,9 +62,9 @@
                             <a href="#" >   
                                 <i class="fas fa-history"></i>
                                 <div class="droplist droplist-normal">
-                                    <li class="border-bottom"><a href="#">Lịch sử quản lý</a></li>
+                                    <li class="border-bottom"><a href="/user/{{user.P_AccountID}}/mHistory">Lịch sử quản lý</a></li>
                                     <li class="border-bottom"><a href="#">Lịch sử mua nhu yếu phẩm</a></li>
-                                    <li class="border-bottom"><a href="#">Lịch sử thanh toán</a></li>
+                                    <li class="border-bottom"><a href="/user/{{user.P_AccountID}}/pHistory">Lịch sử thanh toán</a></li>
                                 </div>
                             </a>
                         </div>
@@ -75,7 +75,13 @@
                                     <span class="user-name">User</span>
                                 </div>
                                 <div class="droplist droplist-normal">
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li>
+                                        <form action="/logout?_method=DELETE" method="post">
+                                            <button type="submit" class="btn btn-logout" style="font-weight:500; font-size:1.6rem;">
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                    </li>
                                 </div>
                             </a>
                         </div>

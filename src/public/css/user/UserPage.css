@@ -154,7 +154,7 @@ a:hover {
     font-weight: 700;
 }
 
-.searchbar-btn a:hover {
+.searchbar-btn > a:hover {
    opacity: .7;
 }
 
@@ -273,6 +273,11 @@ a:hover {
     }
 
     .droplist li:hover a {
+        color: white;
+        opacity: 1;
+    }
+
+    .droplist li:hover .btn-logout {
         color: white;
         opacity: 1;
     }
