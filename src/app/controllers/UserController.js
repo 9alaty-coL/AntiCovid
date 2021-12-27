@@ -10,7 +10,7 @@ class UserController {
     async home(req, res, next) {
         id = req.params.id;
         acc = await Authens.one('_id', id);
-        user = await Users.one('P_AccountID', id);
+        user = await Users.one('P_ID', id);
         res.redirect(`/user/${id}/infor`);
         return;
     }
