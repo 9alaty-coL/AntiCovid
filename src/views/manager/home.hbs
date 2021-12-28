@@ -16,13 +16,16 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fa fa-list-ul"></i> Danh sách</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Tạo tài khoản</a>
+                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
         </div>
@@ -115,7 +118,7 @@
 
     <div class="col-9" style="flex:1;">
         <div class="section general-information">
-            <div class="card mb-5">
+            <div class="card mb-5 w-100">
                 <div class="card-header">
                     <h1>Quản lý người liên quan covid-19</h1>
                 </div>
@@ -123,10 +126,10 @@
                     <div class="row mx-auto justify-content-center">
 
                         {{!-- 1 cái div này là 1 cục chức năng --}}
-                        <div class="col-3 my-5 mx-5">
-                            <a href="/admin/create" class="text-dark">
-                                <div class="card" style="width: 30rem;">
-                                    <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
+                        <div class="col-2 my-5" style="margin-right: 4rem;">
+                            <a href="/manager/listUser" class="text-dark">
+                                <div class="card" style="width: 24rem;">
+                                    <img src="https://static.thenounproject.com/png/2204677-200.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Danh sách người liên quan</h3>
@@ -138,10 +141,10 @@
                         </div>
                         {{!-- end --}}
 
-                        <div class="col-3 my-5 mx-5">
-                            <a href="/admin/manage" class="text-dark">
-                                <div class="card" style="width: 30rem;">
-                                    <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
+                        <div class="col-2 my-5" style="margin-left: 4rem; margin-right: 4rem;">
+                            <a href="/manager/addUser" class="text-dark">
+                                <div class="card" style="width: 24rem;">
+                                    <img src="https://cdn.iconscout.com/icon/free/png-256/user-circle-plus-3609979-3014619.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Thêm người liên quan</h3>
@@ -152,20 +155,34 @@
                             </a>
                         </div>
 
-                        <div class="col-3 my-5 mx-5">
-                            <a href="/admin/treatment" class="text-dark">
+                        <div class="col-2 my-5" style="margin-left: 4rem; margin-right: 4rem;">
+                            <a href="/manager/listUser" class="text-dark">
 
-                                <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
+                                <div class="card" style="width: 24rem;">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdwQwivK1ooi8FRM_njfl9oXDzUG1drCwKEToSTvnM4-fzHcBesML5fj-jx8hm6mRMr7k&usqp=CAU"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thay dổi trạng thái</h3>
-                                        <p class="card-text text-center">Thay đổi trạng thái bệnh lý của người liên quan
-                                            Covid-19</p>
+                                        <h3 class="card-title text-center">Thay đổi trạng thái</h3>
+                                        <p class="card-text text-center">Thay đổi trạng thái bệnh lý của người liên quan Covid-19</p>
                                     </div>
                                 </div>
                             </a>
-                        </div>                       
+                        </div>       
+
+                        <div class="col-2 my-5" style="margin-left: 4rem; margin-right: 2rem;">
+                            <a href="/manager/search" class="text-dark">
+
+                                <div class="card" style="width: 24rem;">
+                                    <img src="https://static.thenounproject.com/png/88308-200.png"
+                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center">Tìm kiếm chi tiết</h3>
+                                        <p class="card-text text-center">Tìm kiếm người liên quan với các tiêu chí đặc biệt</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>   
+
                     </div>
                 </div>
             </div>
@@ -179,7 +196,7 @@
 
                         {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/create" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -194,7 +211,7 @@
                         {{!-- end --}}
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/manage" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -208,7 +225,7 @@
                         </div>
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/treatment" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
@@ -234,7 +251,7 @@
 
                         {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/create" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -249,7 +266,7 @@
                         {{!-- end --}}
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/manage" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -263,7 +280,7 @@
                         </div>
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/treatment" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
@@ -289,7 +306,7 @@
 
                         {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/create" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -304,7 +321,7 @@
                         {{!-- end --}}
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/manage" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -318,7 +335,7 @@
                         </div>
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/treatment" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
@@ -344,7 +361,7 @@
 
                         {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/create" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -359,7 +376,7 @@
                         {{!-- end --}}
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/manage" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
@@ -373,7 +390,7 @@
                         </div>
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/admin/treatment" class="text-dark">
+                            <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
                                     <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"

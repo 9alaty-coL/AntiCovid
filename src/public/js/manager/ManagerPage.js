@@ -1,3 +1,4 @@
+// Sidebar JS
 $('.title').click(function () {
     $(this).children().toggleClass('d-none');
     $(this).parent().children('.list').toggleClass('d-none');
@@ -7,14 +8,32 @@ $('.list-item').click(function () {
     $(this).addClass('active');
 });
 
+// Notification JS
 $('html').click(function () {
-    $('.search-menu').empty();
     $('.notification-menu').addClass('d-none');
 });
 $('.notification-btn').click(function (event) {
     event.stopPropagation();
     $('.notification-menu').toggleClass('d-none');
 });
+
+// Searchbar JS
+// $('#searchBar').focusin(function() {
+//     $('.search-menu').removeClass('d-none')
+// });
+
+// $('#searchBar').focusout(function() {
+//     if ($('.search-menu').is(':focus')) ;
+//     $('.search-menu').addClass('d-none')
+// });
+
+// $('.search-menu').focusin(function() {
+//     $('.search-menu').removeClass('d-none')
+// });
+
+// $('.search-menu').focusout(function() {
+//     $('.search-menu').addClass('d-none')
+// });
 
 // Search novel
 const novelLists = document.querySelector('.search-menu');

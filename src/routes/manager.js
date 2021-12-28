@@ -5,7 +5,9 @@ const ManagerController = require('../app/controllers/ManagerController');
 
 router.get('/', ManagerController.home);
 
-router.get('/search?=:Key', ManagerController.search);
+router.get('/listUser', ManagerController.listUser);
+
+router.get('/search', ManagerController.search);
 
 router.get('/sortby=:SortID', ManagerController.sortBy);
 

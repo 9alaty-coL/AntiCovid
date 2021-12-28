@@ -1,3 +1,5 @@
+const UserModel = require('../models/User')
+
 class ManagerController {
     ///>> Method → <GET> <<///
 
@@ -10,12 +12,24 @@ class ManagerController {
         });
     }
 
+    // Get → /userlist
+    async listUser (req, res, next) {
+        let users = await UserModel.all();
+
+        res.render('manager/listUser', {
+            layout: 'manager',
+            users: users,
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
+        });
+    }
+
     // Get → /search?=:Key
     search (req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
-            css: ['AdminPage'],
-            js: ['AdminPage'],
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
         });
     }
 
@@ -23,8 +37,8 @@ class ManagerController {
     sortBy (req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
-            css: ['AdminPage'],
-            js: ['AdminPage'],
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
         });
     }
 
@@ -32,8 +46,8 @@ class ManagerController {
     search_sortBy (req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
-            css: ['AdminPage'],
-            js: ['AdminPage'],
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
         });
     }
 
@@ -41,8 +55,8 @@ class ManagerController {
     detail (req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
-            css: ['AdminPage'],
-            js: ['AdminPage'],
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
         });
     }
 
@@ -50,8 +64,8 @@ class ManagerController {
     addUser (req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
-            css: ['AdminPage'],
-            js: ['AdminPage'],
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
         });
     }
 
