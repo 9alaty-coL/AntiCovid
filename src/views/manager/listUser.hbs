@@ -131,13 +131,13 @@
             </div>
 
             {{#each users}}
-            <div class="card mb-1">
+            <div class="card mb-1 user-card" onclick="window.location='/manager/detail/UserID={{this.P_ID}}'">
                 <div class="row card-body h-100" style="min-height: 70px;">
-                    <span class="col-2 border-end border-dark border-2"> {{this.P_FullName}}</span>
-                    <span class="col-1 border-end border-dark border-2 text-center">{{this.P_IdentityCard}}</span>
-                    <span class="col-1 border-end border-dark border-2 text-center">{{this.P_YearOfBirth}}</span>
-                    <span class="col-4 border-end border-dark border-2">{{this.P_Address}}</span>
-                    <span class="col-1 border-end border-dark border-2 text-center">{{this.P_Status}}</span>
+                    <span class="col-2 border-end border-dark border-1"> {{this.P_FullName}}</span>
+                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
+                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
+                    <span class="col-4 border-end border-dark border-1">{{this.P_Address}}</span>
+                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Status}}</span>
                     <span class="col-3">{{this.P_HospitalAddress}}</span>
                 </div>
             </div>

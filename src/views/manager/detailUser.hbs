@@ -1,0 +1,249 @@
+<div class="content row">
+    {{!-- sidebar --}}
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <a class="title" href="/manager/">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <i class="fa fa-home d-none" aria-hidden="true"></i>
+                Trang chủ
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý người liên quan
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý s.phẩm / n.y.phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Hậu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Hậu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Hậu</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý gói nhu yếu phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Hậu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Hậu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Hậu</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Thống kê thông tin
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý thanh toán
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{!-- end sidebar --}}
+
+    <div class="col-9" style="flex:1;">
+        <div class="section general-information">
+            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Chi tiết thông tin: </h1>
+            <div class="container">
+                <div class="row no-gutter">
+                    {{#with user}}
+                    <div class="col-8">
+                        <div class="card mb-3 me-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h1><b>Họ và tên:</b></h1>
+                                    </div>
+                                    <div class="col-9">
+                                        <h1 class="card-title">{{P_FullName}}</h1>
+                                    </div>
+                                    <div class="col-3">
+                                        <h3><b>CMND/CCCD:</b></h3>
+                                    </div>
+                                    <div class="col-9">
+                                        <h3 class="card-title">{{P_IdentityCard}}</h3>
+                                    </div>
+                                    <div class="col-3">
+                                        <p class="card-text">Địa chỉ nơi ở:</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <p class="card-text">{{P_Address}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p class="card-text">Trạng thái điều trị:</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <p class="card-text">{{P_Status}}</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <p class="card-text">Cơ sở điều trị / cách ly:</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <p class="card-text">{{P_HospitalAddress}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h1><b>Chỉnh sửa thông tin trạng thái: </b></h1>
+                                <form>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-3 w-100">
+                                                    <label for="Current" class="form-label">Hiện tại đang là:</label>
+                                                    <input type="text" id="Current" class="form-control text-center"
+                                                        placeholder="{{P_Status}}" value="{{P_Status}}" name="Current"
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-3 w-100">
+                                                    <label for="Status" class="form-label">Chỉnh sửa thành:</label>
+                                                    <select id="Status" class="form-select text-center" name="Status">
+                                                        <option>F1</option>
+                                                        <option>F2</option>
+                                                        <option>F3</option>
+                                                        <option>F4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button type="button" class="btn btn-warning w-100">Kiểm tra ảnh hưởng</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" class="btn btn-success w-100">Hoàn tất chỉnh sửa</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {{/with}}
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Lịch sử quá trình được quản lý:</h3>
+                            {{#each userlog}}
+                            <p class="card-text">{{this.log}}</p>
+                            {{else}}
+                            <p class="card-text">Người nầy chưa được quản lý chuyển đi nơi nào cả.</p>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Danh sách người liên đới với người nầy:</h3>
+                            {{#each relates}}
+                            <div class="card mb-1 user-card"
+                                onclick="window.location='/manager/detail/UserID={{this.P_ID}}'">
+                                <div class="row card-body h-100" style="min-height: 70px;">
+                                    <span class="col-2 border-end border-dark border-2"> {{this.P_FullName}}</span>
+                                    <span
+                                        class="col-1 border-end border-dark border-2 text-center">{{this.P_IdentityCard}}</span>
+                                    <span
+                                        class="col-1 border-end border-dark border-2 text-center">{{this.P_YearOfBirth}}</span>
+                                    <span class="col-4 border-end border-dark border-2">{{this.P_Address}}</span>
+                                    <span
+                                        class="col-1 border-end border-dark border-2 text-center">{{this.P_Status}}</span>
+                                    <span class="col-3">{{this.P_HospitalAddress}}</span>
+                                </div>
+                            </div>
+                            {{else}}
+                            <p class="card-text">Không có người nào liên đới với người nầy cả</p>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

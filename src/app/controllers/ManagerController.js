@@ -52,8 +52,15 @@ class ManagerController {
     }
 
     // Get → /detail/UserID=:UserID
-    detail (req, res, next) {
-        res.render('manager/home', {
+    async detail (req, res, next) {
+        let userID = req.params.UserID;
+        let userInfo = await UserModel.one('P_ID', userID);
+        let relateInfo = await UserModel.relate(userInfo.P_RelatedPersonID);
+
+        res.render('manager/detailUser', {
+            user: userInfo,
+            userlog: [],
+            relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
