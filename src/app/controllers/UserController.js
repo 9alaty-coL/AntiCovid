@@ -36,7 +36,7 @@ class UserController {
     }
 
     // GET /user/:id/pwd
-    async password(req, res, next) {
+    password(req, res, next) {
         res.render('user/password', {
             layout: 'user',
             css: ['UserPage'],
@@ -97,6 +97,7 @@ class UserController {
         return;
     }
 
+    // GET /user/:id/mHistory
     async managedHistory(req, res, next) {
         res.render('user/managedHistory', {
             layout: 'user',
@@ -107,6 +108,7 @@ class UserController {
         return;
     }
 
+    // GET /user/:id/accBal
     async accountBalance(req, res, next) {
         res.render('user/accountBalance', {
             layout: 'user',
@@ -117,6 +119,7 @@ class UserController {
         return;
     }
 
+    // GET /user/:id/deposit
     async deposit(req, res, next) {
         res.render('user/deposit', {
             layout: 'user',
@@ -127,11 +130,44 @@ class UserController {
         return;
     }
 
+    // GET /user/:id/pHistory
     async paidHistory(req, res, next) {
         res.render('user/paidHistory', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'paidHistory'],
+            user: user,
+        });
+        return;
+    }
+
+    // GET /user/:id/packet
+    async packet(req, res, next) {
+        res.render('user/packet', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'packet'],
+            user: user,
+        });
+        return;
+    }
+
+    // GET /user/packet/:p_id
+    async packetDetail(req, res, next) {
+        res.render('user/packetDetail', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage'],
+            user: user,
+        });
+        return;
+    }
+
+    async buyHistory(req, res, next) {
+        res.render('user/buyHistory', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'buyHistory'],
             user: user,
         });
         return;

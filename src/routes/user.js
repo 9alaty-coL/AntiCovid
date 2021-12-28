@@ -16,6 +16,12 @@ router.get('/:id/deposit', UserController.deposit);
 
 router.get('/:id/pHistory', UserController.paidHistory);
 
+router.get('/:id/packet', UserController.packet);
+
+router.get('/:id/packet/:p_id', UserController.packetDetail);
+
+router.get('/:id/bHistory', UserController.buyHistory);
+
 router.get('/:id', UserController.home);
 
 module.exports = router;
