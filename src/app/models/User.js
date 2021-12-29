@@ -2,8 +2,7 @@ const db = require('../../config/db');
 
 const tbName = 'Users';
 
-class Users {
-    
+class Users {    
     async all() {
         try {
             const res = await db.all(tbName);
@@ -19,6 +18,16 @@ class Users {
             return res;
         } catch (err) {
             console.log('error in User/One: ' + err.message);
+            return null;
+        }
+    }
+
+    async userLocationHistory(userID) {
+        try {
+            const res = await db.one('P_ID', userID, 'LocationHistory');
+            return res;
+        } catch (err) {
+            console.log('error in User/LocationHistory: ' + err.message);
             return null;
         }
     }
