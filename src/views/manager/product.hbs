@@ -14,7 +14,7 @@
                 <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
                 Quản lý người liên quan
             </div>
-            <ul class="list">
+            <ul class="list d-none ">
                 <li class="list-item active">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
@@ -35,12 +35,12 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Quản lý s.phẩm / n.y.phẩm
             </div>
-            <ul class="list d-none">
-                 <li class="list-item active">
-                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách </a>
+            <ul class="list">
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/manager/product"><i class="fas fa-user"></i> ...</a>
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
@@ -57,17 +57,17 @@
                 Quản lý gói nhu yếu phẩm
             </div>
             <ul class="list d-none">
-                <li class="list-item">
-                    <a class="d-block" href="/manager/package"><i class="fas fa-home"></i> Danh sách gói nhu yếu phẩm</a>
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Tìm kiếm gói nhu yếu phẩm</a>
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Tìm kiếm gói nhu yếu phẩm</a>
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
         </div>
@@ -116,29 +116,26 @@
     </div>
     {{!-- end sidebar --}}
 
-    <div class="col-9" style="flex:1;">
+    <div class="col-5" style="flex:1;">
         <div class="section general-information">
-            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Danh sách người liên quan đến covid-19</h1>
+            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Danh sách các nhu yếu phâm</h1>
             <div class="card bg-info mb-3 text-light">
                 <div class="row card-body h-100">
-                    <span class="col-2 border-end border-dark border-2"><b>Full Name</b></span>
-                    <span class="col-1 border-end border-dark border-2 text-center"><b>Id Card</b></span>
-                    <span class="col-1 border-end border-dark border-2 text-center"><b>BirthYear</b></span>
-                    <span class="col-4 border-end border-dark border-2"><b>Address</b></span>
-                    <span class="col-1 border-end border-dark border-2 text-center"><b>Status</b></span>
-                    <span class="col-3"><b>Hospital Address</b></span>
+                    <span class="col-3 border-end border-dark border-2 text-center"><b>Tên sản phẩm </b></span>
+                    <span class="col-3 border-end border-dark border-2 text-center"><b>Hình ảnh</b></span>
+                    <span class="col-3 border-end border-dark border-2 text-center"><b>Giá tiền</b></span>
+                    <span class="col-3 text-center">                                <b>Đơn vị định lượng</b></span>
                 </div>
             </div>
 
-            {{#each users}}
-            <div class="card mb-1 user-card" onclick="window.location='/manager/detail/UserID={{this.P_ID}}'">
+            {{#each Products}}
+            <div class="card mb-1 user-card">
                 <div class="row card-body h-100" style="min-height: 70px;">
-                    <span class="col-2 border-end border-dark border-1"> {{this.P_FullName}}</span>
-                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
-                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
-                    <span class="col-4 border-end border-dark border-1">{{this.P_Address}}</span>
-                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Status}}</span>
-                    <span class="col-3">{{this.P_HospitalAddress}}</span>
+                    <span class="col-3 border-end border-dark border-1 text-center"> {{this.Product_Name}}</span>
+                    <span class="col-3 border-end border-dark border-1 text-center"> <img src="{{this.Product_Image}}" style="width:120px;height:80px;"> </span>
+                    <span class="col-3 border-end border-dark border-1 text-center">{{this.Product_Price}} VNĐ</span>
+                    <span class="col-3 border-end border-dark border-1 text-center">{{this.Product_Unit}}</span>
+                   
                 </div>
             </div>
             {{/each}}

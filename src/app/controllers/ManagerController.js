@@ -1,5 +1,6 @@
 const UserModel = require('../models/User')
-
+const ProductsModel = require('../models/product')
+const PackagesModel = require('../models/package')
 class ManagerController {
     ///>> Method → <GET> <<///
 
@@ -75,6 +76,36 @@ class ManagerController {
             js: ['ManagerPage'],
         });
     }
+    
+
+    product (req, res, next) {
+        res.render('manager/product', {
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
+        });
+    }
+    async Product (req, res, next) {
+        let Products = await ProductsModel.all();
+
+        res.render('manager/product',{
+            layout: 'manager',
+            Products: Products,
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
+        });
+    }
+    async Package (req, res, next) {
+        let Packages = await PackagesModel.all();
+
+        res.render('manager/Package',{
+            layout: 'manager',
+            Packages: Packages,
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
+        });
+    }
+    
 
     ///>> Method → <POST> <<///
 

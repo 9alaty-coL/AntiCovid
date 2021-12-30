@@ -17,4 +17,9 @@ router.get('/detail/UserID=:UserID', ManagerController.detail);
 
 router.get('/addUser', ManagerController.addUser);
 
+
+router.get('/product', ManagerController.Product);
+
+router.get('/package', ManagerController.Package);
+
 module.exports = router;
