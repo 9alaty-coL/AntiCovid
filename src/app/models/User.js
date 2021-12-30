@@ -22,16 +22,6 @@ class Users {
         }
     }
 
-    async userLocationHistory(userID) {
-        try {
-            const res = await db.one('P_ID', userID, 'LocationHistory');
-            return res;
-        } catch (err) {
-            console.log('error in User/LocationHistory: ' + err.message);
-            return null;
-        }
-    }
-
     async relate(arrayID) {
         try {
             let res = [];

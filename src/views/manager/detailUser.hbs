@@ -38,11 +38,11 @@
                 Quản lý s.phẩm / n.y.phẩm
             </div>
             <ul class="list d-none">
-               <li class="list-item active">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/manager/product"><i class="fas fa-user"></i> tìm kiếms</a>
+                    <a class="d-block" href="/manager/product"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
@@ -59,7 +59,7 @@
                 Quản lý gói nhu yếu phẩm
             </div>
             <ul class="list d-none">
-               <li class="list-item active">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
@@ -172,16 +172,20 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="mb-3 w-100">
-                                                <label for="Current" class="form-label text-form ">Hiện tại đang là:</label>
-                                                <input type="text" id="Current" class="form-control text-center text-form"
+                                                <label for="Current" class="form-label text-form ">Hiện tại đang
+                                                    là:</label>
+                                                <input type="text" id="Current"
+                                                    class="form-control text-center text-form"
                                                     placeholder="{{P_Status}}" value="{{P_Status}}" name="Current"
                                                     disabled>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3 w-100">
-                                                <label for="Status" class="form-label text-form ">Chỉnh sửa thành:</label>
-                                                <select id="Status" class="form-select text-center text-form " name="Status"
+                                                <label for="Status" class="form-label text-form ">Chỉnh sửa
+                                                    thành:</label>
+                                                <select id="Status" class="form-select text-center text-form "
+                                                    name="Status"
                                                     onclick="if (typeof(this.selectedIndex) != 'undefined') changeStatusRelate(this.selectedIndex)">
                                                     <option class="StaOp text-form ">F0</option>
                                                     <option class="StaOp text-form ">F1</option>
@@ -212,31 +216,61 @@
                 <div class="row">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="w-100 border-dark border-bottom border-3">
-                                <h1 class="mb-4"><b>Lịch sử quá trình được quản lý:</b></h1>
-                                {{#each userLocationHistory}}
+                            <div class="border-bottom border-dark border-3 mb-3">
+                                <div class="row">
+                                    <h1 class="mb-2 col-8"><b>Lịch sử quá trình được quản lý - Nơi điều trị:</b></h1>
+                                    <h1 class="mb-2 col-4"><b>Người quản lý:</b></h1>
+                                </div>
+                                {{#each userlogLocation}}
                                 <div class="mb-1">
                                     <div class="row mb-3">
-                                        <span class="col-3"><i class="fa fa-calendar"></i> {{this.Time}}</span>
-                                        <span class="col-7"><i class="fa fa-home"></i> {{this.HospitalLocation}}</span>
+                                        <span class="col-2"><i class="fa fa-calendar"></i> {{this.Time}}</span>
+                                        <span class="col-6"><i class="fa fa-home"></i> {{this.Activity}}</span>
+                                        <span class="col-4"><i class="fas fa-user"></i> {{this.Manager}}</span>
                                     </div>
                                 </div>
                                 {{else}}
                                 <p class="card-text">Người nầy chưa được quản lý chuyển đi nơi nào cả.</p>
                                 {{/each}}
                             </div>
-
-                            <h1 class="my-4"><b>Chuyển nơi điều trị / cách ly:</b></h1>
+                            <div class="mt-3">
+                                <div class="row">
+                                    <h1 class="mb-2 col-8"><b>Lịch sử quá trình được quản lý - Chuyển trạng thái:</b></h1>
+                                    <h1 class="mb-2 col-4"><b>Người quản lý:</b></h1>
+                                </div>
+                                {{#each userlogStatus}}
+                                <div class="mb-1">
+                                    <div class="row mb-3">
+                                        <span class="col-2"><i class="fa fa-calendar"></i> {{this.Time}}</span>
+                                        <span class="col-6"><i class="fa fa-medkit"></i> {{this.Activity}}</span>
+                                        <span class="col-4"><i class="fas fa-user"></i> {{this.Manager}}</span>
+                                    </div>
+                                </div>
+                                {{else}}
+                                <p class="card-text">Người nầy chưa được quản lý chuyển đi nơi nào cả.</p>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h1 class="mb-4"><b>Chuyển nơi điều trị / cách ly:</b></h1>
                             <form>
                                 <div class="input-group">
-                                    <input name="Time "type="text" class="form-control text-form" placeholder="Thời gian chuyển" style="width: 20%;">
-                                    <input name="HospitalLocation" type="text" class="form-control text-form" placeholder="Vị trí chuyển đến" style="width: 60%;">
-                                    <button class="btn btn-outline-info text-form" type="button" style="width: 20%;">Hoàn tất</button>
+                                    <input name="Time " type="text" class="form-control text-form"
+                                        placeholder="Thời gian chuyển" style="width: 20%;">
+                                    <input name="HospitalLocation" type="text" class="form-control text-form"
+                                        placeholder="Vị trí chuyển đến" style="width: 60%;">
+                                    <button class="btn btn-outline-info text-form" type="button"
+                                        style="width: 20%;">Hoàn tất</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="card mb-3">
                         <div class="card-body">
