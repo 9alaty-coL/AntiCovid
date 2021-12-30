@@ -53,35 +53,48 @@
             <div class="col-9" style="flex:1;">
                 <div class="section buy-history">
                     <div class="section-title">
-                        Lịch sử thanh toán
+                        Lịch sử mua nhu yếu phẩm
                     </div>
                     <div class="section-content mt-4 ">
+                        {{#each notPaidBills}}
                         <div class="d-flex mt-4 justify-content-between">
-                            <p class="text-ellipsis--2 me-5 fs-3">Gói "Khẩu trang VN-N95 (10 cái)": 300000đ</p>
+                            <p class="text-ellipsis--7 me-5 fs-3">
+                               - Đơn hàng {{this.B_ID}}: <span class="text-orange">{{this.B_Totalpayment}}đ</span> <br>
+                                {{#each this.B_Products}}
+                                    + {{this}} <br>
+                                {{/each}}
+                            </p>
                             <div class="">
                                 <div class="remainedmoney d-inline-block mx-5" style="min-width:12rem;">
-                                    <div class="text-center">Tổng số tiền :</div>
-                                    <div class="text-center">1200000đ </div>
+                                   <div class="text-center btn pay">Thanh toán</div>
                                 </div>
                                 <div class="Datetime d-inline-block ms-5">
-                                    <div class="text-center">10:30</div>
-                                    <div class="text-center">1/12/2021 </div>
+                                    <div class="text-center">{{this.B_Time}}</div>
+                                    <div class="text-center">{{this.B_Date}}</div>
                                 </div>
                             </div>
                         </div>
+                        {{/each}}
+                        {{#each paidBills}}
                         <div class="d-flex mt-4 justify-content-between">
-                            <p class="text-ellipsis--2 me-5 fs-3">Gói "Khẩu trang TW-N95 (50 cái)": 200000đ</p>
+                            <p class="text-ellipsis--7 me-5 fs-3">
+                               - Đơn hàng {{this.B_ID}}: <span class="text-orange">{{this.B_Totalpayment}}đ</span> <br>
+                                {{#each this.B_Products}}
+                                    + {{this}} <br>
+                                {{/each}}
+                            </p>
                             <div class="">
                                 <div class="remainedmoney d-inline-block mx-5" style="min-width:12rem;">
-                                    <div class="text-center">Tổng số tiền :</div>
-                                    <div class="text-center">1000000đ </div>
+                                    <div class="text-center">Trạng thái</div>
+                                    <div class="text-center">Đã thanh toán</div>
                                 </div>
                                 <div class="Datetime d-inline-block ms-5">
-                                    <div class="text-center">10:30</div>
-                                    <div class="text-center">12/12/2021 </div>
+                                    <div class="text-center">{{this.B_Time}}</div>
+                                    <div class="text-center">{{this.B_Date}}</div>
                                 </div>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
                 </div>
             </div>

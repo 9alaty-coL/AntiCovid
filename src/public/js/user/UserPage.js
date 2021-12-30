@@ -15,6 +15,9 @@ $('.notification-btn').click(function (event) {
     event.stopPropagation();
     $('.notification-menu').toggleClass('d-none');
 });
+$('.notification-menu').click(function (event) {
+    event.stopPropagation();
+});
 
 // Search novel
 const novelLists = document.querySelector('.search-menu');

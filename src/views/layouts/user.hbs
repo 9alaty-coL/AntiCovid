@@ -46,16 +46,23 @@
                                     <span class="notification-badge">1</span>
                                 </a>
                                 <ul class="notification-menu d-none">
-                                    <li class="d-flex ">
-                                        <div class="notification-content text-ellipsis--3">
-                                            <p>Thông báo 1</p>
-                                        </div>
+                                    {{#each notPaidBills}}
+                                        <li class="d-flex ">
+                                            <a href="./bHistory" class="notification-content text-ellipsis--3">
+                                            Bạn có đơn hàng {{this.B_ID}} chờ thanh toán
+                                            </a>
+                                        </li>
+                                    {{/each}}
+                                    {{!-- <li class="d-flex ">
+                                        <a href="/user/{{user.P_ID}}/bHistory" class="notification-content text-ellipsis--3">
+                                           Bạn có đơn hàng NYP8VN4398 chờ thanh toán
+                                        </a>
                                     </li>
                                     <li class="d-flex ">
-                                        <div class="notification-content text-ellipsis--3">
-                                            <p>Thông báo 2</p>
-                                        </div>
-                                    </li>
+                                        <a href="/user/{{user.P_ID}}/bHistory" class="notification-content text-ellipsis--3">
+                                            Bạn có đơn hàng NYP8VN4398 chờ thanh toán
+                                        </a>
+                                    </li> --}}
                                 </ul>
                         </div>
                         <div class="searchbar-btn Dropdown">
@@ -96,12 +103,12 @@
 
         <footer id="footer">
             <div class="social-list">
-                <a href=""><i class="fab fa-facebook-square"></i></a>
-                <a href=""><i class="fab fa-instagram"></i></a>
-                <a href=""><i class="fab fa-youtube"></i></a>
-                <a href=""><i class="fab fa-pinterest-p"></i></a>
-                <a href=""><i class="fab fa-twitter"></i></a>
-                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-facebook-square"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <p class="copy-right"> 
                 Đồ án cuối kì môn Phát triển ứng dụng Web <br>

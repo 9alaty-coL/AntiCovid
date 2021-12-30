@@ -207,12 +207,54 @@ a:hover {
     font-weight: 500;
 
 }
-  
-.notification-btn .notification-menu p {
-    margin-bottom: 0;
-    font-size: 1.4rem;
+ 
+.notification-btn .notification-content  {
+    font-size: 1.6rem;
+    color: #333;
+    opacity: .95;
+}
+.notification-btn .notification-content:hover  {
+    color: var(--orange-color);
+    opacity: .7;
 }
 
+
+.text-ellipsis--7{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    /* Addition lines for 7 line or multiline ellipsis */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+.text-ellipsis--6{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    /* Addition lines for 6 line or multiline ellipsis */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+.text-ellipsis--5{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    /* Addition lines for 5 line or multiline ellipsis */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+.text-ellipsis--4{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    /* Addition lines for 4 line or multiline ellipsis */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
 .text-ellipsis--3{
     text-overflow:ellipsis;
     overflow:hidden;
@@ -521,6 +563,21 @@ a:hover {
     color: white;
     font-size: 1.4rem;
     
+}
+
+
+.pay {
+    padding: .4rem 1.2rem;
+    font-size: 1.8rem;
+    color: white;
+    background-color: var(--orange-color);
+    font-weight: 400;
+    border-radius: .4rem;
+    margin-bottom: 2.8rem;
+}
+.pay:hover {
+   background-color: orange;
+   color: white;
 }
 
 .product {
