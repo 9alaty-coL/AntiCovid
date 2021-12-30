@@ -27,7 +27,7 @@ class ManagerController {
 
     // Get → /search?=:Key
     search (req, res, next) {
-        res.render('manager/home', {
+        res.render('manager/searchUser', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
@@ -54,13 +54,23 @@ class ManagerController {
 
     // Get → /detail/UserID=:UserID
     async detail (req, res, next) {
+        // User Info
         let userID = req.params.UserID;
         let userInfo = await UserModel.one('P_ID', userID);
+
+        // User Location History
+        let resLocationHistory = await UserModel.userLocationHistory(userID);
+        let userLocationHistory = [];
+        for (let i = 0; i < resLocationHistory.Time.length; i++) {
+            userLocationHistory.push({Time: resLocationHistory.Time[i], HospitalLocation: resLocationHistory.HospitalLocation[i]});
+        }
+
+        // User RelateInfo
         let relateInfo = await UserModel.relate(userInfo.P_RelatedPersonID);
 
         res.render('manager/detailUser', {
             user: userInfo,
-            userlog: [],
+            userLocationHistory: userLocationHistory,
             relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
@@ -70,7 +80,15 @@ class ManagerController {
 
     // Get → /addUser
     addUser (req, res, next) {
-        res.render('manager/home', {
+        res.render('manager/addUser', {
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
+        });
+    }
+
+    addRelate (req, res, next) {
+        res.render('manager/addRelate', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
