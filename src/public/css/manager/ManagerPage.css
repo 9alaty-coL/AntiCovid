@@ -509,6 +509,13 @@ a:hover {
   padding-right: 0;
 }
 
+.text-form {
+    font-size: 1em;
+}
+
+.card-bg {
+    background-color: aliceblue;
+}
 
 
 

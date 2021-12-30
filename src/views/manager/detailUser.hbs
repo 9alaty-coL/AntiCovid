@@ -172,21 +172,21 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="mb-3 w-100">
-                                                <label for="Current" class="form-label">Hiện tại đang là:</label>
-                                                <input type="text" id="Current" class="form-control text-center"
+                                                <label for="Current" class="form-label text-form ">Hiện tại đang là:</label>
+                                                <input type="text" id="Current" class="form-control text-center text-form"
                                                     placeholder="{{P_Status}}" value="{{P_Status}}" name="Current"
                                                     disabled>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3 w-100">
-                                                <label for="Status" class="form-label">Chỉnh sửa thành:</label>
-                                                <select id="Status" class="form-select text-center" name="Status"
+                                                <label for="Status" class="form-label text-form ">Chỉnh sửa thành:</label>
+                                                <select id="Status" class="form-select text-center text-form " name="Status"
                                                     onclick="if (typeof(this.selectedIndex) != 'undefined') changeStatusRelate(this.selectedIndex)">
-                                                    <option class="StaOp">F0</option>
-                                                    <option class="StaOp">F1</option>
-                                                    <option class="StaOp">F2</option>
-                                                    <option class="StaOp">F3</option>
+                                                    <option class="StaOp text-form ">F0</option>
+                                                    <option class="StaOp text-form ">F1</option>
+                                                    <option class="StaOp text-form ">F2</option>
+                                                    <option class="StaOp text-form ">F3</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -228,25 +228,10 @@
 
                             <h1 class="my-4"><b>Chuyển nơi điều trị / cách ly:</b></h1>
                             <form>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="mb-3 w-100">
-                                            <label for="Time" class="form-label">Chọn thời gian chuyển:</label>
-                                            <input type="text" id="Time" class="form-control text-center" name="Time">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="mb-3 w-100">
-                                            <label for="HospitalLocation" class="form-label">Nơi điều trị / cách ly:</label>
-                                            <input type="text" id="HospitalLocation" class="form-control" name="HospitalLocation">
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="mb-3 h-100">
-                                            <label for="Button" class="form-label"></label>
-                                            <button type="button" class="btn btn-info w-100" id="Button">Hoàn tất chuyển đi</button>
-                                        </div>
-                                    </div>
+                                <div class="input-group">
+                                    <input name="Time "type="text" class="form-control text-form" placeholder="Thời gian chuyển" style="width: 20%;">
+                                    <input name="HospitalLocation" type="text" class="form-control text-form" placeholder="Vị trí chuyển đến" style="width: 60%;">
+                                    <button class="btn btn-outline-info text-form" type="button" style="width: 20%;">Hoàn tất</button>
                                 </div>
                             </form>
                         </div>

@@ -79,7 +79,7 @@ class ManagerController {
 
     // Get → /addUser
     addUser (req, res, next) {
-        res.render('manager/home', {
+        res.render('manager/addUser', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
