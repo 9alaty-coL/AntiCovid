@@ -26,7 +26,7 @@ class ManagerController {
 
     // Get → /search?=:Key
     search (req, res, next) {
-        res.render('manager/home', {
+        res.render('manager/searchUser', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
@@ -80,6 +80,14 @@ class ManagerController {
     // Get → /addUser
     addUser (req, res, next) {
         res.render('manager/addUser', {
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['ManagerPage'],
+        });
+    }
+
+    addRelate (req, res, next) {
+        res.render('manager/addRelate', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],

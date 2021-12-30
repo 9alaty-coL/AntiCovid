@@ -18,13 +18,13 @@
                 <li class="list-item">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
-                <li class="list-item active">
+                <li class="list-item">
                     <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
                 </li>
                 <li class="list-item">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
                 </li>
-                <li class="list-item">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
@@ -118,83 +118,83 @@
 
     <div class="col-9" style="flex:1;">
         <div class="section general-information">
-            <h1 class="mx-5 mb-5"><i class="fas fa-user"></i> Thêm tài khoản cho người liên quan đến covid-19</h1>
-            <form id="addUser">
-                <div class="card card-bg mb-3 text-dark">
-                    <div class="card-body w-100">
-                        <h1>Thông tin tài khoản : </h1>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="username" style="width: 15%;">User
-                                Name</label>
-                            <input id="username" name="username" type="text"
-                                class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                style="width: 85%;">
+            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Tìm kiếm chi tiết người liên quan đến covid-19</h1>
+            <div class="card card-bg mb-3 text-dark">
+                <div class="card-body w-100">
+                    <form>
+                        <h1>Tìm kiếm dựa trên → Thông tin tài khoản : </h1>
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text text-form" for="P_FullName" style="width: 15%;">Họ và
+                                        tên</label>
+                                    <input id="P_FullName" name="P_FullName" type="text"
+                                        class="form-control text-form text-location-form" placeholder="Họ và tên"
+                                        style="width: 40%;">
+                                    <label class="input-group-text text-form" for="P_YearOfBirth"
+                                        style="width: 10%;">Năm sinh</label>
+                                    <input id="P_YearOfBirth" name="P_YearOfBirth" type="text"
+                                        class="form-control text-form text-location-form" placeholder="Năm sinh"
+                                        style="width: 10%;">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text text-form" for="P_IdentityCard"
+                                        style="width: 15%;">CMND/CCCD</label>
+                                    <input id="P_IdentityCard" name="P_IdentityCard" type="text"
+                                        class="form-control text-form text-location-form"
+                                        placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;">
+
+                                    <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
+                                        thái</label>
+                                    <select class="form-select text-form" id="P_Status" name="P_Status"
+                                        style="width: 10%;">
+                                        <option class="text-form" value="" selected disabled></option>
+                                        <option class="text-form" value="F0">F0</option>
+                                        <option class="text-form" value="F1">F1</option>
+                                        <option class="text-form" value="F2">F2</option>
+                                        <option class="text-form" value="F3">F3</option>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa
+                                        chỉ nơi ở</label>
+                                    <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
+                                        placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-group-text text-form" for="P_HospitalAddress"
+                                        style="width: 15%;">Nơi đang điều trị</label>
+                                    <input id="P_HospitalAddress" name="P_HospitalAddress" type="text"
+                                        class="form-control text-form" placeholder="Tên bệnh viện đang điều trị"
+                                        style="width: 85%;">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm kiếm</button>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="password"
-                                style="width: 15%;">Password</label>
-                            <input id="password" name="password" type="password"
-                                class="form-control text-form text-location-form" placeholder="Mật khẩu"
-                                style="width: 85%;">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-group-text text-form" for="repassword" style="width: 15%;">Repeat
-                                Password</label>
-                            <input id="password" name="repassword" type="repassword"
-                                class="form-control text-form text-location-form" placeholder="Nhập lại mật khẩu"
-                                style="width: 85%;">
-                        </div>
-                    </div>
+
+                    </form>
                 </div>
-                <div class="card card-bg mb-3 text-dark">
-                    <div class="card-body w-100">
-                        <h1>Thông tin cơ bản: </h1>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="P_FullName" style="width: 15%;">Họ và
-                                tên</label>
-                            <input id="P_FullName" name="P_FullName" type="text"
-                                class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                style="width: 85%;">
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="P_IdentityCard"
-                                style="width: 15%;">CMND/CCCD</label>
-                            <input id="P_IdentityCard" name="P_IdentityCard" type="text"
-                                class="form-control text-form text-location-form"
-                                placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;">
-                            <label class="input-group-text text-form" for="P_YearOfBirth" style="width: 10%;">Năm
-                                sinh</label>
-                            <input id="P_YearOfBirth" name="P_YearOfBirth" type="text"
-                                class="form-control text-form text-location-form" placeholder="Năm sinh"
-                                style="width: 15%;">
-                            <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
-                                thái</label>
-                            <select class="form-select text-form" id="P_Status" name="P_Status" style="width: 10%;">
-                                <option class="text-form" value="F0" selected>F0</option>
-                                <option class="text-form" value="F1">F1</option>
-                                <option class="text-form" value="F2">F2</option>
-                                <option class="text-form" value="F3">F3</option>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa chỉ nơi
-                                ở</label>
-                            <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-group-text text-form" for="P_HospitalAddress" style="width: 15%;">Nơi
-                                đang điều trị</label>
-                            <input id="P_HospitalAddress" name="P_HospitalAddress" type="text"
-                                class="form-control text-form" placeholder="Tên bệnh viện đang điều trị"
-                                style="width: 85%;">
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="w-100 text-center">
-                <button type="submit" form="addUser" class="btn btn-success w-25 text-center" style="font-size: 1.5em;">Tạo tài khoản</button>      
             </div>
+
+            <div class="card card-bg mb-3 text-dark">
+                <div class="card-body w-100">
+                    <h1>Kết quả gần nhất : </h1>
+                    {{#each users}}
+                    <div class="card mb-1 user-card" onclick="window.location='/manager/detail/UserID={{this.P_ID}}'">
+                        <div class="row card-body h-100" style="min-height: 70px;">
+                            <span class="col-2 border-end border-dark border-1"> {{this.P_FullName}}</span>
+                            <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
+                            <span class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
+                            <span class="col-4 border-end border-dark border-1">{{this.P_Address}}</span>
+                            <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Status}}</span>
+                            <span class="col-3">{{this.P_HospitalAddress}}</span>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>    
         </div>
     </div>
 </div>
