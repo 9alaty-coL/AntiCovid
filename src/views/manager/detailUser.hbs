@@ -168,24 +168,24 @@
                         <div class="card mb-3" style="min-height: 160px;">
                             <div class="card-body h-100">
                                 <h1><b>Chỉnh sửa thông tin trạng thái: </b></h1>
-                                <form>
+                                <form action="/manager/detail/UserID={{P_ID}}/changeStatus?_method=PUT" method="POST" id="ChangeStatusForm">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="mb-3 w-100">
-                                                <label for="Current" class="form-label text-form ">Hiện tại đang
+                                                <label for="from" class="form-label text-form ">Hiện tại đang
                                                     là:</label>
-                                                <input type="text" id="Current"
+                                                <input type="text" id="from"
                                                     class="form-control text-center text-form"
-                                                    placeholder="{{P_Status}}" value="{{P_Status}}" name="Current"
-                                                    disabled>
+                                                    placeholder="{{P_Status}}" value="{{P_Status}}" name="from"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-3 w-100">
-                                                <label for="Status" class="form-label text-form ">Chỉnh sửa
+                                                <label for="to" class="form-label text-form ">Chỉnh sửa
                                                     thành:</label>
-                                                <select id="Status" class="form-select text-center text-form "
-                                                    name="Status"
+                                                <select id="to" class="form-select text-center text-form "
+                                                    name="to"
                                                     onclick="if (typeof(this.selectedIndex) != 'undefined') changeStatusRelate(this.selectedIndex)">
                                                     <option class="StaOp text-form ">F0</option>
                                                     <option class="StaOp text-form ">F1</option>
@@ -201,8 +201,7 @@
                                                 onclick="resetStatus();">Hủy bỏ chỉnh sửa</button>
                                         </div>
                                         <div class="col-6">
-                                            <button type="button" class="btn btn-success w-100">Hoàn tất chỉnh
-                                                sửa</button>
+                                            <button type="submit" class="btn btn-success w-100">Hoàn tất chỉnh sửa</button>
                                         </div>
                                     </div>
                                 </form>
@@ -300,4 +299,3 @@
         </div>
     </div>
 </div>
-<script src="/js/manager/DetailRelate.js"></script>

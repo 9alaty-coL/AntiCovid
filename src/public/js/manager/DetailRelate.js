@@ -8,9 +8,10 @@ function resetStatus() {
 }
 
 function calStatus(Status, offset) {
+    if (Status === "Không") Status = "F4";
     let nextStatus = parseInt(Status[1]) + offset;
     if (nextStatus < 0) return "F0";
-    else if (nextStatus > 3) return "Xóa";
+    else if (nextStatus > 3) return "Không";
     else return "F" + nextStatus;
 }
 
@@ -32,7 +33,7 @@ function changeStatusRelate(to) {
 
 // Check Status Option
 $(document).ready(function(){
-    let StatusOption = $("#Current").val();
+    let StatusOption = $("#from").val();
     $(".StaOp").each(function() {
         if ($(this).text() === StatusOption) {
             $(this).attr('selected', 'selected');

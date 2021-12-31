@@ -217,7 +217,19 @@ class UserController {
         res.render('user/packageDetail', {
             layout: 'user',
             css: ['UserPage'],
-            js: ['UserPage'],
+            js: ['UserPage', 'detail'],
+            user: user,
+            notPaidBills: notPaidBills,
+        });
+        return;
+    }
+
+     // GET /user/:id/package/:p_id
+     async productDetail(req, res, next) {
+        res.render('user/productDetail', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'detail'],
             user: user,
             notPaidBills: notPaidBills,
         });

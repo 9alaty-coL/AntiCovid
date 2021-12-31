@@ -1,9 +1,20 @@
 const UserModel = require('../models/User')
 const ManagerModel = require('../models/Manager')
-const ProductsModel = require('../models/product')
-const PackagesModel = require('../models/package')
+const ProductsModel = require('../models/Product')
+const PackagesModel = require('../models/Package')
 const LocationHistoryModel = require('../models/LocationHistory')
 const StatusHistoryModel = require('../models/StatusHistory')
+const TreatmentPlacesModel = require('../models/TreatmentPlaces')
+const TimeUtils = require('../../utils/Time')
+const e = require('express')
+
+function calStatus(Status, offset) {
+    if (Status === "Không") Status = "F4";
+    let nextStatus = parseInt(Status[1]) + offset;
+    if (nextStatus < 0) return "F0";
+    else if (nextStatus > 3) return "Không";
+    else return "F" + nextStatus;
+}
 
 class ManagerController {
     ///>> Method → <GET> <<///
@@ -67,7 +78,8 @@ class ManagerController {
         let userlogLocation = [];
         for (let i = 0; i < resLocationHistory.Time.length; i++) {
             let Manager = await ManagerModel.one('M_ID', resLocationHistory.Manager_ID[i]);
-            userlogLocation.push({Time: resLocationHistory.Time[i], Activity: resLocationHistory.HospitalLocation[i], Manager: Manager.ManagerName});
+            let Location = await TreatmentPlacesModel.one('_id', resLocationHistory.HospitalLocation[i]);
+            userlogLocation.push({Time: resLocationHistory.Time[i], Activity: Location.name, Manager: Manager.ManagerName});
         }
 
         // User Status History
@@ -88,7 +100,7 @@ class ManagerController {
             relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['DetailUser','DetailRelate','ManagerPage'],
         });
     }
 
@@ -141,7 +153,46 @@ class ManagerController {
 
     ///>> Method → <POST> <<///
 
+
     ///>> Method → <PUT> <<///
+    async changeStatus (req, res, next) {
+        // Change Status by:
+        let manager = req.user;
+
+        // Offset:
+        let from = req.body.from;
+        let to = req.body.to;
+        let offset = parseInt(to[1]) - parseInt(from[1]);
+
+        // User Info:
+        let user = await UserModel.one('P_ID', req.params.UserID);
+        
+        // Change Relate Status + Report StatusHistory
+        for (let i = 0; i < user.P_RelatedPersonID.length; i++) {
+            let relate = await UserModel.one('P_ID', user.P_RelatedPersonID[i]);
+            if (relate.P_Status !== "Không" && parseInt(relate.P_Status[1]) < parseInt(user.P_Status[1])) continue;
+            else {
+                // Change Relate Status
+                let newRelateStatus = { P_ID: relate.P_ID, P_Status: calStatus(relate.P_Status, offset) };
+                await UserModel.update(newRelateStatus);
+                // Report StatusHistory
+                await StatusHistoryModel.append(relate.P_ID, 'Time', TimeUtils.getNow());
+                await StatusHistoryModel.append(relate.P_ID, 'StatusChange', relate.P_Status + " → " + calStatus(relate.P_Status, offset));
+                await StatusHistoryModel.append(relate.P_ID, 'Manager_ID', manager._id);
+            }
+        }
+
+        // Change User Status
+        let newUserStatus = { P_ID: user.P_ID, P_Status: calStatus(user.P_Status, offset) };
+        await UserModel.updateUser(newUserStatus);
+        // Report StatusHistory
+        console.log(TimeUtils.getNow());
+        //await StatusHistoryModel.append(user.P_ID, 'Time', TimeUtils.getNow());
+        //await StatusHistoryModel.append(user.P_ID, 'StatusChange', user.P_Status + " → " + calStatus(user.P_Status, offset));
+        //await StatusHistoryModel.append(user.P_ID, 'Manager_ID', manager._id);
+
+        return res.redirect(`/manager/detail/UserID=${req.params.UserID}`);
+    }
 
     ///>> Method → <DELETE> <<///
 }
