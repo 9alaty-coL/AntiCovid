@@ -2,7 +2,7 @@ const db = require('../../config/db');
 
 const tbName = 'LocationHistory';
 
-class Users {    
+class LocationHistory {    
     async one(colName, cprName) {
         try {
             const res = await db.one(colName, cprName, tbName);
@@ -14,4 +14,4 @@ class Users {
     }
 }
 
-module.exports = new Users();
+module.exports = new LocationHistory();

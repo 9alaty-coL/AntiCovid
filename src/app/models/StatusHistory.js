@@ -12,6 +12,17 @@ class StatusHistory {
             return null;
         }
     }
+
+    async append(conditionValue, appCol, appValue) {
+        try {
+            const res = await db.append('P_ID', conditionValue, appCol, appValue, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User/Append: ' + err.message);
+            return null;
+        }
+
+    }
 }
 
 module.exports = new StatusHistory();

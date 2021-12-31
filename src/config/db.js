@@ -35,7 +35,7 @@ class dbQuery {
             const res = await db.any(`SELECT * FROM "${tbName}"`);
             return res;
         } catch (err) {
-            console.log('error: ' + err.message);
+            console.log('error in db/all: ' + err.message);
         }
     }
 
@@ -46,7 +46,7 @@ class dbQuery {
             );
             return res;
         } catch (err) {
-            console.log('error : ' + err.message);
+            console.log('error in db/one: ' + err.message);
             return null;
         }
     }
@@ -58,7 +58,7 @@ class dbQuery {
             );
             return res;
         } catch (err) {
-            console.log('error: ' + err.message);
+            console.log('error in db/rows: ' + err.message);
             return null;
         }
     }
@@ -70,7 +70,7 @@ class dbQuery {
             );
             return res;
         } catch (err) {
-            console.log('error: ' + err.message);
+            console.log('error in db/insert: ' + err.message);
             return null;
         }
     }
@@ -91,6 +91,16 @@ class dbQuery {
         }
     }
 
+    async append(conditionCol, conditionValue, appCol, appValue, tbName) {
+        try {
+            let app = await db.one(`UPDATE public."${tbName}" SET "${appCol}" = array_append("${appCol}", ${appValue}) WHERE "${conditionCol}" = "${conditionValue}"`);
+            return app;
+        } catch (err) {
+            console.log('error in db/append: ' + err.message);
+            return null;
+        }
+    }
+
     async delete(colName, cprName, tbName) {
         try {
             await db.oneOrNone(
@@ -98,7 +108,7 @@ class dbQuery {
             );
             return 0;
         } catch (err) {
-            console.log('error: ' + err.message);
+            console.log('error in db/delete: ' + err.message);
             return null;
         }
     }

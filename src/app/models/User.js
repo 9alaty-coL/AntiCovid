@@ -31,7 +31,27 @@ class Users {
             }
             return res;
         } catch (err) {
-            console.log('error in User/Rows: ' + err.message);
+            console.log('error in User/relate: ' + err.message);
+            return null;
+        }
+    }
+
+    async update(value){
+        try{
+            const res = await db.update('_id', value, tbName);
+            return res;
+        }catch(err){
+            console.log('error in User/update: ' + err.message);
+            return null;
+        }
+    }
+
+    async updateUser(value){
+        try{
+            const res = await db.update('P_ID', value, tbName);
+            return res;
+        }catch(err){
+            console.log('error in User/update: ' + err.message);
             return null;
         }
     }
