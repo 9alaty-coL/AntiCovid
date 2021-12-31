@@ -68,6 +68,7 @@ class Users {
             return null;
         }
     }
+    
 }
 
 module.exports = new Users();

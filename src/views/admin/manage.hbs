@@ -46,18 +46,18 @@
                                 <tbody>
                                     {{#each account}}
                                     <tr>
-                                        {{#if this.locked}}
+                                        {{#if this.isLocked}}
                                         <th scope="row" style="min-width: 80px;">{{this.index}} 🔒</th>
                                         <td style="text-align:left; min-width: 300px;">{{this.username}}</td>
                                         <td style="min-width: 180px;">
-                                            <a href="/admin/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary disabled">Lịch sử hoạt động</button></a>
-                                            <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-success">Mở Khóa</button></a>
+                                            <a href="#" class="btn btn-link"><button type="button" class="btn btn-outline-primary disabled">Lịch sử hoạt động</button></a>
+                                            <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#unlock-form"><button type="button" class="btn btn-outline-success">Mở Khóa</button></a>
                                         </td>
                                         {{else}}
                                         <th scope="row" style="min-width: 80px;">{{this.index}}</th>
                                         <td style="text-align:left; min-width: 300px;">{{this.username}}</td>
                                         <td style="min-width: 180px;">
-                                            <a href="/admin/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Lịch sử hoạt động</button></a>
+                                            <a href="#" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Lịch sử hoạt động</button></a>
                                             <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Khóa</button></a>
                                         </td>
                                         {{/if}}
@@ -72,23 +72,24 @@
                                     {{/each}}
                                 </tbody>
                             </table>
+                            
                             <div class="pagination mt-4">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         {{#if first}}
-                                        <li class="page-item"><a class="page-link" href="/admin/treatment?page={{first}}">First</a></li>
+                                        <li class="page-item"><a class="page-link" href="/admin/manage?page={{first}}">First</a></li>
                                         {{/if}}
 
                                         {{#each pageList}}
                                         {{#if this.active}}
-                                        <li class="page-item active"><a class="page-link px-4" href="/admin/treatment?page={{this.num}}">{{this.num}}</a></li>
+                                        <li class="page-item active"><a class="page-link px-4" href="/admin/manage?page={{this.num}}">{{this.num}}</a></li>
                                         {{else}}
-                                        <li class="page-item"><a class="page-link px-3" href="/admin/treatment?page={{this.num}}">{{this.num}}</a></li>
+                                        <li class="page-item"><a class="page-link px-3" href="/admin/manage?page={{this.num}}">{{this.num}}</a></li>
                                         {{/if}}
                                         {{/each}}
 
                                         {{#if last}}
-                                        <li class="page-item"><a class="page-link" href="/admin/treatment?page={{last}}">Last</a></li>
+                                        <li class="page-item"><a class="page-link" href="/admin/manage?page={{last}}">Last</a></li>
                                         {{/if}}
                                     </ul>
                                 </nav>
@@ -103,15 +104,33 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLabel">Xóa địa điểm</h2>
+        <h2 class="modal-title" id="exampleModalLabel">Khóa tài khoản</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          Xóa địa điểm điều trị/cách ly y tế? Bạn sẽ không thể khôi phục sau khi xóa
+          Khóa tài khoản người quản lý? Tài khoản này sẽ bị vô hiệu hóa trên hệ thống.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" id="delete-confirm" class="btn btn-danger">Xóa</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="delete-confirm" class="btn btn-danger">Khóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert-delete modal fade" id="unlock-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Mở khóa tài khoản</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          Mở khóa tài khoản người quản lý? Tài khoản này sẽ được khôi phục và sử dụng các tính năng trên hệ thống.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="unlock-confirm" class="btn btn-success">Mở khóa</button>
       </div>
     </div>
   </div>
@@ -120,4 +139,32 @@
 
     
 <form  method="post" id="deleteForm"></form>
+<form  method="post" id="unlockForm"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        $(document).ready(function(){
+
+            $('#delete-form').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var _id = button.data('id')
+                $('#deleteForm').attr('action',`/admin/lock/${_id}?_method=PUT`);
+            })
+
+            $('#delete-confirm').on('click', ()=>{
+                $('#deleteForm').submit();
+            })
+
+            $('#unlock-form').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var _id = button.data('id')
+                $('#unlockForm').attr('action',`/admin/unlock/${_id}?_method=PUT`);
+            })
+
+            $('#unlock-confirm').on('click', ()=>{
+                $('#unlockForm').submit();
+            })
+        })
+    })
+</script>
 

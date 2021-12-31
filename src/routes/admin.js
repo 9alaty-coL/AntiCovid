@@ -9,6 +9,10 @@ router.get('/create', AdminController.create);
 
 router.get('/manage', AdminController.manage);
 
+router.put('/lock/:id', AdminController.lock);
+
+router.put('/unlock/:id', AdminController.unlock);
+
 router.get('/treatment', AdminController.treatment);
 
 router.get('/treatment/create', AdminController.createTreatment);

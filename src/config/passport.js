@@ -8,13 +8,14 @@ function initialize(passport) {
         if (user == null) {
             return done(null, false, { message: 'No user with that username' });
         }
-        if (user.isLocked){
-            return done(null, false, {message: 'Your account is locked, contact administrator for more details'})
-        }
+
 
         try {
             if (await bcrypt.compare(password, user.password)) {
             // if (password == user.password) {
+                if (user.isLocked){
+                    return done(null, false, {message: 'Your account has been locked, contact administrator for more details'})
+                }
                 if(req.body.remember && !req.session.cookie.maxAge){
                     req.session.cookie.maxAge = 24*60*60*1000;
                 }

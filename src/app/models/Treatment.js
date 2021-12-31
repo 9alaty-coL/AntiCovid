@@ -1,6 +1,6 @@
 const db = require('../../config/db');
 
-const tbName = 'Treatment';
+const tbName = 'TreatmentPlaces';
 
 class Users {
     
@@ -9,7 +9,7 @@ class Users {
             const res = await db.all(tbName);
             return res;
         } catch (err) {
-            console.log('error in User: ' + err.message);
+            console.log('error in TreatmentPlaces: ' + err.message);
         }
     }
 
@@ -18,7 +18,7 @@ class Users {
             const res = await db.one(colName, cprName, tbName);
             return res;
         } catch (err) {
-            console.log('error in User: ' + err.message);
+            console.log('error in TreatmentPlaces: ' + err.message);
             return null;
         }
     }
@@ -28,7 +28,7 @@ class Users {
             const res = await db.insert(value, tbName);
             return res;
         } catch (err) {
-            console.log('error in User: ' + err.message);
+            console.log('error in TreatmentPlaces: ' + err.message);
             return null;
         }
     }
