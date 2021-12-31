@@ -215,7 +215,7 @@ a:hover {
 }
 .notification-btn .notification-content:hover  {
     color: var(--orange-color);
-    opacity: .7;
+    opacity: .8;
 }
 
 
@@ -419,12 +419,11 @@ a:hover {
     color: #333;
 }
 
-
 .sidebar-item .list-item a {
     color: #333;
     text-decoration: none;
-    height: 100%;
     padding: .8rem;
+    height: 100%;;
 }
 
 .sidebar-item .list-item.active  {
@@ -548,23 +547,6 @@ a:hover {
     border: 2px solid red;
 }
 
-.packet-title {
-    /* color: #0d6efd; */
-    color: #333;
-    font-size: 4rem;
-    
-}
-.packet-title .box{
-    display: inline-block;
-    background-color: var(--orange-color);
-    transform: translateY(-.8rem);
-    padding: .2rem .6rem;
-    color: white;
-    font-size: 1.4rem;
-    
-}
-
-
 .pay {
     padding: .4rem 1.2rem;
     font-size: 1.8rem;
@@ -579,14 +561,46 @@ a:hover {
    color: white;
 }
 
+.packet-title {
+    /* color: #0d6efd; */
+    color: #333;
+    font-size: 4rem;
+    
+}
+.packet-title .box{
+    display: inline-block;
+    background-color: var(--orange-color);
+    transform: translateY(-.8rem);
+    padding: .2rem .6rem;
+    color: white;
+    font-size: 1.4rem;
+}
+
 .product {
     font-size: 1.6rem;
-    margin: 1rem 2rem;
+    margin: 1rem;
 }
 .product-desc {
+    font-size: 1.6rem;
+    color: #333;
     display: inline-block;
 }
+.product-desc a {
+    font-size: 1.4rem;
+    color: #333;
+    display: inline-block;
+}
+.product-desc a:hover {
+    color: var(--orange-color);
+}
+.product-desc a img:hover {
+    transform: scale(1.08);
+}
 .product-quantity {
+    align-self: center;
+    text-align: center;
+    height: 100%;
+    flex: 1;
     font-size: 1.4rem;
     display: inline-block;
 }
