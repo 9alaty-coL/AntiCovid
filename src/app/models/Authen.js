@@ -8,7 +8,7 @@ class Users {
             const res = await db.all(tbName);
             return res;
         } catch (err) {
-            console.log('error in User: ' + err.message);
+            console.log('error in Authen: ' + err.message);
         }
     }
 
@@ -17,7 +17,7 @@ class Users {
             const res = await db.one(colName, cprName, tbName);
             return res;
         } catch (err) {
-            console.log('error in User: ' + err.message);
+            console.log('error in Authen: ' + err.message);
             return null;
         }
     }
@@ -27,7 +27,7 @@ class Users {
             const res = await db.insert(value, tbName);
             return res;
         } catch (err) {
-            console.log('error in User: ' + err.message);
+            console.log('error in Authen: ' + err.message);
             return null;
         }
     }
@@ -37,7 +37,7 @@ class Users {
             let res = await db.one('username', username, tbName);
             return res;
         } catch (error) {
-            console.log('error in User: ', error.message);
+            console.log('error in Authen: ', error.message);
         }
     }
 
@@ -46,7 +46,16 @@ class Users {
             let res = await db.one('_id', _id, tbName);
             return res;
         } catch (error) {
-            console.log('error in User: ', error.message);
+            console.log('error in Authen: ', error.message);
+        }
+    }
+
+    async getManagerAccounts(){
+        try {
+            let res = await db.rows('role', 'manager', tbName)
+            return res;
+        } catch (error) {
+            console.log('error in Authen: ', error.message);
         }
     }
 

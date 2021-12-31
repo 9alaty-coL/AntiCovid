@@ -155,6 +155,23 @@ class AdminController {
             color:color
         })
     }
+
+    // [GET] admin/manage
+    async manage(req, res, next) {
+        
+        let accounts = await UserM.getManagerAccounts();
+        accounts.forEach((value, index) => {
+            value.index = index + 1;
+        })
+
+
+        res.render('admin/manage', {
+            account: accounts,
+            layout:'admin',
+            css: ['manage'],
+            js: ['AdminPage'],
+        })
+    }
 }
 
 module.exports = new AdminController();

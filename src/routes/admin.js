@@ -7,6 +7,8 @@ router.post('/create', AdminController.newAccount);
 
 router.get('/create', AdminController.create);
 
+router.get('/manage', AdminController.manage);
+
 router.get('/treatment', AdminController.treatment);
 
 router.get('/treatment/create', AdminController.createTreatment);

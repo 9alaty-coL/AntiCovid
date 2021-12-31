@@ -1,0 +1,123 @@
+<div class="content row">
+
+    {{!-- sidebar --}}
+<div class="sidebar">
+    <div class="sidebar-item">
+        <div class="title">
+            <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+            <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+            Quản lý
+        </div>
+        <ul class="list">
+            <li class="list-item ">
+                <a class="d-block" href="/admin"><i class="fas fa-home"></i> Trang chủ</a>
+            </li>
+            <li class="list-item">
+                <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Tạo tài khoản</a>
+            </li>
+            <li class="list-item active">
+                  <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Quản lý manager</a>
+            </li>
+            <li class="list-item">
+                <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Địa điểm cách ly</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    {{!-- end sidebar --}}
+
+                <div class="col-9" style="flex:1;">
+                <div class="section managed-history ">
+                    <div class="section-title">
+                        Danh sách tài khoản Manager
+                    </div>
+                    <div class="row" style="margin: auto">
+                        <div class="col-2"></div>
+                        <div class="col-7 mt-5">
+                            {{!-- <a href="/admin/treatment/create" class="btn btn-success">Thêm địa điểm</a> --}}
+                            <table class="table mt-4 table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên tài khoản</th>
+                                        <th scope="col">Tùy chỉnh</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each account}}
+                                    <tr>
+                                        {{#if this.locked}}
+                                        <th scope="row" style="min-width: 80px;">{{this.index}} 🔒</th>
+                                        <td style="text-align:left; min-width: 300px;">{{this.username}}</td>
+                                        <td style="min-width: 180px;">
+                                            <a href="/admin/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary disabled">Lịch sử hoạt động</button></a>
+                                            <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-success">Mở Khóa</button></a>
+                                        </td>
+                                        {{else}}
+                                        <th scope="row" style="min-width: 80px;">{{this.index}}</th>
+                                        <td style="text-align:left; min-width: 300px;">{{this.username}}</td>
+                                        <td style="min-width: 180px;">
+                                            <a href="/admin/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Lịch sử hoạt động</button></a>
+                                            <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Khóa</button></a>
+                                        </td>
+                                        {{/if}}
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                    <td colspan="3" class="text-center">
+                                        Hiện không có tài khoản Manager nào trong hệ thống <br>
+                                        <a href="/admin/create">Thêm tài khoản</a>
+                                    </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <div class="pagination mt-4">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        {{#if first}}
+                                        <li class="page-item"><a class="page-link" href="/admin/treatment?page={{first}}">First</a></li>
+                                        {{/if}}
+
+                                        {{#each pageList}}
+                                        {{#if this.active}}
+                                        <li class="page-item active"><a class="page-link px-4" href="/admin/treatment?page={{this.num}}">{{this.num}}</a></li>
+                                        {{else}}
+                                        <li class="page-item"><a class="page-link px-3" href="/admin/treatment?page={{this.num}}">{{this.num}}</a></li>
+                                        {{/if}}
+                                        {{/each}}
+
+                                        {{#if last}}
+                                        <li class="page-item"><a class="page-link" href="/admin/treatment?page={{last}}">Last</a></li>
+                                        {{/if}}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+<div class="alert-delete modal fade" id="delete-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Xóa địa điểm</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          Xóa địa điểm điều trị/cách ly y tế? Bạn sẽ không thể khôi phục sau khi xóa
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="delete-confirm" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+<form  method="post" id="deleteForm"></form>
+
