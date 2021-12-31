@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const UserM = require('../models/Authen')
-const Treatment = require('../models/Treatment')
+const Treatment = require('../models/TreatmentPlaces')
 
 class AdminController {
 
@@ -45,13 +45,34 @@ class AdminController {
 
     // [GET] admin/treatment
     async treatment(req, res, next) {
+        let itemsPerPage = 6;
+        let currPage = req.query.page ? req.query.page : 1;
+        let pages;
+        let pageList = [];
         let treatment = await Treatment.all();
+        pages = Math.ceil(treatment.length / itemsPerPage);
 
+        for (let i = 1; i <= pages; i++){
+            pageList.push({num: i});
+        }
+
+        pageList[currPage - 1].active = 1;
+
+        treatment.forEach((value, index) => {
+            value.index = index + 1;
+        })
+        treatment = treatment.slice((currPage - 1) * itemsPerPage, currPage * itemsPerPage);
+
+        
+        
         res.render('admin/treatment', {
              layout: 'admin', 
              css: ['treatment'], 
              js: ['AdminPage'],
-             treatment: treatment
+             treatment: treatment,
+             pageList: pageList,
+             first: pages >=3 ? 1 : null,
+             last: pages >=3 ? pages :null,
         });
     }
 

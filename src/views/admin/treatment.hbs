@@ -45,18 +45,18 @@
                         <tbody>
                             {{#each treatment}}
                             <tr>
-                                <th scope="row">{{sum @index 1}}</th>
-                                <td>{{this.name}}</td>
+                                <th scope="row" style="min-width: 80px;">{{this.index}}</th>
+                                <td style="text-align:left">{{this.name}}</td>
                                 <td>{{this.capacity}}</td>
-                                <td>{{this.current}}</td>
-                                <td>
+                                <td style="min-width: 150px;">{{this.current}}</td>
+                                <td style="min-width: 180px;">
                                     <a href="/admin/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Edit</button></a>
                                     <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Delete</button></a>
                                 </td>
                             </tr>
                             {{else}}
                             <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="5" class="text-center">
                                 Hiện không có địa điểm điều trị/cách ly nào
                                 <a href="/admin/treatment/create">Thêm địa điểm</a>
                             </td>
@@ -64,6 +64,27 @@
                             {{/each}}
                         </tbody>
                     </table>
+                    <div class="pagination mt-4">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {{#if first}}
+                                <li class="page-item"><a class="page-link" href="/admin/treatment?page={{first}}">First</a></li>
+                                {{/if}}
+
+                                {{#each pageList}}
+                                {{#if this.active}}
+                                <li class="page-item active"><a class="page-link px-4" href="/admin/treatment?page={{this.num}}">{{this.num}}</a></li>
+                                {{else}}
+                                <li class="page-item"><a class="page-link px-3" href="/admin/treatment?page={{this.num}}">{{this.num}}</a></li>
+                                {{/if}}
+                                {{/each}}
+
+                                {{#if last}}
+                                <li class="page-item"><a class="page-link" href="/admin/treatment?page={{last}}">Last</a></li>
+                                {{/if}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
