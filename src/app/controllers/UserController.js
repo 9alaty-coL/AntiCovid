@@ -1,6 +1,8 @@
 const Users = require('../models/User');
 const Authens = require('../models/Authen');
 const Bills = require('../models/Bill');
+const LocationHistory = require('../models/LocationHistory');
+const StatusHistory = require('../models/StatusHistory');
 const bcrypt = require('bcrypt');
 
 let id;
@@ -9,6 +11,8 @@ let user;
 let listOfBills;
 let paidBills;
 let notPaidBills;
+let status = [];
+let location = [];
 const saltRounds = 10;
 class UserController {
     async home(req, res, next) {
@@ -31,6 +35,22 @@ class UserController {
         
         notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
         
+        const statusHistory = await StatusHistory.one('P_ID', id)
+        for (let i = 0; i < statusHistory.StatusChange.length; i++) {
+            status[i] = {
+                StatusChange : statusHistory.StatusChange[i],
+                Time : statusHistory.Time[i],
+            }
+        }
+
+
+        const locationHistory = await LocationHistory.one('P_ID', id);
+        for (let i = 0; i < locationHistory.HospitalLocation.length; i++) {
+            location[i] = {
+                HospitalLocation : locationHistory.HospitalLocation[i],
+                Time : locationHistory.Time[i],
+            }
+        }
         
         res.redirect(`/user/${id}/infor`);
         return;
@@ -129,6 +149,8 @@ class UserController {
             js: ['UserPage', 'managedHistory'],
             user: user,
             notPaidBills: notPaidBills,
+            status: status,
+            location: location,
         });
         return;
     }
@@ -178,21 +200,21 @@ class UserController {
         return;
     }
 
-    // GET /user/:id/packet
-    async packet(req, res, next) {
-        res.render('user/packet', {
+    // GET /user/:id/package
+    async package(req, res, next) {
+        res.render('user/package', {
             layout: 'user',
             css: ['UserPage'],
-            js: ['UserPage', 'packet'],
+            js: ['UserPage', 'package'],
             user: user,
             notPaidBills: notPaidBills,
         });
         return;
     }
 
-    // GET /user/:id/packet/:p_id
-    async packetDetail(req, res, next) {
-        res.render('user/packetDetail', {
+    // GET /user/:id/package/:p_id
+    async packageDetail(req, res, next) {
+        res.render('user/packageDetail', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage'],
