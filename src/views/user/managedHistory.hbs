@@ -36,7 +36,7 @@
                     </div>
                     <ul class="list d-none">
                          <li class="list-item packet">
-                            <a href="/user/{{user.P_ID}}/packet" class="d-block">
+                            <a href="/user/{{user.P_ID}}/package" class="d-block">
                                 <i class="fas fa-list"></i> Danh sách các gói
                             </a>
                         </li>
@@ -55,20 +55,24 @@
                         Lịch sử được quản lý
                     </div>
                     <div class="section-content mt-4 ">
-                        <div class="d-flex mt-4 justify-content-between">
-                            <p class="text-ellipsis--2 me-5 fs-3">Tình trạng sức khỏe hiện tại của bạn được cập nhập thành: F0 </p>
+                        <h2 class="my-5 mx-3"> Trạng thái </h2>
+                        {{#each status}}
+                        <div class="d-flex mt-4 ms-4 justify-content-between">
+                            <p class="text-ellipsis--4 me-5 fs-3">Tình trạng sức khỏe hiện tại của bạn được cập nhập từ {{this.StatusChange}} </p>
                             <div class="Datetime ms-5">
-                                <div class="text-center">10:30</div>
-                                <div class="text-center">1/12/2021 </div>
+                                <div class="text-center"> {{this.Time}} </div>
                             </div>
                         </div>
-                        <div class="d-flex mt-4 justify-content-between">
-                            <p class="text-ellipsis--2 me-5 fs-3">Tình trạng sức khỏe hiện tại của bạn được cập nhập thành: Đã khỏi bệnh.  </p>
+                        {{/each}}
+                        <h2 class="my-5 mx-3"> Đia điểm điều trị / cách ly</h2>
+                         {{#each location}}
+                        <div class="d-flex mt-4 ms-4 justify-content-between">
+                            <p class="text-ellipsis--4 me-5 fs-3"> Bạn được chuyển đến {{this.HospitalLocation}}  </p>
                             <div class="Datetime ms-5">
-                                <div class="text-center">10:30</div>
-                                <div class="text-center">31/12/2021 </div>
+                                <div class="text-center"> {{this.Time}} </div>
                             </div>
                         </div>
+                         {{/each}}
                     </div>
                 </div>
             </div>

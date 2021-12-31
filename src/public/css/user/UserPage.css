@@ -419,13 +419,12 @@ a:hover {
     color: #333;
 }
 
-.sidebar-item .list-item {
-    padding: .8rem;
-}
 
 .sidebar-item .list-item a {
     color: #333;
     text-decoration: none;
+    height: 100%;
+    padding: .8rem;
 }
 
 .sidebar-item .list-item.active  {
