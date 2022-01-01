@@ -207,62 +207,12 @@ a:hover {
     font-weight: 500;
 
 }
- 
-.notification-btn .notification-content  {
-    font-size: 1.6rem;
-    color: #333;
-    opacity: .95;
-}
-.notification-btn .notification-content:hover  {
-    color: var(--orange-color);
-    opacity: .8;
+  
+.notification-btn .notification-menu p {
+    margin-bottom: 0;
+    font-size: 1.4rem;
 }
 
-.text-ellipsis--21{
-    text-overflow:ellipsis;
-    overflow:hidden;
-    /* Addition lines for 21 line or multiline ellipsis */
-    display: -webkit-box !important;
-    -webkit-line-clamp: 21;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-}
-.text-ellipsis--7{
-    text-overflow:ellipsis;
-    overflow:hidden;
-    /* Addition lines for 7 line or multiline ellipsis */
-    display: -webkit-box !important;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-}
-.text-ellipsis--6{
-    text-overflow:ellipsis;
-    overflow:hidden;
-    /* Addition lines for 6 line or multiline ellipsis */
-    display: -webkit-box !important;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-}
-.text-ellipsis--5{
-    text-overflow:ellipsis;
-    overflow:hidden;
-    /* Addition lines for 5 line or multiline ellipsis */
-    display: -webkit-box !important;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-}
-.text-ellipsis--4{
-    text-overflow:ellipsis;
-    overflow:hidden;
-    /* Addition lines for 4 line or multiline ellipsis */
-    display: -webkit-box !important;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-}
 .text-ellipsis--3{
     text-overflow:ellipsis;
     overflow:hidden;
@@ -427,11 +377,13 @@ a:hover {
     color: #333;
 }
 
+.sidebar-item .list-item {
+    padding: .8rem;
+}
+
 .sidebar-item .list-item a {
     color: #333;
     text-decoration: none;
-    padding: .8rem;
-    height: 100%;;
 }
 
 .sidebar-item .list-item.active  {
@@ -458,13 +410,16 @@ a:hover {
     margin-right: 2rem;
 }
 
+.section .card-title{
+    font-size: 2rem;
+}
+
 .section-title {
     font-weight: 500;
     padding: .6rem;
     font-size: 2.8rem;
     border-bottom: 1px solid #e6e6e6;
 }
-
 
 .avatar {
     padding: 1.2rem;
@@ -548,106 +503,36 @@ a:hover {
     background-color: var(--header-color);
 }
 
-.img-list li:hover {
-    padding:1px;
-    cursor: pointer;
-    transform: scale(1.08);
-    border: 2px solid red;
+.alert-delete{
+    font-size: 1.7rem;
 }
 
-.pay {
-    padding: .4rem 1.2rem;
+.alert-delete button{
+    font-size: 1.6rem;
+}
+
+.section a.btn{
+    font-size: 2rem;
+}
+
+.section table{
     font-size: 1.8rem;
-    color: white;
-    background-color: var(--orange-color);
-    font-weight: 400;
-    border-radius: .4rem;
-    margin-bottom: 2.8rem;
-}
-.pay:hover {
-   background-color: orange;
-   color: white;
-}
-
-.packet-title {
-    /* color: #0d6efd; */
-    color: #333;
-    font-size: 4rem;
+    vertical-align: middle;
     
 }
-.packet-title .box{
-    display: inline-block;
-    background-color: var(--orange-color);
-    transform: translateY(-.8rem);
-    padding: .2rem .6rem;
-    color: white;
-    font-size: 1.4rem;
+
+/* .section table tr{
+    min-height: 80px;
+} */
+
+.section button{
+    font-size: 1.6rem;
 }
 
-.product {
-    font-size: 1.6rem;
-    margin: 1rem;
-}
-.product-desc {
-    font-size: 1.6rem;
-    color: #333;
-    display: inline-block;
-}
-.product-desc a {
-    font-size: 1.4rem;
-    color: #333;
-    display: inline-block;
-}
-.product-desc a:hover {
-    color: var(--orange-color);
-}
-.product-desc a img:hover {
-    transform: scale(1.08);
-}
-.product-quantity {
-    align-self: center;
-    text-align: center;
-    height: 100%;
-    flex: 1;
-    font-size: 1.4rem;
-    display: inline-block;
-}
-.text-orange {
-    color: var(--orange-color);
-    opacity: .9 ;
-    font-size: 1.6rem;
-}
-.product-quantity input {
-    text-align: center;
-    width: 8rem;
-    margin:0 2rem;
+.section .pagination{
+    display:flex;
+    justify-content: center;
+    font-size:2rem;
+    
 }
 
-.guarantee {
-    display: inline-block;
-    padding: 1.2rem 2rem;
-    margin-left: 2rem;
-    margin-right: 1rem;
-    font-size: 1.6rem;
-    color: var(--orange-color);
-    border: 1px solid var(--orange-color);
-    background-color: rgba(255,87,34,.1);
-}
-.guarantee:hover {
-    cursor: default!important;
-    color: var(--orange-color);
-}
-
-.buy {
-    margin-top: 4rem;
-}
-.buy-btn {
-    background-color: var(--orange-color);
-    color: #fff;
-    font-size: 2rem;
-    padding: .9rem 4rem;
-}
-.buy-btn:hover {
-    background-color: orangered;
-    color: #fff;
-}

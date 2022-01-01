@@ -155,6 +155,72 @@ class AdminController {
             color:color
         })
     }
+
+    // [GET] admin/manage
+    async manage(req, res, next) {
+        let itemsPerPage = 6;
+        let currPage = req.query.page ? req.query.page : 1;
+        let pages;
+        let pageList = [];
+        let account = await UserM.getManagerAccounts();
+
+        let acc1 = []; let acc2 = [];
+        account.forEach(value=>{
+            if (value.isLocked){
+                acc2.push(value);
+            }
+            else{
+                acc1.push(value);
+            }
+        })
+        account = [...acc1, ...acc2];
+
+        pages = Math.ceil(account.length / itemsPerPage);
+
+        for (let i = 1; i <= pages; i++){
+            pageList.push({num: i});
+        }
+
+        pageList[currPage - 1].active = 1;
+
+        account.forEach((value, index) => {
+            value.index = index + 1;
+        })
+        account = account.slice((currPage - 1) * itemsPerPage, currPage * itemsPerPage);
+
+        // let accounts = await UserM.getManagerAccounts();
+        // accounts.forEach((value, index) => {
+        //     value.index = index + 1;
+        // })
+
+        res.render('admin/manage', {
+            account: account,
+            layout:'admin',
+            css: ['manage'],
+            js: ['AdminPage'],
+            pageList: pageList,
+            first: pages >=3 ? 1 : null,
+            last: pages >=3 ? pages :null,
+        })
+    }
+
+    // [PUT] /admin/lock/:id
+    async lock(req, res, next) {
+
+        let us = {_id: req.params.id, isLocked: 'true'}
+        let response = await UserM.update(us);
+        res.redirect('back');
+    }
+
+    // [PUT] /admin/unlock/:id
+    async unlock(req, res, next) {
+
+        let us = {_id: req.params.id, isLocked: 'false'}
+        let response = await UserM.update(us);
+        res.redirect('back');
+    }
 }
+
+
 
 module.exports = new AdminController();

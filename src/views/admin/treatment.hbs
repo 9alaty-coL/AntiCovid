@@ -47,7 +47,7 @@
                             <tr>
                                 <th scope="row" style="min-width: 80px;">{{this.index}}</th>
                                 <td style="text-align:left">{{this.name}}</td>
-                                <td>{{this.capacity}}</td>
+                                <td style="min-width: 100px;">{{this.capacity}}</td>
                                 <td style="min-width: 150px;">{{this.current}}</td>
                                 <td style="min-width: 180px;">
                                     <a href="/admin/treatment/{{this._id}}/edit" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Edit</button></a>
@@ -104,7 +104,7 @@
           Xóa địa điểm điều trị/cách ly y tế? Bạn sẽ không thể khôi phục sau khi xóa
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
         <button type="button" id="delete-confirm" class="btn btn-danger">Xóa</button>
       </div>
     </div>

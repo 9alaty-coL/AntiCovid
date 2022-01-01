@@ -2,7 +2,7 @@ const db = require('../../config/db');
 
 const tbName = 'TreatmentPlaces';
 
-class Users {
+class TreatmentPlaces {
     
     async all() {
         try {
@@ -64,4 +64,4 @@ class Users {
 
 }
 
-module.exports = new Users();
+module.exports = new TreatmentPlaces();
