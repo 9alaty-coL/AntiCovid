@@ -86,15 +86,17 @@ class dbQuery {
             let res = await db.one(qr);
             return res;
         } catch (err) {
-            console.log('error in db: ' + err.message);
+            console.log('error in d/update: ' + err.message);
             return null;
         }
     }
 
-    async append(conditionCol, conditionValue, appCol, appValue, tbName) {
+    async append(conditionCol, conditionValue, object, tbName) {
         try {
-            let app = await db.one(`UPDATE public."${tbName}" SET "${appCol}" = array_append("${appCol}", ${appValue}) WHERE "${conditionCol}" = "${conditionValue}"`);
-            return app;
+            for (const appCol in object) {
+                await db.oneOrNone(`UPDATE public."${tbName}" SET "${appCol}" = array_append("${appCol}", '${object[appCol]}') WHERE "${conditionCol}" = ${conditionValue}`);
+            }
+            return null;
         } catch (err) {
             console.log('error in db/append: ' + err.message);
             return null;

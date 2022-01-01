@@ -1,9 +1,9 @@
 function resetStatus() {
     console.log($('#LeftStatus').text());
-    $('#LeftStatus').text($('#LeftStatus').text().slice(0, 2));
+    $('#LeftStatus').text($('#LeftStatus').text().split(" ")[0]);
 
     $('.status').each(function() {
-        $(this).text($(this).text().slice(0, 2));
+        $(this).text($(this).text().split(" ")[0]);
     });
 }
 
@@ -17,15 +17,17 @@ function calStatus(Status, offset) {
 
 function changeStatusRelate(to) {
     if ($('#LeftStatus').text().length > 2) resetStatus();
-    let Status = $('#LeftStatus').text(); // F?
-    let offset = to - parseInt(Status[1]);
+    let Status = $('#LeftStatus').text();
+    
+    let from;
+    if (Status === "Không") from = 4; else from = Status[1];
+    let offset = to - from;
 
     if (offset === 0) return;
 
-    $('#LeftStatus').html(`${Status}<b class="text-danger"> → F${to}</b>`);
+    $('#LeftStatus').html(`${Status}<b class="text-danger"> → ${calStatus(Status, offset)}</b>`);
 
     $('.status').each(function(index) {
-        if (index === 0) return;
         let curStatus = $(this).text();
         $(this).html(`${curStatus}<b class="text-danger border-end-0"> → ${calStatus(curStatus, offset)}</b>`)
     });

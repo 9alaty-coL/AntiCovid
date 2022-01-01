@@ -218,7 +218,15 @@ a:hover {
     opacity: .8;
 }
 
-
+.text-ellipsis--21{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    /* Addition lines for 21 line or multiline ellipsis */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 21;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
 .text-ellipsis--7{
     text-overflow:ellipsis;
     overflow:hidden;

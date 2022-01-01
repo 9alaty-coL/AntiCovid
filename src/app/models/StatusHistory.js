@@ -13,10 +13,12 @@ class StatusHistory {
         }
     }
 
-    async append(conditionValue, appCol, appValue) {
+    async append(conditionValue, object) {
         try {
-            const res = await db.append('P_ID', conditionValue, appCol, appValue, tbName);
-            return res;
+            await db.append('P_ID', conditionValue, object, tbName);
+            console.log("StatusHistory: ", conditionValue);
+            console.log("StatusHistory: ", object);
+            return null;
         } catch (err) {
             console.log('error in StatusHistory/Append: ' + err.message);
             return null;
