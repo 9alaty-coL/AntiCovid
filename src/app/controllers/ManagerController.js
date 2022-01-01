@@ -174,11 +174,10 @@ class ManagerController {
             else {
                 // Change Relate Status
                 let newRelateStatus = { P_ID: relate.P_ID, P_Status: calStatus(relate.P_Status, offset) };
-                await UserModel.update(newRelateStatus);
+                await UserModel.updateUser(newRelateStatus);
                 // Report StatusHistory
-                await StatusHistoryModel.append(relate.P_ID, 'Time', TimeUtils.getNow());
-                await StatusHistoryModel.append(relate.P_ID, 'StatusChange', relate.P_Status + " → " + calStatus(relate.P_Status, offset));
-                await StatusHistoryModel.append(relate.P_ID, 'Manager_ID', manager._id);
+                let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate.P_Status + " → " + calStatus(relate.P_Status, offset), Manager_ID: manager._id}
+                await StatusHistoryModel.append(relate.P_ID, reportRelateStatus);
             }
         }
 
@@ -186,11 +185,10 @@ class ManagerController {
         let newUserStatus = { P_ID: user.P_ID, P_Status: calStatus(user.P_Status, offset) };
         await UserModel.updateUser(newUserStatus);
         // Report StatusHistory
-        console.log(TimeUtils.getNow());
-        //await StatusHistoryModel.append(user.P_ID, 'Time', TimeUtils.getNow());
-        //await StatusHistoryModel.append(user.P_ID, 'StatusChange', user.P_Status + " → " + calStatus(user.P_Status, offset));
-        //await StatusHistoryModel.append(user.P_ID, 'Manager_ID', manager._id);
+        let reportUserStatus = { Time: TimeUtils.getNow(), StatusChange: user.P_Status + " → " + calStatus(user.P_Status, offset), Manager_ID: manager._id}
+        await StatusHistoryModel.append(user.P_ID, reportUserStatus);
 
+        // Redirect
         return res.redirect(`/manager/detail/UserID=${req.params.UserID}`);
     }
 

@@ -51,7 +51,7 @@ class Users {
             const res = await db.update('P_ID', value, tbName);
             return res;
         }catch(err){
-            console.log('error in User/update: ' + err.message);
+            console.log('error in User/updateUser: ' + err.message);
             return null;
         }
     }
