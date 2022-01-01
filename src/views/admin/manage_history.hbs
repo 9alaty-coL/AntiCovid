@@ -1,0 +1,98 @@
+<div class="content row">
+
+    {{!-- sidebar --}}
+<div class="sidebar">
+    <div class="sidebar-item">
+        <div class="title">
+            <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+            <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+            Quản lý
+        </div>
+        <ul class="list">
+            <li class="list-item ">
+                <a class="d-block" href="/admin"><i class="fas fa-home"></i> Trang chủ</a>
+            </li>
+            <li class="list-item">
+                <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Tạo tài khoản</a>
+            </li>
+            <li class="list-item active">
+                  <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Quản lý manager</a>
+            </li>
+            <li class="list-item">
+                <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Địa điểm cách ly</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    {{!-- end sidebar --}}
+
+                <div class="col-9" style="flex:1;">
+                <div class="section managed-history ">
+                    <div class="section-title">
+                        Lịch sử hoạt động tài khoản <b class="text-danger">{{manager.username}}</b>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="/admin/manage" class="btn btn-danger mt-3">Back</a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: auto">
+                        <div class="col-11 mt-2">
+                            {{!-- <a href="/admin/treatment/create" class="btn btn-success">Thêm địa điểm</a> --}}
+                            <table class="table mt-4 table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Hoạt động</th>
+                                        <th scope="col">Thời gian</th>
+                                        <th scope="col">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each activity}}
+                                    <tr>
+                                        <th scope="row" style="min-width: 60px;">{{this.index}}</th>
+                                        <td style="text-align:left; min-width: 300px;">{{{this.Activity}}}</td>
+                                        <td style="text-align:left; min-width: 220px;">{{this.TimeLog}}</td>
+                                        <td style="min-width: 180px;">{{{this.ActivityDetail}}}</td>
+                                    </tr>
+                                    {{else}}
+                                    <tr>
+                                    <td colspan="4" class="text-center">
+                                        Tài khoản này chưa có hoạt động nào <br>
+                                        <a href="/admin/manage">Quay lại</a>
+                                    </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            
+                            <div class="pagination mt-4">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        {{#if first}}
+                                        <li class="page-item {{first.state}}"><a class="page-link" href="/admin/history/{{id}}?page={{first.page}}">First</a></li>
+                                        {{/if}}
+
+                                        {{#each pageList}}
+                                        {{#if this.active}}
+                                        <li class="page-item active"><a class="page-link px-4" href="/admin/history/{{../id}}?page={{this.num}}">{{this.num}}</a></li>
+                                        {{else}}
+                                        <li class="page-item"><a class="page-link px-3" href="/admin/history/{{../id}}?page={{this.num}}">{{this.num}}</a></li>
+                                        {{/if}}
+                                        {{/each}}
+
+                                        {{#if last}}
+                                        <li class="page-item {{last.state}}"><a class="page-link" href="/admin/history/{{id}}?page={{last.page}}">Last</a></li>
+                                        {{/if}}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+
+

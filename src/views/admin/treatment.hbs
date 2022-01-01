@@ -68,7 +68,7 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 {{#if first}}
-                                <li class="page-item"><a class="page-link" href="/admin/treatment?page={{first}}">First</a></li>
+                                <li class="page-item {{first.state}}"><a class="page-link" href="/admin/treatment?page={{first.page}}">First</a></li>
                                 {{/if}}
 
                                 {{#each pageList}}
@@ -80,7 +80,7 @@
                                 {{/each}}
 
                                 {{#if last}}
-                                <li class="page-item"><a class="page-link" href="/admin/treatment?page={{last}}">Last</a></li>
+                                <li class="page-item {{last.state}}"><a class="page-link" href="/admin/treatment?page={{last.page}}">Last</a></li>
                                 {{/if}}
                             </ul>
                         </nav>

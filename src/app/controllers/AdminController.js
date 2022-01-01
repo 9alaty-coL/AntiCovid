@@ -1,6 +1,10 @@
 const bcrypt = require('bcrypt');
 const UserM = require('../models/Authen')
+const Activity = require('../models/Manager')
 const Treatment = require('../models/TreatmentPlaces')
+const StatusHistory = require('../models/StatusHistory')
+const LocationHistory = require('../models/LocationHistory')
+const PatientM = require('../models/User')
 
 class AdminController {
 
@@ -45,7 +49,7 @@ class AdminController {
 
     // [GET] admin/treatment
     async treatment(req, res, next) {
-        let itemsPerPage = 6;
+        let itemsPerPage = 7;
         let currPage = req.query.page ? req.query.page : 1;
         let pages;
         let pageList = [];
@@ -65,14 +69,24 @@ class AdminController {
 
         
         
+        let first = {}; let last =  {};
+        first.page = 1;
+        last.page = pages;
+        if (currPage == pages){
+            last.state = 'disabled';
+        }
+        if (currPage == 1){
+            first.state = 'disabled';
+        }
+
         res.render('admin/treatment', {
              layout: 'admin', 
              css: ['treatment'], 
              js: ['AdminPage'],
              treatment: treatment,
              pageList: pageList,
-             first: pages >=3 ? 1 : null,
-             last: pages >=3 ? pages :null,
+             first: first,
+             last: last
         });
     }
 
@@ -158,7 +172,7 @@ class AdminController {
 
     // [GET] admin/manage
     async manage(req, res, next) {
-        let itemsPerPage = 6;
+        let itemsPerPage = 7;
         let currPage = req.query.page ? req.query.page : 1;
         let pages;
         let pageList = [];
@@ -193,14 +207,24 @@ class AdminController {
         //     value.index = index + 1;
         // })
 
+        let first = {}; let last =  {};
+        first.page = 1;
+        last.page = pages;
+        if (currPage == pages){
+            last.state = 'disabled';
+        }
+        if (currPage == 1){
+            first.state = 'disabled';
+        }
+
         res.render('admin/manage', {
             account: account,
             layout:'admin',
             css: ['manage'],
             js: ['AdminPage'],
             pageList: pageList,
-            first: pages >=3 ? 1 : null,
-            last: pages >=3 ? pages :null,
+            first:first,
+            last: last,
         })
     }
 
@@ -219,6 +243,134 @@ class AdminController {
         let response = await UserM.update(us);
         res.redirect('back');
     }
+
+    // [GET] /admin/history/:id
+    async history(req, res, next){
+        let itemsPerPage = 7;
+        let currPage = req.query.page ? req.query.page : 1;
+        let pages;
+        let pageList = [];
+
+        let manager = await UserM.getUserById(req.params.id)
+        let manageLog = await Activity.one('M_ID', req.params.id)
+        let status = await StatusHistory.all();
+        let location = await LocationHistory.all();
+
+        let statusH = await statusHistory(status, req.params.id); // StatusHistory
+        let locationH = await locationHistory(location, req.params.id); // LocationHistory
+        let activity = [...manageHistory(manageLog), ...statusH, ...locationH];
+
+
+
+        
+        //pagination
+        pages = Math.ceil(activity.length / itemsPerPage);
+
+        for (let i = 1; i <= pages; i++){
+            pageList.push({num: i});
+        }
+
+        pageList[currPage - 1].active = 1;
+
+        activity.forEach((value, index) => {
+            value.index = index + 1;
+        })
+        activity = activity.slice((currPage - 1) * itemsPerPage, currPage * itemsPerPage);
+
+
+        let first = {}; let last =  {};
+        first.page = 1;
+        last.page = pages;
+        if (currPage == pages){
+            last.state = 'disabled';
+        }
+        if (currPage == 1){
+            first.state = 'disabled';
+        }
+
+        res.render('admin/manage_history', {
+            manager: manager,
+            layout:'admin',
+            css: ['history'],
+            js: ['AdminPage'],
+            activity: activity,
+            first:first,
+            last:last,
+            pageList: pageList,
+            id:req.params.id,
+        })
+    }
+
+}
+
+function manageHistory(manager){
+    let activity = [];
+    if(!manager.TimeLog){
+        return activity;
+    }
+    else{
+        manager.TimeLog.forEach((value, index) => {
+            manager.Activity
+            activity.push({
+                TimeLog: value,
+                Activity: manager.Activity[index],
+                ActivityDetail: manager.ActivityDetail[index],
+            });
+        })
+    }
+    
+    return activity;
+}
+
+async function statusHistory(table, id){
+    let activity = [];
+    if(!table){
+        return activity;
+    }
+
+    for (let i in table){
+        if (table[i].Manager_ID){
+            for (let j in table[i].Manager_ID){
+                if (table[i].Manager_ID[j] == id){
+                    const patient = await PatientM.one('P_ID', table[i].P_ID);
+                    const obj = {};
+                    obj.TimeLog = table[i].Time[j];
+                    obj.Activity = `Chuyển trạng thái bệnh nhân <b>${await patient.P_FullName}</b>`;
+                    obj.ActivityDetail = table[i].StatusChange[j];
+                    activity.push(obj);
+                }
+            }
+        }
+    }
+
+    return activity;
+}
+
+async function locationHistory(table, id) {
+
+    let activity = [];
+    if(!table){
+        return activity;
+    }
+
+    for (let i in table){
+        if (table[i].Manager_ID){
+            for (let j in table[i].Manager_ID){
+                if (table[i].Manager_ID[j] == id){
+                    const patient = await PatientM.one('P_ID', table[i].P_ID);
+                    const treatment = await Treatment.getTreatmentById(table[i].HospitalLocation[j]);
+                    const obj = {};
+                    obj.TimeLog = table[i].Time[j];
+                    obj.Activity = `Chuyển nơi điều trị bệnh nhân <b>${await patient.P_FullName}</b>`;
+                    obj.ActivityDetail = `Chuyển bệnh nhân  <b>${await patient.P_FullName}</b> đến khu điều trị <b>${await treatment.name}</b>`;
+                    activity.push(obj);
+                }
+            }
+        }
+    }
+
+    return activity;
+
 }
 
 

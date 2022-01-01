@@ -50,14 +50,14 @@
                                         <th scope="row" style="min-width: 80px;">{{this.index}} 🔒</th>
                                         <td style="text-align:left; min-width: 300px;">{{this.username}}</td>
                                         <td style="min-width: 180px;">
-                                            <a href="#" class="btn btn-link"><button type="button" class="btn btn-outline-primary disabled">Lịch sử hoạt động</button></a>
+                                            <a href="/admin/history/{{this._id}}" class="btn btn-link"><button type="button" class="btn btn-outline-primary disabled">Lịch sử hoạt động</button></a>
                                             <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#unlock-form"><button type="button" class="btn btn-outline-success">Mở Khóa</button></a>
                                         </td>
                                         {{else}}
                                         <th scope="row" style="min-width: 80px;">{{this.index}}</th>
                                         <td style="text-align:left; min-width: 300px;">{{this.username}}</td>
                                         <td style="min-width: 180px;">
-                                            <a href="#" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Lịch sử hoạt động</button></a>
+                                            <a href="/admin/history/{{this._id}}" class="btn btn-link"><button type="button" class="btn btn-outline-primary">Lịch sử hoạt động</button></a>
                                             <a id="" class="btn btn-link btn-delete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Khóa</button></a>
                                         </td>
                                         {{/if}}
@@ -77,7 +77,7 @@
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         {{#if first}}
-                                        <li class="page-item"><a class="page-link" href="/admin/manage?page={{first}}">First</a></li>
+                                        <li class="page-item {{first.state}}"><a class="page-link" href="/admin/manage?page={{first.page}}">First</a></li>
                                         {{/if}}
 
                                         {{#each pageList}}
@@ -89,7 +89,7 @@
                                         {{/each}}
 
                                         {{#if last}}
-                                        <li class="page-item"><a class="page-link" href="/admin/manage?page={{last}}">Last</a></li>
+                                        <li class="page-item {{last.state}}"><a class="page-link" href="/admin/manage?page={{last.page}}">Last</a></li>
                                         {{/if}}
                                     </ul>
                                 </nav>

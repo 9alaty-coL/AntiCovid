@@ -8,7 +8,7 @@ class StatusHistory {
             const res = await db.one(colName, cprName, tbName);
             return res;
         } catch (err) {
-            console.log('error in User/One: ' + err.message);
+            console.log('error in StatusHistory/One: ' + err.message);
             return null;
         }
     }
@@ -18,10 +18,19 @@ class StatusHistory {
             const res = await db.append('P_ID', conditionValue, appCol, appValue, tbName);
             return res;
         } catch (err) {
-            console.log('error in User/Append: ' + err.message);
+            console.log('error in StatusHistory/Append: ' + err.message);
             return null;
         }
 
+    }
+
+    async all() {
+        try {
+            const res = await db.all(tbName);
+            return res;
+        } catch (err) {
+            console.log('error in StatusHistory/All: ' + err.message);
+        }
     }
 }
 

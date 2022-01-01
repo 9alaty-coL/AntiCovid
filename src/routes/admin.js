@@ -13,6 +13,8 @@ router.put('/lock/:id', AdminController.lock);
 
 router.put('/unlock/:id', AdminController.unlock);
 
+router.get('/history/:id', AdminController.history);
+
 router.get('/treatment', AdminController.treatment);
 
 router.get('/treatment/create', AdminController.createTreatment);
