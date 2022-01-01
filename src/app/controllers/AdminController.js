@@ -163,6 +163,18 @@ class AdminController {
         let pages;
         let pageList = [];
         let account = await UserM.getManagerAccounts();
+
+        let acc1 = []; let acc2 = [];
+        account.forEach(value=>{
+            if (value.isLocked){
+                acc2.push(value);
+            }
+            else{
+                acc1.push(value);
+            }
+        })
+        account = [...acc1, ...acc2];
+
         pages = Math.ceil(account.length / itemsPerPage);
 
         for (let i = 1; i <= pages; i++){
@@ -194,16 +206,18 @@ class AdminController {
 
     // [PUT] /admin/lock/:id
     async lock(req, res, next) {
-        let us = await UserM.getUserById(req.params.id);
-        // us.isLocked = true;
-        let response = await UserM.update(us);
 
+        let us = {_id: req.params.id, isLocked: 'true'}
+        let response = await UserM.update(us);
         res.redirect('back');
     }
 
     // [PUT] /admin/unlock/:id
     async unlock(req, res, next) {
 
+        let us = {_id: req.params.id, isLocked: 'false'}
+        let response = await UserM.update(us);
+        res.redirect('back');
     }
 }
 
