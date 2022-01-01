@@ -5,6 +5,8 @@ const LocationHistory = require('../models/LocationHistory');
 const StatusHistory = require('../models/StatusHistory');
 const bcrypt = require('bcrypt');
 
+var currDate = new Date();
+
 let id;
 let acc;
 let user;
@@ -24,7 +26,7 @@ class UserController {
 
         listOfBills = await Bills.getBillsByUserID(id) 
         for(let i = 0; i < listOfBills.length; i++) {
-            let tokens = listOfBills[i].B_Datetime.toString().split(' ');
+            let tokens = listOfBills[i].B_Datetime.split(' ');
             let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
             let time = tokens[4];
             listOfBills[i].B_Date = date;
@@ -182,7 +184,7 @@ class UserController {
     // GET /user/:id/pHistory
     paidHistory(req, res, next) {
         for(let i = 0; i < paidBills.length; i++) {
-            let tokens = paidBills[i].B_PaymentDatetime.toString().split(' ');
+            let tokens = paidBills[i].B_PaymentDatetime.split(' ');
             let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
             let time = tokens[4];
             paidBills[i].B_PaymentDate = date;
