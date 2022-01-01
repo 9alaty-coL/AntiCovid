@@ -54,7 +54,7 @@ class AdminController {
         let pages;
         let pageList = [];
         let treatment = await Treatment.all();
-        pages = Math.ceil(treatment.length / itemsPerPage);
+        pages = Math.ceil(treatment.length / itemsPerPage) == 0 ? 1 : Math.ceil(treatment.length / itemsPerPage);
 
         for (let i = 1; i <= pages; i++){
             pageList.push({num: i});
@@ -189,7 +189,7 @@ class AdminController {
         })
         account = [...acc1, ...acc2];
 
-        pages = Math.ceil(account.length / itemsPerPage);
+        pages = Math.ceil(account.length / itemsPerPage) == 0 ? 1 : Math.ceil(account.length / itemsPerPage);
 
         for (let i = 1; i <= pages; i++){
             pageList.push({num: i});
@@ -261,10 +261,10 @@ class AdminController {
         let activity = [...manageHistory(manageLog), ...statusH, ...locationH];
 
 
-
+        sortByDate(activity);
         
         //pagination
-        pages = Math.ceil(activity.length / itemsPerPage);
+        pages = Math.ceil(activity.length / itemsPerPage) == 0 ? 1 : Math.ceil(activity.length / itemsPerPage);
 
         for (let i = 1; i <= pages; i++){
             pageList.push({num: i});
@@ -305,7 +305,7 @@ class AdminController {
 
 function manageHistory(manager){
     let activity = [];
-    if(!manager.TimeLog){
+    if (!manager || !manager.TimeLog){
         return activity;
     }
     else{
@@ -373,6 +373,22 @@ async function locationHistory(table, id) {
 
 }
 
+function sortByDate(activity){
+    if (activity.length == 0) {
+        return;
+    }
+    let max = 0;
 
+    for (let i = 0; i < activity.length; i++) {
+        max = i;
+        for (let j = i; j < activity.length; j++){
+            if (Date.parse(activity[j].TimeLog) > Date.parse(activity[max].TimeLog)){
+                max = j;
+            }
+        }
+        [activity[i], activity[max]] = [activity[max], activity[i]];
+    }
+    
+}
 
 module.exports = new AdminController();
