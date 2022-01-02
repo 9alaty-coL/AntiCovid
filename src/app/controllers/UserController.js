@@ -269,7 +269,7 @@ class UserController {
     }
 
     // GET /user/package/:p_id
-    async packageDetail(req, res, next) {
+    packageDetail(req, res, next) {
         const packageID = req.params.p_id;
         currPackage = listOfPackages[packageID-1];
         let productsInPackage = [];
@@ -295,8 +295,50 @@ class UserController {
 
     // Post /user/package/:p_id
     async buy(req, res, next) {
+        var currDate = new Date();
         const packageID = req.params.p_id;
-        console.log(packageID);
+        const totalPrice = parseInt(req.body.totalPrice);
+        let quantity = req.body.input;
+        let randomID;
+        let bill;
+        let temp = [];
+
+        let currPack =  listOfPackages[packageID-1];
+        for (let i = 0; i < currPack.P_ProductsID.length; i++) {
+            temp.push(`${listOfProducts[currPack.P_ProductsID[i]-1].Product_Name} x ${quantity[i]} ${listOfProducts[currPack.P_ProductsID[i]-1].Product_Unit}`);
+        }
+        
+        do {
+            randomID = Math.round(Math.random() * 100000);
+            bill = {
+                B_ID : `NYP${id}VN${randomID}`,
+                B_UserID : id,
+                B_Totalpayment: totalPrice,
+                B_IsPaid: false,
+                B_PaymentDatetime: null,
+                B_Datetime: currDate.toString(), 
+                B_Products : temp,
+    
+            }
+            
+        } while(bill.B_ID === await Bills.one('B_ID', bill.B_ID ) )
+        
+        const result = await Bills.insert(bill);
+
+        // Load all bills again
+        listOfBills = await Bills.getBillsByUserID(id) 
+        for(let i = 0; i < listOfBills.length; i++) {
+            let tokens = listOfBills[i].B_Datetime.split(' ');
+            let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
+            let time = tokens[4];
+            listOfBills[i].B_Date = date;
+            listOfBills[i].B_Time = time;
+        }
+        listOfBills.sort(function(a,b){
+            return new Date(b.B_Datetime) - new Date(a.B_Datetime);
+        });
+        paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
+        notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
 
         res.redirect(`/user/${id}/bHistory`);
         return;
@@ -304,7 +346,7 @@ class UserController {
 
 
      // GET /user/product/:p_id
-     async productDetail(req, res, next) {
+    productDetail(req, res, next) {
         const productID = req.params.p_id;
         let currProduct = listOfProducts[productID-1];
 

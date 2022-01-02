@@ -45,7 +45,7 @@ $('input').click(function() {
             <li class="product">
                 <div class="row">
                     <div class="col-6 product-desc ">
-                    ${currProducts[i].Product_Name} : ${quantity[i]}/${currProducts[i].Product_Unit}
+                    ${currProducts[i].Product_Name} : ${quantity[i]} ${currProducts[i].Product_Unit}
                     </div>
                     <div class="col-6 product-quantity ">
                         ${currProducts[i].Product_Price}đ x  ${quantity[i]} = <span class="text-orange"> ${price}đ</span>
@@ -83,7 +83,7 @@ function showBill() {
             <li class="product">
                 <div class="row">
                     <div class="col-6 product-desc ">
-                    ${currProducts[i].Product_Name} : ${quantity[i]}/${currProducts[i].Product_Unit}
+                    ${currProducts[i].Product_Name} : ${quantity[i]} ${currProducts[i].Product_Unit}
                     </div>
                     <div class="col-6 product-quantity ">
                         ${currProducts[i].Product_Price}đ x  ${quantity[i]} = <span class="text-orange"> ${price}đ</span>
