@@ -3,6 +3,9 @@ const Authens = require('../models/Authen');
 const Bills = require('../models/Bill');
 const LocationHistory = require('../models/LocationHistory');
 const StatusHistory = require('../models/StatusHistory');
+const TreatmentPlaces = require('../models/TreatmentPlaces');
+const Packages = require('../models/Package');
+const Products = require('../models/Product');
 const bcrypt = require('bcrypt');
 
 var currDate = new Date();
@@ -10,11 +13,14 @@ var currDate = new Date();
 let id;
 let acc;
 let user;
+let treatmentPlace;
 let listOfBills;
 let paidBills;
 let notPaidBills;
 let status = [];
 let location = [];
+let listOfPackages;
+let listOfProducts;
 const saltRounds = 10;
 class UserController {
     async home(req, res, next) {
@@ -24,6 +30,8 @@ class UserController {
 
         user = await Users.one('P_ID', id);
 
+        treatmentPlace = await TreatmentPlaces.one('_id', user.P_TreatmentPlace);
+
         listOfBills = await Bills.getBillsByUserID(id) 
         for(let i = 0; i < listOfBills.length; i++) {
             let tokens = listOfBills[i].B_Datetime.split(' ');
@@ -32,6 +40,9 @@ class UserController {
             listOfBills[i].B_Date = date;
             listOfBills[i].B_Time = time;
         }
+        listOfBills.sort(function(a,b){
+            return new Date(b.B_Datetime) - new Date(a.B_Datetime);
+        });
 
         paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
         
@@ -44,6 +55,9 @@ class UserController {
                 Time : statusHistory.Time[i],
             }
         }
+        status.sort(function(a,b){
+            return new Date(b.Time) - new Date(a.Time);
+        });
 
 
         const locationHistory = await LocationHistory.one('P_ID', id);
@@ -53,6 +67,19 @@ class UserController {
                 Time : locationHistory.Time[i],
             }
         }
+
+
+        listOfPackages = await Packages.all();
+        listOfPackages.sort(function(a,b){
+            return a.P_ID - b.P_ID;
+        });
+console.log(listOfPackages)
+
+        listOfProducts = await Products.all();
+        listOfProducts.sort(function(a,b){
+            return a.Product_ID - b.Product_ID;
+        });
+
         
         res.redirect(`/user/${id}/infor`);
         return;
@@ -75,6 +102,9 @@ class UserController {
             user: user,
             relatedPeople: relatedPeople,
             notPaidBills: notPaidBills,
+            treatmentPlace: treatmentPlace,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -89,6 +119,8 @@ class UserController {
             color: '',
             message: '',
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -139,6 +171,8 @@ class UserController {
             color: color,
             message: message,
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -153,6 +187,8 @@ class UserController {
             notPaidBills: notPaidBills,
             status: status,
             location: location,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -165,6 +201,8 @@ class UserController {
             js: ['UserPage', 'accountBalance'],
             user: user,
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -177,6 +215,8 @@ class UserController {
             js: ['UserPage', 'deposit'],
             user: user,
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -198,46 +238,72 @@ class UserController {
             user: user,
             paidbills: paidBills,
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
     // GET /user/:id/package
-    async package(req, res, next) {
+    package(req, res, next) {
         res.render('user/package', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'package'],
             user: user,
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
-    // GET /user/:id/package/:p_id
+    // GET /user/package/:p_id
     async packageDetail(req, res, next) {
+        const packageID = req.params.p_id;
+        let currPackage = listOfPackages[packageID-1];
+        let productsInPackage = [];
+        for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
+            productsInPackage[i] = listOfProducts[currPackage.P_ProductsID[i]-1];
+            productsInPackage[i].Product_Limit = currPackage.Product_Limit[i];
+        }
+        
+
         res.render('user/packageDetail', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'detail'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            productsInPackage: productsInPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
-     // GET /user/:id/package/:p_id
+     // GET /user/product/:p_id
      async productDetail(req, res, next) {
+        const productID = req.params.p_id;
+        let currProduct = listOfProducts[productID-1];
+
+        console.log(currProduct)
+
         res.render('user/productDetail', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'detail'],
             user: user,
             notPaidBills: notPaidBills,
+            currProduct: currProduct,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
+     // GET /user/:p_id/bHistory
     buyHistory(req, res, next) {
         res.render('user/buyHistory', {
             layout: 'user',
@@ -246,6 +312,8 @@ class UserController {
             user: user,
             paidBills: paidBills,
             notPaidBills: notPaidBills,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }

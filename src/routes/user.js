@@ -18,9 +18,9 @@ router.get('/:id/pHistory', UserController.paidHistory);
 
 router.get('/:id/package', UserController.package);
 
-router.get('/:id/package/:p_id', UserController.packageDetail);
+router.get('/package/:p_id', UserController.packageDetail);
 
-router.get('/:id/product/:p_id', UserController.productDetail);
+router.get('/product/:p_id', UserController.productDetail);
 
 router.get('/:id/bHistory', UserController.buyHistory);
 

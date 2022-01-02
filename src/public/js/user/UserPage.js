@@ -20,69 +20,75 @@ $('.notification-menu').click(function (event) {
 });
 
 // Search novel
-const novelLists = document.querySelector('.search-menu');
+const pLists = document.querySelector('.search-menu');
 const searchBar = document.getElementById('searchBar');
 
-let novels = [];
-
-const loadNovels = async () => {
-    try {
-        const res = await fetch('https://hp-api.herokuapp.com/api/characters');
-        novels = await res.json();
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-loadNovels();
 
 searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
-    const filteredNovels = novels.filter((novel) => {
-        return novel.name.toLowerCase().includes(searchString);
+    const filteredProducts = products.filter( (product) => {
+        return product.Product_Name.toLowerCase().includes(searchString)
     });
-    novelLists.innerHTML = '';
-    if (searchString.length !== 0) displayNovels(filteredNovels);
+    const filteredPackages = packages.filter( (p) => {
+        return p.P_Name.toLowerCase().includes(searchString)
+    });
+
+
+    pLists.innerHTML = '';
+    if (searchString.length !== 0) display(filteredProducts, filteredPackages);
 });
 
-// show 10 results
-const displayNovels = (novels) => {
-    let htmlString;
 
-    if (novels.length === 0) {
-        htmlString = `
+const display = (pro, pac) => {
+    if (pro.length === 0 && pac.length === 0) {
+        let htmlString = `
                 <li style="color:red; font-size: 1.4rem">
-                    Truyện bạn tìm không có !
+                    Sản phẩm/gói bạn tìm không có !
                 </li>
             `;
-    } else if (novels.length < 10) {
-        htmlString = novels
-            .map((novel) => {
+        
+        pLists.innerHTML = htmlString;
+    } 
+    else   {
+        let packagesHtmlString;
+        let productsHtmlString;
+
+        productsHtmlString = pro
+            .map((product) => {
                 return `
                 <li class="">
-                    <a href="#" class="">
-                        ${novel.name}
+                    <a href="/user/product/${product.Product_ID}" class="">
+                        ${product.Product_Name}
                     </a> 
                 </li>
             `;
             })
             .join('');
-    } else {
-        let results = [];
-        for (i = 0; i < 10; i++) {
-            results.push(novels[i]);
-        }
-        htmlString = results
-            .map((novel) => {
-                return `
-                <li class="">
-                    <a href="#" class="">
-                        ${novel.name}
-                    </a> 
-                </li>
-            `;
+
+
+            packagesHtmlString = pac
+            .map((p) => {
+                let result =  `
+                    <li class="">
+                        <a href="/user/package/${p.P_ID}" class="">
+                            ${p.P_Name}: 
+                `;
+
+                for(let i = 0; i < p.P_ProductsID.length; i++) {
+                    let id = parseInt(p.P_ProductsID[i]) -1;
+                    let name = products[id].Product_Name;
+        
+                    if(i === 0 ) {
+                        result += `${name}`;
+                    }
+                    else
+                        result += `, ${name}`;
+                }
+                return result;
             })
             .join('');
-    }
-    novelLists.innerHTML = htmlString;
+
+        pLists.innerHTML = productsHtmlString + packagesHtmlString;
+    } 
+   
 };

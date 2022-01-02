@@ -549,10 +549,8 @@ a:hover {
 }
 
 .img-list li:hover {
-    padding:1px;
     cursor: pointer;
     transform: scale(1.08);
-    border: 2px solid red;
 }
 
 .pay {
