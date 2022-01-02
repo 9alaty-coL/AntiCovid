@@ -21,6 +21,8 @@ let status = [];
 let location = [];
 let listOfPackages;
 let listOfProducts;
+let currPackage = { P_ID: -1};
+
 const saltRounds = 10;
 class UserController {
     async home(req, res, next) {
@@ -73,7 +75,7 @@ class UserController {
         listOfPackages.sort(function(a,b){
             return a.P_ID - b.P_ID;
         });
-console.log(listOfPackages)
+
 
         listOfProducts = await Products.all();
         listOfProducts.sort(function(a,b){
@@ -103,6 +105,7 @@ console.log(listOfPackages)
             relatedPeople: relatedPeople,
             notPaidBills: notPaidBills,
             treatmentPlace: treatmentPlace,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -119,6 +122,7 @@ console.log(listOfPackages)
             color: '',
             message: '',
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -171,6 +175,7 @@ console.log(listOfPackages)
             color: color,
             message: message,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -187,6 +192,7 @@ console.log(listOfPackages)
             notPaidBills: notPaidBills,
             status: status,
             location: location,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -201,6 +207,7 @@ console.log(listOfPackages)
             js: ['UserPage', 'accountBalance'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -215,6 +222,7 @@ console.log(listOfPackages)
             js: ['UserPage', 'deposit'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -238,6 +246,7 @@ console.log(listOfPackages)
             user: user,
             paidbills: paidBills,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -252,6 +261,7 @@ console.log(listOfPackages)
             js: ['UserPage', 'package'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -261,7 +271,7 @@ console.log(listOfPackages)
     // GET /user/package/:p_id
     async packageDetail(req, res, next) {
         const packageID = req.params.p_id;
-        let currPackage = listOfPackages[packageID-1];
+        currPackage = listOfPackages[packageID-1];
         let productsInPackage = [];
         for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
             productsInPackage[i] = listOfProducts[currPackage.P_ProductsID[i]-1];
@@ -283,12 +293,20 @@ console.log(listOfPackages)
         return;
     }
 
+    // Post /user/package/:p_id
+    async buy(req, res, next) {
+        const packageID = req.params.p_id;
+        console.log(packageID);
+
+        res.redirect(`/user/${id}/bHistory`);
+        return;
+    }
+
+
      // GET /user/product/:p_id
      async productDetail(req, res, next) {
         const productID = req.params.p_id;
         let currProduct = listOfProducts[productID-1];
-
-        console.log(currProduct)
 
         res.render('user/productDetail', {
             layout: 'user',
@@ -297,6 +315,7 @@ console.log(listOfPackages)
             user: user,
             notPaidBills: notPaidBills,
             currProduct: currProduct,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });
@@ -312,6 +331,7 @@ console.log(listOfPackages)
             user: user,
             paidBills: paidBills,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
         });

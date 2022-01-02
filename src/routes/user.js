@@ -20,6 +20,8 @@ router.get('/:id/package', UserController.package);
 
 router.get('/package/:p_id', UserController.packageDetail);
 
+router.post('/package/:p_id', UserController.buy);
+
 router.get('/product/:p_id', UserController.productDetail);
 
 router.get('/:id/bHistory', UserController.buyHistory);

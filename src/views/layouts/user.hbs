@@ -115,8 +115,11 @@
     <script type="text/javascript">
         let packages = [];
         let products = [];
+        let currPackageID = {{currPackage.P_ID}};
+        let currPackage;
         let temp;
         let p ;
+
         {{#each listOfPackages}}
             p = [];
             {{#each this.P_ProductsID}}
@@ -134,11 +137,13 @@
                     Product_ID : `{{this.Product_ID}}`,
                     Product_Name: `{{this.Product_Name}}`,
                     Product_Price: `{{this.Product_Price}}`,
-                     Product_Unit: `{{this.Product_Unit}}`,
+                    Product_Unit: `{{this.Product_Unit}}`,
                 }
             products.push(temp)
         {{/each}}
-       
+
+        currPackage = packages[currPackageID-1];
+
     </script>
 
     {{#each js}}

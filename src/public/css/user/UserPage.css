@@ -549,7 +549,6 @@ a:hover {
 }
 
 .img-list li:hover {
-    cursor: pointer;
     transform: scale(1.08);
 }
 
