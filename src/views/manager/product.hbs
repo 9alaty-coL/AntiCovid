@@ -116,29 +116,29 @@
     </div>
     {{!-- end sidebar --}}
 
-    <div class="col-5" style="flex:1;">
-        <div class="section general-information">
-            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Danh sách các nhu yếu phâm</h1>
-            <div class="card bg-info mb-3 text-light">
-                <div class="row card-body h-100">
-                    <span class="col-3 border-end border-dark border-2 text-center"><b>Tên sản phẩm </b></span>
-                    <span class="col-3 border-end border-dark border-2 text-center"><b>Hình ảnh</b></span>
-                    <span class="col-3 border-end border-dark border-2 text-center"><b>Giá tiền</b></span>
-                    <span class="col-3 text-center">                                <b>Đơn vị định lượng</b></span>
-                </div>
-            </div>
-
-            {{#each Products}}
-            <div class="card mb-1 user-card">
-                <div class="row card-body h-100" style="min-height: 70px;">
-                    <span class="col-3 border-end border-dark border-1 text-center"> {{this.Product_Name}}</span>
-                    <span class="col-3 border-end border-dark border-1 text-center"> <img src="{{this.Product_Image}}" style="width:120px;height:80px;"> </span>
-                    <span class="col-3 border-end border-dark border-1 text-center">{{this.Product_Price}} VNĐ</span>
-                    <span class="col-3 border-end border-dark border-1 text-center">{{this.Product_Unit}}</span>
+   <div class="col-9" style="flex:1;">
+                 <div class="section packet-list">
+                    <div class="section-title">
+                        Danh sách các  nhu yếu phẩm
+                    </div>
+                    
+                    <div class="section-content mt-4 me-2">
+                        <div class="row">
+                            {{#each Products}}
+                            <div class="col-3 " >
+                                <div class="card" style="width: 100%;">
+                                    <img src="{{this.Product_Image}}" class="card-img-top" height="200" alt="..." >
+                                    <div class="card-body">
+                                      <h4 class="card-title fs-2">{{this.Product_Name}}</h4>
+                                      <p class="card-text  text-ellipsis--3 fs-4">Giá: {{this.Product_Price}} ₫ </p>
+                                      <p class="card-text  text-ellipsis--3 fs-4">Đơn vị: {{this.Product_Unit}}</p>
+                                      <a href="/manager/detail/UserID={{this.P_ID}}" class="btn btn-primary fs-5">Xem chi tiết </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
                    
                 </div>
             </div>
-            {{/each}}
-        </div>
-    </div>
-</div>
