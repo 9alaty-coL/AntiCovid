@@ -3,6 +3,9 @@ const Authens = require('../models/Authen');
 const Bills = require('../models/Bill');
 const LocationHistory = require('../models/LocationHistory');
 const StatusHistory = require('../models/StatusHistory');
+const TreatmentPlaces = require('../models/TreatmentPlaces');
+const Packages = require('../models/Package');
+const Products = require('../models/Product');
 const bcrypt = require('bcrypt');
 
 var currDate = new Date();
@@ -10,11 +13,16 @@ var currDate = new Date();
 let id;
 let acc;
 let user;
+let treatmentPlace;
 let listOfBills;
 let paidBills;
 let notPaidBills;
 let status = [];
 let location = [];
+let listOfPackages;
+let listOfProducts;
+let currPackage = { P_ID: -1};
+
 const saltRounds = 10;
 class UserController {
     async home(req, res, next) {
@@ -24,6 +32,8 @@ class UserController {
 
         user = await Users.one('P_ID', id);
 
+        treatmentPlace = await TreatmentPlaces.one('_id', user.P_TreatmentPlace);
+
         listOfBills = await Bills.getBillsByUserID(id) 
         for(let i = 0; i < listOfBills.length; i++) {
             let tokens = listOfBills[i].B_Datetime.split(' ');
@@ -32,6 +42,9 @@ class UserController {
             listOfBills[i].B_Date = date;
             listOfBills[i].B_Time = time;
         }
+        listOfBills.sort(function(a,b){
+            return new Date(b.B_Datetime) - new Date(a.B_Datetime);
+        });
 
         paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
         
@@ -44,6 +57,9 @@ class UserController {
                 Time : statusHistory.Time[i],
             }
         }
+        status.sort(function(a,b){
+            return new Date(b.Time) - new Date(a.Time);
+        });
 
 
         const locationHistory = await LocationHistory.one('P_ID', id);
@@ -53,6 +69,19 @@ class UserController {
                 Time : locationHistory.Time[i],
             }
         }
+
+
+        listOfPackages = await Packages.all();
+        listOfPackages.sort(function(a,b){
+            return a.P_ID - b.P_ID;
+        });
+
+
+        listOfProducts = await Products.all();
+        listOfProducts.sort(function(a,b){
+            return a.Product_ID - b.Product_ID;
+        });
+
         
         res.redirect(`/user/${id}/infor`);
         return;
@@ -75,6 +104,10 @@ class UserController {
             user: user,
             relatedPeople: relatedPeople,
             notPaidBills: notPaidBills,
+            treatmentPlace: treatmentPlace,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -89,6 +122,9 @@ class UserController {
             color: '',
             message: '',
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -139,6 +175,9 @@ class UserController {
             color: color,
             message: message,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -153,6 +192,9 @@ class UserController {
             notPaidBills: notPaidBills,
             status: status,
             location: location,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -165,6 +207,9 @@ class UserController {
             js: ['UserPage', 'accountBalance'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -177,6 +222,9 @@ class UserController {
             js: ['UserPage', 'deposit'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
@@ -198,46 +246,125 @@ class UserController {
             user: user,
             paidbills: paidBills,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
     // GET /user/:id/package
-    async package(req, res, next) {
+    package(req, res, next) {
         res.render('user/package', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'package'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
-    // GET /user/:id/package/:p_id
-    async packageDetail(req, res, next) {
+    // GET /user/package/:p_id
+    packageDetail(req, res, next) {
+        const packageID = req.params.p_id;
+        currPackage = listOfPackages[packageID-1];
+        let productsInPackage = [];
+        for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
+            productsInPackage[i] = listOfProducts[currPackage.P_ProductsID[i]-1];
+            productsInPackage[i].Product_Limit = currPackage.Product_Limit[i];
+        }
+        
+
         res.render('user/packageDetail', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'detail'],
             user: user,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            productsInPackage: productsInPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
-     // GET /user/:id/package/:p_id
-     async productDetail(req, res, next) {
+    // Post /user/package/:p_id
+    async buy(req, res, next) {
+        var currDate = new Date();
+        const packageID = req.params.p_id;
+        const totalPrice = parseInt(req.body.totalPrice);
+        let quantity = req.body.input;
+        let randomID;
+        let bill;
+        let temp = [];
+
+        let currPack =  listOfPackages[packageID-1];
+        for (let i = 0; i < currPack.P_ProductsID.length; i++) {
+            temp.push(`${listOfProducts[currPack.P_ProductsID[i]-1].Product_Name} x ${quantity[i]} ${listOfProducts[currPack.P_ProductsID[i]-1].Product_Unit}`);
+        }
+        
+        do {
+            randomID = Math.round(Math.random() * 100000);
+            bill = {
+                B_ID : `NYP${id}VN${randomID}`,
+                B_UserID : id,
+                B_Totalpayment: totalPrice,
+                B_IsPaid: false,
+                B_PaymentDatetime: null,
+                B_Datetime: currDate.toString(), 
+                B_Products : temp,
+    
+            }
+            
+        } while(bill.B_ID === await Bills.one('B_ID', bill.B_ID ) )
+        
+        const result = await Bills.insert(bill);
+
+        // Load all bills again
+        listOfBills = await Bills.getBillsByUserID(id) 
+        for(let i = 0; i < listOfBills.length; i++) {
+            let tokens = listOfBills[i].B_Datetime.split(' ');
+            let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
+            let time = tokens[4];
+            listOfBills[i].B_Date = date;
+            listOfBills[i].B_Time = time;
+        }
+        listOfBills.sort(function(a,b){
+            return new Date(b.B_Datetime) - new Date(a.B_Datetime);
+        });
+        paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
+        notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
+
+        res.redirect(`/user/${id}/bHistory`);
+        return;
+    }
+
+
+     // GET /user/product/:p_id
+    productDetail(req, res, next) {
+        const productID = req.params.p_id;
+        let currProduct = listOfProducts[productID-1];
+
         res.render('user/productDetail', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'detail'],
             user: user,
             notPaidBills: notPaidBills,
+            currProduct: currProduct,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }
 
+     // GET /user/:p_id/bHistory
     buyHistory(req, res, next) {
         res.render('user/buyHistory', {
             layout: 'user',
@@ -246,6 +373,9 @@ class UserController {
             user: user,
             paidBills: paidBills,
             notPaidBills: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
         });
         return;
     }

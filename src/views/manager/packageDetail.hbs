@@ -115,32 +115,4 @@
         </div>
     </div>
     {{!-- end sidebar --}}
-  
-           
-
-    <div class="col-9" style="flex:1;">
-                 <div class="section packet-list">
-                    <div class="section-title">
-                        Danh sách các gói nhu yếu phẩm
-                    </div>
-                    
-                    <div class="section-content mt-4 me-2">
-                        <div class="row">
-                            {{#each Packages}}
-                            <div class="col-4">
-                                <div class="card" style="width: 100%;">
-                                    <img src="{{this.P_Image}}" class="card-img-top" height="260" alt="...">
-                                    <div class="card-body">
-                                      <h4 class="card-title fs-2">{{this.Packages_Name}}</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: {{this.Product_List}}</p>
-                                      <a href="/manager/packageDetail/{{this.Packages_ID}}" class="btn btn-primary fs-5">Xem chi tiết </a>
-                                    </div>
-                                </div>
-                            </div>
-                            {{/each}}
-                        </div>
-                    </div>
-                   
-                </div>
-            </div>
-           
+    

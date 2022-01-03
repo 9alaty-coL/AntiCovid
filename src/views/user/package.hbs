@@ -57,66 +57,23 @@
                     </div>
                     <div class="section-content mt-4 me-2">
                         <div class="row">
-                            <div class="col-3">
-                                <div class="card" style="width: 100%;">
-                                    <img src="https://cf.shopee.vn/file/07406419575453530652c172a70ed2e6_tn" class="card-img-top" height="200" alt="...">
+                            {{#each listOfPackages}}
+                            <div class="col-3 my-3">
+                                <div class="card" style="width: 100%; box-shadow: 0 2px 4px rgba(0, 0, 0, .15), 0 8px 16px rgba(0, 0, 0, .15);">
+                                    <img src="{{this.P_Image}}" class="card-img-top" height="200" alt="...">
                                     <div class="card-body">
-                                      <h4 class="card-title">Gói NYP1</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: Gạo ST24 + Muối hầm + Trứng gà + Mì gói </p>
-                                      <a href="#" class="btn btn-primary fs-4">Xem chi tiết </a>
+                                      <h4 class="card-title">{{this.P_Name}}</h4>
+                                      <p class="card-text text-ellipsis--3 fs-5" style="height: 54px;">Bao gồm:
+                                          {{#each this.Product_List}}
+                                            {{this}},  
+                                          {{/each}}
+                                      </p>
+                                      <a href="/user/package/{{this.P_ID}}" class="btn btn-primary fs-4">Xem chi tiết </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="card" style="width: 100%;">
-                                    <img src="https://cf.shopee.vn/file/07406419575453530652c172a70ed2e6_tn" class="card-img-top" height="200" alt="...">
-                                    <div class="card-body">
-                                      <h4 class="card-title">Gói NYP1</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: Gạo ST24 + Muối hầm + Trứng gà + Mì gói </p>
-                                      <a href="#" class="btn btn-primary fs-4">Xem chi tiết </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="width: 100%;">
-                                    <img src="https://cf.shopee.vn/file/07406419575453530652c172a70ed2e6_tn" class="card-img-top" height="200" alt="...">
-                                    <div class="card-body">
-                                      <h4 class="card-title">Gói NYP1</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: Gạo ST24 + Muối hầm + Trứng gà + Mì gói </p>
-                                      <a href="#" class="btn btn-primary fs-4">Xem chi tiết </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="width: 100%;">
-                                    <img src="https://cf.shopee.vn/file/07406419575453530652c172a70ed2e6_tn" class="card-img-top" height="200" alt="...">
-                                    <div class="card-body">
-                                      <h4 class="card-title">Gói NYP1</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: Gạo ST24 + Muối hầm + Trứng gà + Mì gói </p>
-                                      <a href="#" class="btn btn-primary fs-4">Xem chi tiết </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="width: 100%;">
-                                    <img src="https://cf.shopee.vn/file/07406419575453530652c172a70ed2e6_tn" class="card-img-top" height="200" alt="...">
-                                    <div class="card-body">
-                                      <h4 class="card-title">Gói NYP1</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: Gạo ST24 + Muối hầm + Trứng gà + Mì gói </p>
-                                      <a href="#" class="btn btn-primary fs-4">Xem chi tiết </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="width: 100%;">
-                                    <img src="https://cf.shopee.vn/file/07406419575453530652c172a70ed2e6_tn" class="card-img-top" height="200" alt="...">
-                                    <div class="card-body">
-                                      <h4 class="card-title">Gói NYP1</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5">Bao gồm: Gạo ST24 + Muối hầm + Trứng gà + Mì gói </p>
-                                      <a href="#" class="btn btn-primary fs-4">Xem chi tiết </a>
-                                    </div>
-                                </div>
-                            </div>
+                            {{/each}}
+                 
                         </div>
                     </div>
                 </div>

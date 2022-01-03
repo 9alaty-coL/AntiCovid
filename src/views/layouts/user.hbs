@@ -21,13 +21,13 @@
                     <div class="searchbar-item">
                         <a href="#" class="logo"><h1>Anti<span style="color: #F18121;">Covid</span></h1></a>
                     </div>
-                    <div class="searchbar-item search-packet d-none d-lg-flex">
+                    <div class="searchbar-item search-packet d-lg-flex">
                         <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
                             <input type="text" id="searchBar" class="form-control search-input" placeholder="Bạn cứ nhập từ khóa, còn lại để SimplePoLL lo nè">
                             <div class="search-select-btn"><i class="fas fa-search"></i></div>
                         </div>
                         <ul class="search-menu">
-                            <!-- <li class="">
+                            {{!-- <li class="">
                                 <a href="#" class="">
                                     Gói A
                                 </a> 
@@ -36,7 +36,7 @@
                                 <a href="#" class="">
                                     Gói B
                                 </a> 
-                            </li> -->
+                            </li>  --}}
                         </ul>
                     </div>
                     <div class="searchbar-item ">
@@ -53,16 +53,6 @@
                                             </a>
                                         </li>
                                     {{/each}}
-                                    {{!-- <li class="d-flex ">
-                                        <a href="/user/{{user.P_ID}}/bHistory" class="notification-content text-ellipsis--3">
-                                           Bạn có đơn hàng NYP8VN4398 chờ thanh toán
-                                        </a>
-                                    </li>
-                                    <li class="d-flex ">
-                                        <a href="/user/{{user.P_ID}}/bHistory" class="notification-content text-ellipsis--3">
-                                            Bạn có đơn hàng NYP8VN4398 chờ thanh toán
-                                        </a>
-                                    </li> --}}
                                 </ul>
                         </div>
                         <div class="searchbar-btn Dropdown">
@@ -121,6 +111,40 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        let packages = [];
+        let products = [];
+        let currPackageID = {{currPackage.P_ID}};
+        let currPackage;
+        let temp;
+        let p ;
+
+        {{#each listOfPackages}}
+            p = [];
+            {{#each this.P_ProductsID}}
+                p.push({{this}})
+            {{/each}}
+            temp = {
+                P_ID : `{{this.P_ID}}`,
+                P_Name: `{{this.P_Name}}`,
+                P_ProductsID: p,
+            }
+            packages.push(temp)
+        {{/each}}
+        {{#each listOfProducts}}
+            temp = {
+                    Product_ID : `{{this.Product_ID}}`,
+                    Product_Name: `{{this.Product_Name}}`,
+                    Product_Price: `{{this.Product_Price}}`,
+                    Product_Unit: `{{this.Product_Unit}}`,
+                }
+            products.push(temp)
+        {{/each}}
+
+        currPackage = packages[currPackageID-1];
+
+    </script>
 
     {{#each js}}
        <script type="text/javascript" src="/js/user/{{this}}.js"></script>
