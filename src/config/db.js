@@ -1,3 +1,5 @@
+// require('dotenv').config();
+
 const pgp = require('pg-promise')({
     capSQL: true,
 });
@@ -7,7 +9,7 @@ const cn = {
     host: 'ec2-174-129-16-183.compute-1.amazonaws.com',
     database: 'd55vb335pru2ea',
     password:
-        '6de3f165f80e3dcf9e4d253ac0b0675ce5fed3c1203e0cffcb16c99d132482d6',
+    process.env.POSTGRE_PASSWORD,
     port: 5432,
     max: 30, // use up to 30 connections
     ssl: { rejectUnauthorized: false },
