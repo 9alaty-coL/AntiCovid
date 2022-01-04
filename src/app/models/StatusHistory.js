@@ -16,8 +16,6 @@ class StatusHistory {
     async append(conditionValue, object) {
         try {
             await db.append('P_ID', conditionValue, object, tbName);
-            console.log("StatusHistory: ", conditionValue);
-            console.log("StatusHistory: ", object);
             return null;
         } catch (err) {
             console.log('error in StatusHistory/Append: ' + err.message);

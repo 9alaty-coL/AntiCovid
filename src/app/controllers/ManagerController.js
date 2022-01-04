@@ -20,7 +20,7 @@ class ManagerController {
     ///>> Method → <GET> <<///
 
     // Get → /
-    home(req, res, next) {      
+    home(req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
@@ -29,8 +29,11 @@ class ManagerController {
     }
 
     // Get → /userlist
-    async listUser (req, res, next) {
+    async listUser(req, res, next) {
         let users = await UserModel.all();
+        for (let i = 0; i < users.length; i++) {
+            users[i].P_TreatmentPlace = (await TreatmentPlacesModel.one('_id', users[i].P_TreatmentPlace)).name;
+        }
 
         res.render('manager/listUser', {
             layout: 'manager',
@@ -41,7 +44,7 @@ class ManagerController {
     }
 
     // Get → /search?=:Key
-    search (req, res, next) {
+    search(req, res, next) {
         res.render('manager/searchUser', {
             layout: 'manager',
             css: ['ManagerPage'],
@@ -50,7 +53,7 @@ class ManagerController {
     }
 
     // Get → /sortby=:SortID
-    sortBy (req, res, next) {
+    sortBy(req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
@@ -59,7 +62,7 @@ class ManagerController {
     }
 
     // Get → /search?=:Key/sortby=:SortID
-    search_sortBy (req, res, next) {
+    search_sortBy(req, res, next) {
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
@@ -68,30 +71,34 @@ class ManagerController {
     }
 
     // Get → /detail/UserID=:UserID
-    async detail (req, res, next) {
+    async detail(req, res, next) {
         // User Info
         let userID = req.params.UserID;
         let userInfo = await UserModel.one('P_ID', userID);
+        userInfo.P_TreatmentPlace = (await TreatmentPlacesModel.one('_id', userInfo.P_TreatmentPlace)).name;
 
         // User Location History
-        let resLocationHistory = await LocationHistoryModel.one('P_ID',userID);
+        let resLocationHistory = await LocationHistoryModel.one('P_ID', userID);
         let userlogLocation = [];
         for (let i = 0; i < resLocationHistory.Time.length; i++) {
             let Manager = await ManagerModel.one('M_ID', resLocationHistory.Manager_ID[i]);
             let Location = await TreatmentPlacesModel.one('_id', resLocationHistory.HospitalLocation[i]);
-            userlogLocation.push({Time: resLocationHistory.Time[i], Activity: Location.name, Manager: Manager.ManagerName});
+            userlogLocation.push({ Time: resLocationHistory.Time[i], Activity: Location.name, Manager: Manager.ManagerName });
         }
 
         // User Status History
-        let resStatusHistory = await StatusHistoryModel.one('P_ID',userID);
+        let resStatusHistory = await StatusHistoryModel.one('P_ID', userID);
         let userlogStatus = [];
         for (let i = 0; i < resStatusHistory.Time.length; i++) {
             let Manager = await ManagerModel.one('M_ID', resStatusHistory.Manager_ID[i]);
-            userlogStatus.push({Time: resStatusHistory.Time[i], Activity: resStatusHistory.StatusChange[i], Manager: Manager.ManagerName});
+            userlogStatus.push({ Time: resStatusHistory.Time[i], Activity: resStatusHistory.StatusChange[i], Manager: Manager.ManagerName });
         }
 
         // User RelateInfo
         let relateInfo = await UserModel.relate(userInfo.P_RelatedPersonID);
+        for (let i = 0; i < relateInfo.length; i++) {
+            relateInfo[i].P_TreatmentPlace = (await TreatmentPlacesModel.one('_id', relateInfo[i].P_TreatmentPlace)).name;
+        }
 
         res.render('manager/detailUser', {
             user: userInfo,
@@ -100,12 +107,12 @@ class ManagerController {
             relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['DetailUser','DetailRelate','ManagerPage'],
+            js: ['DetailUser', 'DetailRelate', 'ManagerPage'],
         });
     }
 
     // Get → /addUser
-    addUser (req, res, next) {
+    addUser(req, res, next) {
         res.render('manager/addUser', {
             layout: 'manager',
             css: ['ManagerPage'],
@@ -113,49 +120,50 @@ class ManagerController {
         });
     }
 
-    addRelate (req, res, next) {
+    // Get → /addRelate
+    addRelate(req, res, next) {
         res.render('manager/addRelate', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
         });
     }
-    
 
-    product (req, res, next) {
+    product(req, res, next) {
         res.render('manager/product', {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['ManagerPage'],
         });
     }
-    async Product (req, res, next) {
+
+    async Product(req, res, next) {
         let Products = await ProductsModel.all();
 
-        res.render('manager/product',{
+        res.render('manager/product', {
             layout: 'manager',
             Products: Products,
             css: ['ManagerPage'],
             js: ['ManagerPage'],
         });
     }
-    async Package (req, res, next) {
+
+    async Package(req, res, next) {
         let Packages = await PackagesModel.all();
 
-        res.render('manager/Package',{
+        res.render('manager/Package', {
             layout: 'manager',
             Packages: Packages,
             css: ['ManagerPage'],
             js: ['ManagerPage'],
         });
     }
-    
 
     ///>> Method → <POST> <<///
 
 
     ///>> Method → <PUT> <<///
-    async changeStatus (req, res, next) {
+    async changeStatus(req, res, next) {
         // Change Status by:
         let manager = req.user;
 
@@ -166,7 +174,7 @@ class ManagerController {
 
         // User Info:
         let user = await UserModel.one('P_ID', req.params.UserID);
-        
+
         // Change Relate Status + Report StatusHistory
         for (let i = 0; i < user.P_RelatedPersonID.length; i++) {
             let relate = await UserModel.one('P_ID', user.P_RelatedPersonID[i]);
@@ -176,7 +184,7 @@ class ManagerController {
                 let newRelateStatus = { P_ID: relate.P_ID, P_Status: calStatus(relate.P_Status, offset) };
                 await UserModel.updateUser(newRelateStatus);
                 // Report StatusHistory
-                let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate.P_Status + " → " + calStatus(relate.P_Status, offset), Manager_ID: manager._id}
+                let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate.P_Status + " → " + calStatus(relate.P_Status, offset), Manager_ID: manager._id }
                 await StatusHistoryModel.append(relate.P_ID, reportRelateStatus);
             }
         }
@@ -185,14 +193,36 @@ class ManagerController {
         let newUserStatus = { P_ID: user.P_ID, P_Status: calStatus(user.P_Status, offset) };
         await UserModel.updateUser(newUserStatus);
         // Report StatusHistory
-        let reportUserStatus = { Time: TimeUtils.getNow(), StatusChange: user.P_Status + " → " + calStatus(user.P_Status, offset), Manager_ID: manager._id}
+        let reportUserStatus = { Time: TimeUtils.getNow(), StatusChange: user.P_Status + " → " + calStatus(user.P_Status, offset), Manager_ID: manager._id }
         await StatusHistoryModel.append(user.P_ID, reportUserStatus);
 
         // Redirect
         return res.redirect(`/manager/detail/UserID=${req.params.UserID}`);
     }
 
-    ///>> Method → <DELETE> <<///
+    async changeLocation(req, res, next) {
+        // Change Location by:
+        let manager = req.user;
+
+        // User Info:
+        let user = await UserModel.one('P_ID', req.params.UserID);        
+
+        // Update User Location + Report LocationHistory
+        let newUserStatus = { P_ID: user.P_ID, P_TreatmentPlace: req.body.location_id };
+        await UserModel.updateUser(newUserStatus);
+        
+        let reportLocation = { Time: TimeUtils.getNow(), HospitalLocation: req.body.location_id, Manager_ID: manager._id }
+        await LocationHistoryModel.append(user.P_ID, reportLocation);        
+
+        // Redirect
+        return res.redirect(`/manager/detail/UserID=${req.params.UserID}`);
+    }
+
+    ///>> Method → <GET> + FETCH <<///
+    async fetchTreatmentPlace(req, res, next) {
+        const TreatmentPlaces = await TreatmentPlacesModel.all();
+        res.send(TreatmentPlaces);
+    }
 }
 
 module.exports = new ManagerController();

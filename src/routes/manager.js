@@ -30,4 +30,9 @@ router.get('/addRelate/UserID=:UserID', ManagerController.addRelate);
 // >> PUT
 router.put('/detail/UserID=:UserID/changeStatus', ManagerController.changeStatus)
 
+router.put('/detail/UserID=:UserID/changeLocation', ManagerController.changeLocation)
+
+// >> GET FETCH
+router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
+
 module.exports = router;

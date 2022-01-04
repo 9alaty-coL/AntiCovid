@@ -17,24 +17,6 @@ $('.notification-btn').click(function (event) {
     $('.notification-menu').toggleClass('d-none');
 });
 
-// Searchbar JS
-// $('#searchBar').focusin(function() {
-//     $('.search-menu').removeClass('d-none')
-// });
-
-// $('#searchBar').focusout(function() {
-//     if ($('.search-menu').is(':focus')) ;
-//     $('.search-menu').addClass('d-none')
-// });
-
-// $('.search-menu').focusin(function() {
-//     $('.search-menu').removeClass('d-none')
-// });
-
-// $('.search-menu').focusout(function() {
-//     $('.search-menu').addClass('d-none')
-// });
-
 // Search novel
 const novelLists = document.querySelector('.search-menu');
 const searchBar = document.getElementById('searchBar');
