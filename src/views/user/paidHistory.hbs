@@ -57,15 +57,15 @@
                     {{#each paidbills}}
                         <div class="d-flex mt-4 justify-content-between">
                             <p class="text-ellipsis--7 me-5 fs-3">
-                                Thanh toán đơn hàng {{this.B_ID}} : <span class="text-orange">{{this.B_Totalpayment}}đ</span> <br>
+                                Thanh toán đơn hàng {{this.B_ID}}</span> <br>
                                 {{#each this.B_Products}}
                                     + {{this}} <br>
                                 {{/each}}
                             </p>
                             <div class="">
                                 <div class="remainedmoney d-inline-block mx-5" style="min-width:12rem;">
-                                    <div class="text-center">Số tiền còn lại :</div>
-                                    <div class="text-center">đ</div>
+                                    <div class="text-center">Tổng số tiền:</div>
+                                    <div class="text-center"><span class="text-orange">{{this.B_Totalpayment}}đ</div>
                                 </div>
                                 <div class="Datetime d-inline-block ms-5">
                                     <div class="text-center">{{this.B_PaymentTime}}</div>
