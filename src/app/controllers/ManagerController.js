@@ -24,7 +24,7 @@ class ManagerController {
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
         });
     }
 
@@ -39,16 +39,34 @@ class ManagerController {
             layout: 'manager',
             users: users,
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
         });
     }
 
-    // Get → /search?=:Key
+    // Get → /search
     search(req, res, next) {
         res.render('manager/searchUser', {
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
+        });
+    }
+
+    // Get → /search=:Key
+    searchByKey(req, res, next) {
+        let key = (req.params.Key).split("-");
+        console.log(key);
+        let pairKey = [];
+        for (let index = 0; index < key.length; index++)  {
+            let pair = key[index].split(":");
+            pairKey.push({ Type: pair[0], Value: pair[1] });
+        }
+        console.log(pairKey);
+
+        res.render('manager/searchUser', {
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
         });
     }
 
@@ -57,16 +75,7 @@ class ManagerController {
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
-        });
-    }
-
-    // Get → /search?=:Key/sortby=:SortID
-    search_sortBy(req, res, next) {
-        res.render('manager/home', {
-            layout: 'manager',
-            css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
         });
     }
 
@@ -107,7 +116,7 @@ class ManagerController {
             relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['DetailUser', 'DetailRelate', 'ManagerPage'],
+            js: ['UserSearchBar','DetailUser', 'DetailRelate', 'ManagerPage'],
         });
     }
 
@@ -116,7 +125,7 @@ class ManagerController {
         res.render('manager/addUser', {
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
         });
     }
 
@@ -125,7 +134,7 @@ class ManagerController {
         res.render('manager/addRelate', {
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
         });
     }
 
@@ -222,6 +231,12 @@ class ManagerController {
     async fetchTreatmentPlace(req, res, next) {
         const TreatmentPlaces = await TreatmentPlacesModel.all();
         res.send(TreatmentPlaces);
+    }
+
+    async fetchUserName(req, res, next) {
+        const User = await UserModel.all();
+        let UserName = User.map(each => each.P_FullName);
+        res.send(UserName);
     }
 }
 

@@ -11,9 +11,9 @@ router.get('/listUser', ManagerController.listUser);
 
 router.get('/search', ManagerController.search);
 
-router.get('/sortby=:SortID', ManagerController.sortBy);
+router.get('/search=:Key', ManagerController.searchByKey);
 
-//router.get('/search?=:Key/sortby=:SortID', ManagerController.search_sortBy);
+router.get('/sortby=:SortID', ManagerController.sortBy);
 
 router.get('/detail/UserID=:UserID', ManagerController.detail);
 
@@ -33,6 +33,10 @@ router.put('/detail/UserID=:UserID/changeStatus', ManagerController.changeStatus
 router.put('/detail/UserID=:UserID/changeLocation', ManagerController.changeLocation)
 
 // >> GET FETCH
+router.get('/username', ManagerController.fetchUserName)
+
 router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
+
+
 
 module.exports = router;

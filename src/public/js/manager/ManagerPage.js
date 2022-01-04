@@ -1,3 +1,19 @@
+//>> Algorithm Support
+// Lowercase for Vietnamese
+function nonAccentVietnamese(str) {
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng 
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+    return str;
+}
+
 // Sidebar JS
 $('.title').click(function () {
     $(this).children().toggleClass('d-none');
@@ -16,74 +32,6 @@ $('.notification-btn').click(function (event) {
     event.stopPropagation();
     $('.notification-menu').toggleClass('d-none');
 });
-
-// Search novel
-const novelLists = document.querySelector('.search-menu');
-const searchBar = document.getElementById('searchBar');
-
-let novels = [];
-
-const loadNovels = async () => {
-    try {
-        const res = await fetch('https://hp-api.herokuapp.com/api/characters');
-        novels = await res.json();
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-loadNovels();
-
-searchBar.addEventListener('keyup', (e) => {
-    const searchString = e.target.value.toLowerCase();
-    const filteredNovels = novels.filter((novel) => {
-        return novel.name.toLowerCase().includes(searchString);
-    });
-    novelLists.innerHTML = '';
-    if (searchString.length !== 0) displayNovels(filteredNovels);
-});
-
-// show 10 results
-const displayNovels = (novels) => {
-    let htmlString;
-
-    if (novels.length === 0) {
-        htmlString = `
-                <li style="color:red; font-size: 1.4rem">
-                    Truyện bạn tìm không có !
-                </li>
-            `;
-    } else if (novels.length < 10) {
-        htmlString = novels
-            .map((novel) => {
-                return `
-                <li class="">
-                    <a href="#" class="">
-                        ${novel.name}
-                    </a> 
-                </li>
-            `;
-            })
-            .join('');
-    } else {
-        let results = [];
-        for (i = 0; i < 10; i++) {
-            results.push(novels[i]);
-        }
-        htmlString = results
-            .map((novel) => {
-                return `
-                <li class="">
-                    <a href="#" class="">
-                        ${novel.name}
-                    </a> 
-                </li>
-            `;
-            })
-            .join('');
-    }
-    novelLists.innerHTML = htmlString;
-};
 
 //logout
 $('#logout').click(()=>{
