@@ -3,12 +3,12 @@
                  <div class="row">
                      <div class="col-5">
                          <div class="big-img mb-4">
-                            <img src=" {{currProduct.Product_Image}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
+                            <img class="big" src=" {{currProduct.Product_Image}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
                          </div>
                          <ul class="img-list d-flex" style="padding: 0;">
                              {{#each currProduct.Product_Image}}
                                 <li class="d-inline-block me-3"> 
-                                    <img src="{{this}}" alt="" style="width: 120px; height: 120px; ">
+                                    <img class="small" src="{{this}}" alt="" style="width: 120px; height: 120px; ">
                                 </li>
                              {{/each}}
                          </ul>

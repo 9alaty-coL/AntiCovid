@@ -3,16 +3,16 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="big-img mb-4">
-                            <img src="{{currPackage.P_Image}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
+                            <img class="big" src="{{currPackage.P_Image}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
                         </div>
                         <ul class="img-list d-flex" style="padding: 0;">
                            <div class="row">
                                 <li class="col-3"> 
-                                    <img src="{{currPackage.P_Image}}" alt="" style="width: 120px; height: 120px; ">
+                                    <img class="small" src="{{currPackage.P_Image}}" alt="" style="width: 120px; height: 120px; ">
                                 </li>
                                 {{#each productsInPackage}}
                                 <li class="col-3"> 
-                                    <img src="{{this.Product_Image}}" alt="" style="width: 120px; height: 120px; ">
+                                    <img class="small" src="{{this.Product_Image}}" alt="" style="width: 120px; height: 120px; ">
                                 </li>
                                 {{/each}}
                             </div>
