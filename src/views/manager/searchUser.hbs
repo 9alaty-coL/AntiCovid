@@ -118,56 +118,61 @@
             <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Tìm kiếm chi tiết người liên quan đến covid-19</h1>
             <div class="card card-bg mb-3 text-dark">
                 <div class="card-body w-100">
-                    <form>
+                    <form id="searchForm" onsubmit="if (validateForm()) submitSearch();" method="get">
                         <h1>Tìm kiếm dựa trên → Thông tin tài khoản : </h1>
                         <div class="row">
+                            {{#with key}}
                             <div class="col-10">
                                 <div class="input-group mb-3">
                                     <label class="input-group-text text-form" for="P_FullName" style="width: 15%;">Họ và
                                         tên</label>
                                     <input id="P_FullName" name="P_FullName" type="text"
                                         class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                        style="width: 40%;">
+                                        style="width: 40%;" value="{{P_FullName}}">
                                     <label class="input-group-text text-form" for="P_YearOfBirth"
                                         style="width: 10%;">Năm sinh</label>
-                                    <input id="P_YearOfBirth" name="P_YearOfBirth" type="text"
+                                    <input id="P_YearOfBirth" name="P_YearOfBirth" type="number"
                                         class="form-control text-form text-location-form" placeholder="Năm sinh"
-                                        style="width: 10%;">
+                                        style="width: 10%;" value="{{P_YearOfBirth}}">
                                 </div>
                                 <div class="input-group mb-3">
                                     <label class="input-group-text text-form" for="P_IdentityCard"
                                         style="width: 15%;">CMND/CCCD</label>
-                                    <input id="P_IdentityCard" name="P_IdentityCard" type="text"
+                                    <input id="P_IdentityCard" name="P_IdentityCard" type="number"
                                         class="form-control text-form text-location-form"
-                                        placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;">
+                                        placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;" value="{{P_IdentityCard}}">
 
                                     <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
                                         thái</label>
                                     <select class="form-select text-form" id="P_Status" name="P_Status"
                                         style="width: 10%;">
-                                        <option class="text-form" value="" selected disabled></option>
-                                        <option class="text-form" value="F0">F0</option>
-                                        <option class="text-form" value="F1">F1</option>
-                                        <option class="text-form" value="F2">F2</option>
-                                        <option class="text-form" value="F3">F3</option>
+                                        <option class="text-form" value="" selected></option>
+                                        <option class="text-form" value="F0" {{#ifStr P_Status 'F0'}}selected{{/ifStr}}>F0</option>
+                                        <option class="text-form" value="F1" {{#ifStr P_Status 'F1'}}selected{{/ifStr}}>F1</option>
+                                        <option class="text-form" value="F2" {{#ifStr P_Status 'F2'}}selected{{/ifStr}}>F2</option>
+                                        <option class="text-form" value="F3" {{#ifStr P_Status 'F3'}}selected{{/ifStr}}>F3</option>
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
                                     <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa
                                         chỉ nơi ở</label>
                                     <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                        placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;">
+                                        placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;" value="{{P_Address}}">
                                 </div>
                                 <div class="input-group">
                                     <label class="input-group-text text-form" for="P_HospitalAddress"
                                         style="width: 15%;">Nơi đang điều trị</label>
-                                    <input id="P_HospitalAddress" name="P_HospitalAddress" type="text"
-                                        class="form-control text-form" placeholder="Tên bệnh viện đang điều trị"
-                                        style="width: 85%;">
+                                    <div class="form-control form-control-dark text-form search-packet no-gutter" style="width: 85%;">
+                                        <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
+                                            <input name="P_TreatmentPlace" autocomplete="off" type="text" id="searchBarTreatPlace" class="form-control search-input" placeholder="Vị trí cần tìm" value="{{P_TreatmentPlace}}">
+                                        </div>
+                                        <ul class="search-menu" id="menuBarTreatPlace"></ul>
+                                    </div>
                                 </div>
                             </div>
+                            {{/with}}
                             <div class="col-2">
-                                <button type="button" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm kiếm</button>
+                                <button type="submit" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm kiếm</button>
                             </div>
                         </div>
 
@@ -186,7 +191,7 @@
                             <span class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
                             <span class="col-4 border-end border-dark border-1">{{this.P_Address}}</span>
                             <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Status}}</span>
-                            <span class="col-3">{{this.P_HospitalAddress}}</span>
+                            <span class="col-3">{{this.P_TreatmentPlace}}</span>
                         </div>
                     </div>
                     {{/each}}

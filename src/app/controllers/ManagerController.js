@@ -44,29 +44,35 @@ class ManagerController {
     }
 
     // Get → /search
-    search(req, res, next) {
-        res.render('manager/searchUser', {
-            layout: 'manager',
-            css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
-        });
-    }
+    async search(req, res, next) {
+        // Key
+        let key = {};
 
-    // Get → /search=:Key
-    searchByKey(req, res, next) {
-        let key = (req.params.Key).split("-");
-        console.log(key);
-        let pairKey = [];
-        for (let index = 0; index < key.length; index++)  {
-            let pair = key[index].split(":");
-            pairKey.push({ Type: pair[0], Value: pair[1] });
+        for (let eachKey in req.query) {
+            if (req.query[eachKey] !== "") {
+                key[eachKey] = req.query[eachKey];
+            }
         }
-        console.log(pairKey);
+        console.log(key)
 
+        // Search for user
+        let users = await UserModel.search(key);
+        if (users !== null) {
+            for (let i = 0; i < users.length; i++) {
+                users[i].P_TreatmentPlace = (await TreatmentPlacesModel.one('_id', users[i].P_TreatmentPlace)).name;
+            }
+        } else {
+            users = []
+        }
+
+
+        // Render
         res.render('manager/searchUser', {
+            key: key,
+            users: users,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
+            js: ['SearchUser','UserSearchBar','ManagerPage'],
         });
     }
 

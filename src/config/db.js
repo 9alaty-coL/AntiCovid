@@ -65,6 +65,27 @@ class dbQuery {
         }
     }
 
+    async cols(colName, tbName) {
+        try {
+            const res = await db.any(
+                `SELECT "${colName}" FROM "${tbName}"`,
+            );
+            return res;
+        } catch (err) {
+            console.log('error in db/Column: ' + err.message);
+            return null;
+        }
+    }
+
+    async likes(colName, cprName, tbName) {
+        try {
+            const res = await db.any(`SELECT * FROM "${tbName}" WHERE "${colName}" LIKE '%' || '${cprName}' || '%'`);
+            return res;
+        } catch (err) {
+            console.log('error in db/likes: ' + err.message);
+        }
+    }
+
     async insert(value, tbName) {
         try {
             const res = await db.one(

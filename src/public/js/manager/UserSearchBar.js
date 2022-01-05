@@ -44,7 +44,7 @@ const display = (data) => {
             .map((d) => {
                 return `
                 <li class="">
-                    <a href="/manager/search=P_FullName:${d}" class="">
+                    <a href="/manager/search?P_FullName=${d}" class="">
                         ${d}
                     </a> 
                 </li>
@@ -60,7 +60,7 @@ const display = (data) => {
             .map((d) => {
                 return `
                 <li class="">
-                    <a href="/manager/search=P_FullName:${d}" class="">
+                    <a href="/manager/search?P_FullName=${d}" class="">
                         ${d}
                     </a> 
                 </li>
