@@ -3,12 +3,12 @@
                  <div class="row">
                      <div class="col-5">
                          <div class="big-img mb-4">
-                            <img class="big" src=" {{currProduct.Product_Image}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
+                            <img class="big" src=" {{mainImage}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
                          </div>
                          <ul class="img-list d-flex" style="padding: 0;">
                              {{#each currProduct.Product_Image}}
                                 <li class="d-inline-block me-3"> 
-                                    <img class="small" src="{{this}}" alt="" style="width: 120px; height: 120px; ">
+                                    <img class="small mb-2" src="{{this}}" alt="" style="width: 120px; height: 120px; ">
                                 </li>
                              {{/each}}
                          </ul>
@@ -21,7 +21,7 @@
                          <p class="mb-3 mx-4 fs-2"> Giá:  {{ currProduct.Product_Price}}đ/ {{ currProduct.Product_Unit}}</p>
 
                          <p class="mb-3 mx-4 fs-2"> Giới thiệu:</p>
-                         <p class="mb-3 mx-5 fs-4 text-ellipsis--21"> 
+                         <p class="mb-3 mx-5 fs-4 product-intro text-ellipsis--21"> 
                                  {{currProduct.Product_Intro}}
                          </p>
                      </div>

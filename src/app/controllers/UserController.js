@@ -273,11 +273,12 @@ class UserController {
         const packageID = req.params.p_id;
         currPackage = listOfPackages[packageID-1];
         let productsInPackage = [];
+        let productsImg = [];
         for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
             productsInPackage[i] = listOfProducts[currPackage.P_ProductsID[i]-1];
             productsInPackage[i].Product_Limit = currPackage.Product_Limit[i];
+            productsInPackage[i].Main_Image = productsInPackage[i].Product_Image[0];
         }
-        
 
         res.render('user/packageDetail', {
             layout: 'user',
@@ -289,6 +290,7 @@ class UserController {
             productsInPackage: productsInPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
+            mainImage: currPackage.P_Image[0],
         });
         return;
     }
@@ -353,13 +355,14 @@ class UserController {
         res.render('user/productDetail', {
             layout: 'user',
             css: ['UserPage'],
-            js: ['UserPage', 'detail'],
+            js: ['UserPage', 'productDetail'],
             user: user,
             notPaidBills: notPaidBills,
             currProduct: currProduct,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
+            mainImage: currProduct.Product_Image[0],
         });
         return;
     }

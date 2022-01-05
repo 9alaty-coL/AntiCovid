@@ -548,7 +548,9 @@ a:hover {
     background-color: var(--header-color);
 }
 
-.img-list li:hover {
+.img-list img:hover {
+    padding: 2px 4px;
+    border: 1px solid orange;
     transform: scale(1.08);
 }
 
@@ -636,7 +638,8 @@ a:hover {
 }
 
 .buy {
-    margin-top: 4rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
 }
 .buy-btn {
     background-color: var(--orange-color);

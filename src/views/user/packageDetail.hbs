@@ -3,16 +3,16 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="big-img mb-4">
-                            <img class="big" src="{{currPackage.P_Image}}" alt="" style="width: 100%; min-height:400px; max-height: 500px;">
+                            <img class="big" src="{{mainImage}}" alt="" style="width: 100%; height: 500px;">
                         </div>
                         <ul class="img-list d-flex" style="padding: 0;">
                            <div class="row">
                                 <li class="col-3"> 
-                                    <img class="small" src="{{currPackage.P_Image}}" alt="" style="width: 120px; height: 120px; ">
+                                    <img class="small mb-2" src="{{mainImage}}" alt="" style="width: 120px; height: 120px; ">
                                 </li>
                                 {{#each productsInPackage}}
                                 <li class="col-3"> 
-                                    <img class="small" src="{{this.Product_Image}}" alt="" style="width: 120px; height: 120px; ">
+                                    <img class="small mb-2" src="{{this.Main_Image}}" alt="" style="width: 120px; height: 120px; ">
                                 </li>
                                 {{/each}}
                             </div>
@@ -24,14 +24,14 @@
                             <div class="box">AntiCovid+</div>  {{currPackage.P_Name}}
                         </div>
 
-                        <ul class="products-list mb-4" style="padding: 0; font-size: 2rem;"> Bao gồm:
+                        <ul class="products-list mb-5" style="padding: 0; font-size: 2rem;"> Bao gồm:
                             {{#each productsInPackage}}
                             <li class="product">
                                 <div class="row">
                                     <div class="col-7 product-desc ">
                                        <a href="/user/product/{{this.Product_ID}}">
                                             <div class="d-inline-block">
-                                                <img src="{{this.Product_Image}}" alt="" class="me-2" style="width: 60px; height: 60px;">    
+                                                <img src="{{this.Main_Image}}" alt="" class="me-2" style="width: 60px; height: 60px;">    
                                             </div>
                                             <div class="d-inline-block " style="width:32rem;">
                                                 {{this.Product_Name}} : {{this.Product_Price}}đ/{{this.Product_Unit}} 
