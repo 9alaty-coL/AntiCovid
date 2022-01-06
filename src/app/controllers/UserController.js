@@ -13,6 +13,7 @@ var currDate = new Date();
 let id;
 let acc;
 let user;
+let relatedPeople = [];
 let treatmentPlace;
 let listOfPlaces;
 let listOfBills;
@@ -40,6 +41,12 @@ class UserController {
         acc = await Authens.one('_id', id);
 
         user = await Users.one('P_ID', id);
+
+        let list = user.P_RelatedPersonID;
+        for(let x of list) { 
+            let person =  await Users.one('P_ID', x);
+            relatedPeople.push(person);
+        }
 
         listOfPlaces = await TreatmentPlaces.all();
         listOfPlaces.sort(function(a,b){
@@ -103,13 +110,7 @@ class UserController {
     }
 
     // GET /user/:id/infor
-    async information(req, res, next) { 
-        let relatedPeople = [];
-        let list = user.P_RelatedPersonID;
-        for(let x of list) { 
-            let person =  await Users.one('P_ID', x);
-            relatedPeople.push(person);
-        }
+    information(req, res, next) { 
 
         res.render('user/information', {
             layout: 'user',
@@ -203,8 +204,8 @@ class UserController {
         currPage2 = 1;
         msg1 = '';
         msg2 = '';
-        n1 = currPage1 * 1;
-        n2 = currPage2 * 1;
+        n1 = currPage1 * 8;
+        n2 = currPage2 * 8;
         if(n1 >= status.length) {
             n1 = status.length;
             msg1 = 'disabled';
@@ -349,6 +350,7 @@ class UserController {
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
+            message1: msg1,
         });
         return;
     }
