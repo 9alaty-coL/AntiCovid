@@ -14,6 +14,7 @@ let id;
 let acc;
 let user;
 let treatmentPlace;
+let listOfPlaces;
 let listOfBills;
 let paidBills;
 let notPaidBills;
@@ -22,6 +23,14 @@ let location = [];
 let listOfPackages;
 let listOfProducts;
 let currPackage = { P_ID: -1};
+
+
+let currPage1;
+let currPage2;
+let msg1;
+let msg2;
+let n1;
+let n2;
 
 const saltRounds = 10;
 class UserController {
@@ -32,7 +41,12 @@ class UserController {
 
         user = await Users.one('P_ID', id);
 
-        treatmentPlace = await TreatmentPlaces.one('_id', user.P_TreatmentPlace);
+        listOfPlaces = await TreatmentPlaces.all();
+        listOfPlaces.sort(function(a,b){
+            return a._id - b._id;
+        });
+
+        treatmentPlace = listOfPlaces.filter(p => p._id === user.P_TreatmentPlace)
 
         listOfBills = await Bills.getBillsByUserID(id) 
         for(let i = 0; i < listOfBills.length; i++) {
@@ -67,6 +81,7 @@ class UserController {
             location[i] = {
                 HospitalLocation : locationHistory.HospitalLocation[i],
                 Time : locationHistory.Time[i],
+                HospitalName: listOfPlaces.filter(p => p._id === locationHistory.HospitalLocation[i])[0],
             }
         }
 
@@ -103,8 +118,8 @@ class UserController {
             account: acc,
             user: user,
             relatedPeople: relatedPeople,
-            notPaidBills: notPaidBills,
-            treatmentPlace: treatmentPlace,
+            notPaidBillsList: notPaidBills,
+            treatmentPlace: treatmentPlace[0],
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
@@ -121,7 +136,7 @@ class UserController {
             user: user,
             color: '',
             message: '',
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
@@ -174,7 +189,7 @@ class UserController {
             user: user,
             color: color,
             message: message,
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
@@ -183,18 +198,93 @@ class UserController {
     }
 
     // GET /user/:id/mHistory
-    async managedHistory(req, res, next) {
+    managedHistory(req, res, next) {
+        currPage1 = 1;
+        currPage2 = 1;
+        msg1 = '';
+        msg2 = '';
+        n1 = currPage1 * 1;
+        n2 = currPage2 * 1;
+        if(n1 >= status.length) {
+            n1 = status.length;
+            msg1 = 'disabled';
+        }
+        if(n2 >= location.length) {
+            n2 = location.length;
+            msg2 = 'disabled';
+        }
+        let sta = status.slice(0, n1);
+        let locate = location.slice(0, n2);
+
         res.render('user/managedHistory', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'managedHistory'],
             user: user,
-            notPaidBills: notPaidBills,
-            status: status,
-            location: location,
+            notPaidBillsList: notPaidBills,
+            status: sta,
+            location: locate,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
+            message1: msg1,
+            message2: msg2,
+        });
+        return;
+    }
+
+    location(req, res, next) {
+        currPage2++ ;
+        msg2 = '';
+        n2 = currPage2 * 8;
+        if(n2 >= location.length) {
+            n2 = location.length;
+            msg2 = 'disabled';
+        }
+        let sta = status.slice(0, n1);
+        let locate = location.slice(0, n2);
+
+        res.render('user/managedHistory', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'managedHistory', 'location'],
+            user: user,
+            notPaidBillsList: notPaidBills,
+            status: sta,
+            location: locate,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
+            message1: msg1,
+            message2: msg2,
+        });
+        return;
+    }
+
+    status(req, res, next) {
+        currPage1++ ;
+        msg1 = '';
+        n1 = currPage1 * 8;
+        if(n1 >= location.length) {
+            n1 = location.length;
+            msg1 = 'disabled';
+        }
+        let sta = status.slice(0, n1);
+        let locate = location.slice(0, n2);
+
+        res.render('user/managedHistory', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'managedHistory', 'status'],
+            user: user,
+            notPaidBillsList: notPaidBills,
+            status: sta,
+            location: locate,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
+            message1: msg1,
+            message2: msg2,
         });
         return;
     }
@@ -206,7 +296,7 @@ class UserController {
             css: ['UserPage'],
             js: ['UserPage', 'accountBalance'],
             user: user,
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
@@ -221,7 +311,7 @@ class UserController {
             css: ['UserPage'],
             js: ['UserPage', 'deposit'],
             user: user,
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
@@ -231,6 +321,16 @@ class UserController {
 
     // GET /user/:id/pHistory
     paidHistory(req, res, next) {
+        currPage1 = 1;
+        msg1 = '';
+        n1 = currPage1 * 6;
+        if(n1 >= paidBills.length) {
+            n1 = paidBills.length;
+            msg1 = 'disabled';
+        }
+        let paid = paidBills.slice(0, n1);
+
+
         for(let i = 0; i < paidBills.length; i++) {
             let tokens = paidBills[i].B_PaymentDatetime.split(' ');
             let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
@@ -244,8 +344,8 @@ class UserController {
             css: ['UserPage'],
             js: ['UserPage', 'paidHistory'],
             user: user,
-            paidbills: paidBills,
-            notPaidBills: notPaidBills,
+            paidBills: paid,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
@@ -253,17 +353,84 @@ class UserController {
         return;
     }
 
+    more(req, res, next) {
+        currPage1++;
+        msg1 = '';
+        n1 = currPage1 * 6;
+        if(n1 >= paidBills.length) {
+            n1 = paidBills.length;
+            msg1 = 'disabled';
+        }
+        let paid = paidBills.slice(0, n2);
+
+        for(let i = 0; i < paidBills.length; i++) {
+            let tokens = paidBills[i].B_PaymentDatetime.split(' ');
+            let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
+            let time = tokens[4];
+            paidBills[i].B_PaymentDate = date;
+            paidBills[i].B_PaymentTime = time;
+        }
+
+        res.render('user/paidHistory', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'paidHistory','morePaid'],
+            user: user,
+            paidBills: paid,
+            notPaidBillsList: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
+            message1: msg1,
+        });
+        return;
+    }
+
     // GET /user/:id/package
     package(req, res, next) {
+        currPage1 = 1;
+        msg1 = '';
+        n1 = currPage1 * 6;
+        if(n1 >= listOfPackages.length) {
+            n1 = listOfPackages.length;
+            msg1 = 'disabled';
+        }
+        let packages = listOfPackages.slice(0, n1);
+
         res.render('user/package', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'package'],
             user: user,
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
-            listOfPackages: listOfPackages,
+            listOfPackages: packages,
             listOfProducts: listOfProducts,
+            message1: msg1,
+        });
+        return;
+    }
+
+    morePackage(req, res, next) {
+        currPage1++;
+        msg1 = '';
+        n1 = currPage1 * 6;
+        if(n1 >= listOfPackages.length) {
+            n1 = listOfPackages.length;
+            msg1 = 'disabled';
+        }
+        let packages = listOfPackages.slice(0, n2);
+
+        res.render('user/package', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'package', 'morePaid'],
+            user: user,
+            notPaidBillsList: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: packages,
+            listOfProducts: listOfProducts,
+            message1: msg1,
         });
         return;
     }
@@ -285,7 +452,7 @@ class UserController {
             css: ['UserPage'],
             js: ['UserPage', 'detail'],
             user: user,
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             productsInPackage: productsInPackage,
             listOfPackages: listOfPackages,
@@ -357,7 +524,7 @@ class UserController {
             css: ['UserPage'],
             js: ['UserPage', 'productDetail'],
             user: user,
-            notPaidBills: notPaidBills,
+            notPaidBillsList: notPaidBills,
             currProduct: currProduct,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
@@ -369,16 +536,92 @@ class UserController {
 
      // GET /user/:p_id/bHistory
     buyHistory(req, res, next) {
+        currPage1 = 1;
+        currPage2 = 1;
+        msg1 = '';
+        msg2 = '';
+        n1 = currPage1 * 6;
+        n2 = currPage2 * 6;
+        if(n1 >= notPaidBills.length) {
+            n1 = notPaidBills.length;
+            msg1 = 'disabled';
+        }
+        if(n2 >= paidBills.length) {
+            n2 = paidBills.length;
+            msg2 = 'disabled';
+        }
+        let notPaid = notPaidBills.slice(0, n1);
+        let paid = paidBills.slice(0, n2);
+
         res.render('user/buyHistory', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'buyHistory'],
             user: user,
-            paidBills: paidBills,
-            notPaidBills: notPaidBills,
+            paidBills: paid,
+            notPaidBills: notPaid,
+            notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
             listOfProducts: listOfProducts,
+            message1: msg1,
+            message2: msg2,
+        });
+        return;
+    }
+
+    paid(req, res, next) {
+        currPage1++;
+        msg1 = '';
+        n1 = currPage1 * 6;
+        if(n1 >= notPaidBills.length) {
+            n1 = notPaidBills.length;
+            msg1 = 'disabled';
+        }
+        let notPaid = notPaidBills.slice(0, n1);
+        let paid = paidBills.slice(0, n2);
+
+        res.render('user/buyHistory', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'buyHistory', 'moreNotPaid'],
+            user: user,
+            paidBills: paid,
+            notPaidBills: notPaid,
+            notPaidBillsList: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
+            message1: msg1,
+            message2: msg2,
+        });
+        return;
+    }
+
+    notPaid(req, res, next) {
+        currPage2++;
+        msg2 = '';
+        n2 = currPage2 * 6;
+        if(n2 >= paidBills.length) {
+            n2 = paidBills.length;
+            msg2 = 'disabled';
+        }
+        let notPaid = notPaidBills.slice(0, n1);
+        let paid = paidBills.slice(0, n2);
+
+        res.render('user/buyHistory', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'buyHistory', 'morePaid'],
+            user: user,
+            paidBills: paid,
+            notPaidBills: notPaid,
+            notPaidBillsList: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
+            message1: msg1,
+            message2: msg2,
         });
         return;
     }

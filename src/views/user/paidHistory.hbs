@@ -54,7 +54,7 @@
                         Lịch sử thanh toán
                     </div>
                     <div class="section-content mt-4 ">
-                    {{#each paidbills}}
+                    {{#each paidBills}}
                         <div class="d-flex mt-4 justify-content-between">
                             <p class="text-ellipsis--7 me-5 fs-3">
                                 Thanh toán đơn hàng {{this.B_ID}}</span> <br>
@@ -74,6 +74,11 @@
                             </div>
                         </div>
                     {{/each}}
+                        <form action="/user/{{user.P_ID}}/pHistory/more" method="get">
+                            <div class="d-flex justify-content-center">
+                                <button class="text-center btn more" {{message1}}>Xem thêm</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

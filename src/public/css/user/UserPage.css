@@ -568,6 +568,21 @@ a:hover {
    color: white;
 }
 
+.more {
+    padding: .4rem 1.2rem;
+    font-size: 1.8rem;
+    color: white;
+    background-color: #206791;
+    font-weight: 400;
+    border-radius: .4rem;
+    margin-bottom: 2.8rem;
+    width: 20rem;
+}
+.more:hover {
+   background-color: var(--header-color);
+   color: white;
+}
+
 .packet-title {
     /* color: #0d6efd; */
     color: #333;

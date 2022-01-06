@@ -43,10 +43,10 @@
                         <div class="searchbar-btn notification-btn">
                                 <a href="#">
                                     <span><i class="fas fa-bell"></i></span>
-                                    <span class="notification-badge"> {{notPaidBills.length}}</span>
+                                    <span class="notification-badge"> {{notPaidBillsList.length}}</span>
                                 </a>
                                 <ul class="notification-menu d-none">
-                                    {{#each notPaidBills}}
+                                    {{#each notPaidBillsList}}
                                         <li class="d-flex ">
                                             <a href="./bHistory" class="notification-content text-ellipsis--3">
                                             Bạn có đơn hàng {{this.B_ID}} chờ thanh toán

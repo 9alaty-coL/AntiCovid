@@ -55,24 +55,38 @@
                         Lịch sử được quản lý
                     </div>
                     <div class="section-content mt-4 ">
-                        <h2 class="my-5 mx-3"> Trạng thái </h2>
-                        {{#each status}}
-                        <div class="d-flex mt-4 ms-4 justify-content-between">
-                            <p class="text-ellipsis--4 me-5 fs-3">Tình trạng sức khỏe hiện tại của bạn được cập nhập từ {{this.StatusChange}} </p>
-                            <div class="Datetime ms-5">
-                                <div class="text-center"> {{this.Time}} </div>
+                        <div class="status">
+                            <h2 class="my-5 mx-3"> Trạng thái </h2>
+                            {{#each status}}
+                            <div class="d-flex mt-4 ms-4 justify-content-between">
+                                <p class="text-ellipsis--4 me-5 fs-3">Tình trạng sức khỏe hiện tại của bạn được cập nhập từ {{this.StatusChange}} </p>
+                                <div class="Datetime ms-5">
+                                    <div class="text-center"> {{this.Time}} </div>
+                                </div>
                             </div>
+                            {{/each}}
+                            <form action="/user/{{user.P_ID}}/mHistory/status" method="get">
+                                    <div class="d-flex justify-content-center">
+                                        <button class="text-center btn more" {{message1}}>Xem thêm</button>
+                                    </div>
+                            </form>
                         </div>
-                        {{/each}}
-                        <h2 class="my-5 mx-3"> Đia điểm điều trị / cách ly</h2>
-                         {{#each location}}
-                        <div class="d-flex mt-4 ms-4 justify-content-between">
-                            <p class="text-ellipsis--4 me-5 fs-3"> Bạn được chuyển đến {{this.HospitalLocation}}  </p>
-                            <div class="Datetime ms-5">
-                                <div class="text-center"> {{this.Time}} </div>
+                        <div class="location">
+                            <h2 class="my-5 mx-3"> Đia điểm điều trị / cách ly</h2>
+                            {{#each location}}
+                            <div class="d-flex mt-4 ms-4 justify-content-between">
+                                <p class="text-ellipsis--4 me-5 fs-3"> Bạn được chuyển đến {{this.HospitalName.name}}  </p>
+                                <div class="Datetime ms-5">
+                                    <div class="text-center"> {{this.Time}} </div>
+                                </div>
                             </div>
+                            {{/each}}
+                            <form action="/user/{{user.P_ID}}/mHistory/location" method="get">
+                                    <div class="d-flex justify-content-center">
+                                        <button class="text-center btn more" {{message2}}>Xem thêm</button>
+                                    </div>
+                            </form>
                         </div>
-                         {{/each}}
                     </div>
                 </div>
             </div>
