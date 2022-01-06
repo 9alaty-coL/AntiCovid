@@ -67,10 +67,10 @@ class UserController {
             return new Date(b.B_Datetime) - new Date(a.B_Datetime);
         });
 
-        paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
-        
+        paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)      
         notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
         
+
         const statusHistory = await StatusHistory.one('P_ID', id)
         for (let i = 0; i < statusHistory.StatusChange.length; i++) {
             status[i] = {
@@ -440,11 +440,11 @@ class UserController {
     // GET /user/package/:p_id
     packageDetail(req, res, next) {
         const packageID = req.params.p_id;
-        currPackage = listOfPackages[packageID-1];
+        currPackage = listOfPackages.filter(pack => pack.P_ID == packageID)[0];
         let productsInPackage = [];
         let productsImg = [];
         for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
-            productsInPackage[i] = listOfProducts[currPackage.P_ProductsID[i]-1];
+            productsInPackage[i] = listOfProducts.filter(product => product.Product_ID == currPackage.P_ProductsID[i])[0];
             productsInPackage[i].Product_Limit = currPackage.Product_Limit[i];
             productsInPackage[i].Main_Image = productsInPackage[i].Product_Image[0];
         }
@@ -474,11 +474,13 @@ class UserController {
         let bill;
         let temp = [];
 
-        let currPack =  listOfPackages[packageID-1];
+        let currPack =  listOfPackages.filter(pack => pack.P_ID == packageID)[0];
         for (let i = 0; i < currPack.P_ProductsID.length; i++) {
-            temp.push(`${listOfProducts[currPack.P_ProductsID[i]-1].Product_Name} x ${quantity[i]} ${listOfProducts[currPack.P_ProductsID[i]-1].Product_Unit}`);
+            let p = listOfProducts.filter(product => product.Product_ID === currPack.P_ProductsID[i])[0];
+            temp.push(`${p.Product_Name} x ${quantity[i]} ${p.Product_Unit}`);
         }
-        
+
+        // Add new bill to Bills table
         do {
             randomID = Math.round(Math.random() * 100000);
             bill = {
@@ -489,7 +491,6 @@ class UserController {
                 B_PaymentDatetime: null,
                 B_Datetime: currDate.toString(), 
                 B_Products : temp,
-    
             }
             
         } while(bill.B_ID === await Bills.one('B_ID', bill.B_ID ) )
@@ -511,6 +512,46 @@ class UserController {
         paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
         notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
 
+
+        // Update package sold quantity
+        let packageSoldQuantity = currPack.P_SoldQuantity + 1;
+        let updatedPackage = { 
+            P_ID: packageID,
+            P_SoldQuantity: packageSoldQuantity,
+        }
+
+        const result2 = await Packages.update(updatedPackage);
+
+         // ReLoad all bills
+        listOfPackages = await Packages.all();
+        listOfPackages.sort(function(a,b){
+            return a.P_ID - b.P_ID;
+        });
+
+
+        // Update products sold quantity
+        let soldQuantity = [];
+        let productsId =[];
+        for (let i = 0; i < currPack.P_ProductsID.length; i++) {
+            let temp = listOfProducts.filter(product => product.Product_ID == currPackage.P_ProductsID[i])[0];
+            productsId[i] = temp.Product_ID;
+            soldQuantity[i] = temp.Product_SoldQuantity + parseInt(quantity[i]);
+        }
+
+        for (let i = 0; i < productsId.length; i++) {
+            let updatedProduct = { 
+                Product_ID: productsId[i],
+                Product_SoldQuantity: soldQuantity[i],
+            }
+            let result3 = await Products.update(updatedProduct);
+        }
+        listOfProducts = await Products.all();
+        listOfProducts.sort(function(a,b){
+            return a.Product_ID - b.Product_ID;
+        });
+
+
+
         res.redirect(`/user/${id}/bHistory`);
         return;
     }
@@ -519,7 +560,7 @@ class UserController {
      // GET /user/product/:p_id
     productDetail(req, res, next) {
         const productID = req.params.p_id;
-        let currProduct = listOfProducts[productID-1];
+        let currProduct = listOfProducts.filter(product => product.Product_ID == productID)[0];;
 
         res.render('user/productDetail', {
             layout: 'user',

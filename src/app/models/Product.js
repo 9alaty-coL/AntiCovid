@@ -9,7 +9,7 @@ class Products {
             const res = await db.all(tbName);
             return res;
         } catch (err) {
-            console.log('error in User/All: ' + err.message);
+            console.log('error in Product/All: ' + err.message);
         }
     }
 
@@ -18,7 +18,7 @@ class Products {
             const res = await db.one(colName, cprName, tbName);
             return res;
         } catch (err) {
-            console.log('error in User/One: ' + err.message);
+            console.log('error in Product/One: ' + err.message);
             return null;
         }
     }
@@ -32,7 +32,17 @@ class Products {
             }
             return res;
         } catch (err) {
-            console.log('error in User/Rows: ' + err.message);
+            console.log('error in Product/Rows: ' + err.message);
+            return null;
+        }
+    }
+
+    async update(value){
+        try{
+            const res = await db.update('Product_ID', value, tbName);
+            return res;
+        }catch(err){
+            console.log('error in Product/update: ' + err.message);
             return null;
         }
     }

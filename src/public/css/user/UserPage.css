@@ -184,6 +184,7 @@ a:hover {
 }
 .notification-btn .notification-menu {
     min-height: 20rem;
+    max-height: 45rem;
     position: absolute;
     top: 4.4rem;
     right: -8rem;
@@ -196,6 +197,7 @@ a:hover {
     text-align: left;
     z-index: 2;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .15), 0 8px 16px rgba(0, 0, 0, .15);
+    overflow-y: scroll;
 }
   
 .notification-btn .notification-menu li {
