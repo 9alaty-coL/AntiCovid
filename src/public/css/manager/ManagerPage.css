@@ -513,6 +513,10 @@ a:hover {
     font-size: 1em;
 }
 
+.text-sort {
+    font-size: 0.6em;
+}
+
 .card-bg {
     background-color: aliceblue;
 }

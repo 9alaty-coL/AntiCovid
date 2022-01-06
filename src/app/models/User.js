@@ -14,6 +14,15 @@ class Users {
         }
     }
 
+    async order(sort, order) {
+        try {
+            const res = await db.order(sort, order, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User/Order: ' + err.message);
+        }
+    }
+
     async one(colName, cprName) {
         try {
             const res = await db.one(colName, cprName, tbName);

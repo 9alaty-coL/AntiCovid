@@ -30,16 +30,56 @@ class ManagerController {
 
     // Get → /userlist
     async listUser(req, res, next) {
-        let users = await UserModel.all();
+        console.log(req.query);
+        // Query info
+        let page = req.query.page;
+        if (page === undefined) page = 1;
+        let sort = req.query.sort;
+        if (sort === undefined) sort = "";
+        let order = req.query.order;
+        if (order === undefined) order = "";
+
+        // Get list of user
+        let users = [];
+        if (sort === "") {
+            users = await UserModel.all();
+        } else {
+            users = await UserModel.order(sort, order);
+        }
+
+        // Check page
+        page = Math.min(Math.floor((users.length - 1) / 10) + 1, page);
+        let maxPage = Math.floor((users.length - 1) / 10) + 1;
+        let pages = [];
+        for (let index = page - 2; pages.length < Math.min(maxPage,5) && index <= maxPage; index++) {
+            if (index < 1) continue;
+            pages.push({pageNumber: index});
+        }
+        let Previous = "on";
+        if (page === pages[0].pageNumber) Previous = "off";
+        let Next = "on";
+        if (page === pages[pages.length - 1].pageNumber) Next = "off";
+
+        // Cut off users for selected page
+        users = users.slice((page - 1) * 10, Math.min((page - 1) * 10 + 10), users.length);
+
+        // Handle ID HospitalLocation
         for (let i = 0; i < users.length; i++) {
             users[i].P_TreatmentPlace = (await TreatmentPlacesModel.one('_id', users[i].P_TreatmentPlace)).name;
         }
 
+        // Render
         res.render('manager/listUser', {
             layout: 'manager',
             users: users,
+            currentPageNumber: page,
+            Previous: Previous,
+            Next: Next,
+            pages: pages,
+            sort: sort,
+            order: order,
             css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
+            js: ['UserListPage','UserSearchBar','ManagerPage'],
         });
     }
 
@@ -73,15 +113,6 @@ class ManagerController {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['SearchUser','UserSearchBar','ManagerPage'],
-        });
-    }
-
-    // Get → /sortby=:SortID
-    sortBy(req, res, next) {
-        res.render('manager/home', {
-            layout: 'manager',
-            css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
         });
     }
 

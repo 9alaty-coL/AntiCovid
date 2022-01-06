@@ -33,7 +33,7 @@
                 Quản lý s.phẩm / n.y.phẩm
             </div>
             <ul class="list d-none">
-                 <li class="list-item active">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách </a>
                 </li>
                 <li class="list-item">
@@ -55,7 +55,8 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/manager/package"><i class="fas fa-home"></i> Danh sách gói nhu yếu phẩm</a>
+                    <a class="d-block" href="/manager/package"><i class="fas fa-home"></i> Danh sách gói nhu yếu
+                        phẩm</a>
                 </li>
                 <li class="list-item">
                     <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Tìm kiếm gói nhu yếu phẩm</a>
@@ -64,7 +65,8 @@
                     <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Tìm kiếm gói nhu yếu phẩm</a>
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Tìm kiếm gói nhu yếu
+                        phẩm</a>
                 </li>
             </ul>
         </div>
@@ -115,7 +117,33 @@
 
     <div class="col-9" style="flex:1;">
         <div class="section general-information">
-            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Danh sách người liên quan đến covid-19</h1>
+            <h1 class="mx-5 mb-2 d-flex">
+                <div class="me-auto" style="width: 50%;">
+                    <i class="fa fa-list-ul"></i> Danh sách người liên quan đến covid-19
+                </div>
+                <div class="ms-auto" style="width: 40%;">
+                    <form action="/manager/listUser" method="get" id="formList">
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="sort" style="font-size: 0.8em;">
+                                <option value="" selected>Không sắp xếp...</option>
+                                <option value="P_FullName" {{#ifStr sort 'P_FullName'}}selected{{/ifStr}}>Full Name</option>
+                                <option value="P_Identity" {{#ifStr sort 'P_Identity'}}selected{{/ifStr}}>ID Card</option>
+                                <option value="P_YearOfBirth" {{#ifStr sort 'P_YearOfBirth'}}selected{{/ifStr}}>BirthYear</option>
+                                <option value="P_Address" {{#ifStr sort 'P_Address'}}selected{{/ifStr}}>Address</option>
+                                <option value="P_Status" {{#ifStr sort 'P_Status'}}selected{{/ifStr}}>Status</option>
+                                <option value="P_TreatmentPlace" {{#ifStr sort 'P_TreatmentPlace'}}selected{{/ifStr}}>Hospital</option>
+                            </select>
+                            <select class="form-select" name="order" style="font-size: 0.8em;">
+                                <option value="" selected>Ngẫu nhiên...</option>
+                                <option value="ASC" {{#ifStr order 'ASC'}}selected{{/ifStr}}>Tăng dần</option>
+                                <option value="DESC" {{#ifStr order 'DESC'}}selected{{/ifStr}}>Giảm dần</option>
+                            </select>
+                            <input type="number" id="page" value="{{currentPageNumber}}" name="page" hidden>
+                            <button type="submit" class="btn btn-success" style="font-size: 0.8em;">Sắp xếp</button>
+                        </div>
+                    </form>
+                </div>
+            </h1>
             <div class="card bg-info mb-3 text-light">
                 <div class="row card-body h-100">
                     <span class="col-2 border-end border-dark border-2"><b>Full Name</b></span>
@@ -139,6 +167,29 @@
                 </div>
             </div>
             {{/each}}
+
+            <nav aria-label="Page navigation mt-5">
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li class="page-item">
+                        <button type="submit" form="formList" onclick="submit(0, -1)"
+                                style="font-size: 1.5em;" class="page-link" aria-label="Previous" {{#ifStr Previous 'off'}}disabled{{/ifStr}}>
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+                    {{#each pages}}
+                    <li class="page-item">
+                        <button type="submit" form="formList" onclick="submit({{this.pageNumber}})"
+                                style="font-size: 1.5em;" class="page-link" >{{this.pageNumber}}</button>
+                    </li>
+                    {{/each}}
+                    <li class="page-item">
+                        <button type="submit" form="formList" onclick="submit(0, 1)"
+                                style="font-size: 1.5em;" class="page-link" aria-label="Next" {{#ifStr Next 'off'}}disabled{{/ifStr}}>
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

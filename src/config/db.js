@@ -41,6 +41,15 @@ class dbQuery {
         }
     }
 
+    async order(colName, byOrder, tbName) {
+        try {
+            const res = await db.any(`SELECT * FROM "${tbName}" ORDER BY "${colName}" ${byOrder}`);
+            return res;
+        } catch (err) {
+            console.log('error in db/order: ' + err.message);
+        }
+    }
+
     async one(colName, cprName, tbName) {
         try {
             const res = await db.oneOrNone(
@@ -72,7 +81,7 @@ class dbQuery {
             );
             return res;
         } catch (err) {
-            console.log('error in db/Column: ' + err.message);
+            console.log('error in db/cols: ' + err.message);
             return null;
         }
     }
@@ -109,7 +118,7 @@ class dbQuery {
             let res = await db.one(qr);
             return res;
         } catch (err) {
-            console.log('error in d/update: ' + err.message);
+            console.log('error in db/update: ' + err.message);
             return null;
         }
     }

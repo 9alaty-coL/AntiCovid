@@ -11,8 +11,6 @@ router.get('/listUser', ManagerController.listUser);
 
 router.get('/search', ManagerController.search);
 
-router.get('/sortby=:SortID', ManagerController.sortBy);
-
 router.get('/detail/UserID=:UserID', ManagerController.detail);
 
 router.get('/addUser', ManagerController.addUser);
