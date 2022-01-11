@@ -76,14 +76,11 @@ class Users {
         }
     }
 
-    async relate(arrayID) {
+    async relate(groupID, userID) {
         try {
-            let res = [];
-            for (let element of arrayID) {
-                let user = await db.one('P_ID', element, tbName);
-                if (user != null) res.push(user);
-            }
-            return res;
+            let group = await db.rows('P_RelateGroup', groupID, tbName);
+            let relate = group.filter(g => g.P_ID !== userID);
+            return relate;
         } catch (err) {
             console.log('error in User/relate: ' + err.message);
             return null;

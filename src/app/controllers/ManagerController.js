@@ -9,11 +9,14 @@ const TimeUtils = require('../../utils/Time')
 const e = require('express')
 
 function calStatus(Status, offset) {
-    if (Status === "Không") Status = "F4";
-    let nextStatus = parseInt(Status[1]) + offset;
-    if (nextStatus < 0) return "F0";
-    else if (nextStatus > 3) return "Không";
-    else return "F" + nextStatus;
+    if (offset < 0) {
+        if (Status === "F0") return "Khỏi bệnh"
+        else return "Không"
+    }
+    else {
+        let nextF = Math.max(0, parseInt(Status[1]) - offset);
+        return Status[0] + nextF;
+    }
 }
 
 class ManagerController {
@@ -30,7 +33,6 @@ class ManagerController {
 
     // Get → /userlist
     async listUser(req, res, next) {
-        console.log(req.query);
         // Query info
         let page = req.query.page;
         if (page === undefined) page = 1;
@@ -53,7 +55,8 @@ class ManagerController {
         let pages = [];
         for (let index = page - 2; pages.length < Math.min(maxPage,5) && index <= maxPage; index++) {
             if (index < 1) continue;
-            pages.push({pageNumber: index});
+            if (index === page) pages.push({pageNumber: index, isCurrentPage: "on"});
+            else pages.push({pageNumber: index, isCurrentPage: "off"});
         }
         let Previous = "on";
         if (page === pages[0].pageNumber) Previous = "off";
@@ -126,7 +129,7 @@ class ManagerController {
         // User Location History
         let resLocationHistory = await LocationHistoryModel.one('P_ID', userID);
         let userlogLocation = [];
-        for (let i = 0; i < resLocationHistory.Time.length; i++) {
+        for (let i = 0; resLocationHistory !== null && i < resLocationHistory.Time.length; i++) {
             let Manager = await ManagerModel.one('M_ID', resLocationHistory.Manager_ID[i]);
             let Location = await TreatmentPlacesModel.one('_id', resLocationHistory.HospitalLocation[i]);
             userlogLocation.push({ Time: resLocationHistory.Time[i], Activity: Location.name, Manager: Manager.ManagerName });
@@ -135,13 +138,13 @@ class ManagerController {
         // User Status History
         let resStatusHistory = await StatusHistoryModel.one('P_ID', userID);
         let userlogStatus = [];
-        for (let i = 0; i < resStatusHistory.Time.length; i++) {
+        for (let i = 0; resStatusHistory !== null && i < resStatusHistory.Time.length; i++) {
             let Manager = await ManagerModel.one('M_ID', resStatusHistory.Manager_ID[i]);
             userlogStatus.push({ Time: resStatusHistory.Time[i], Activity: resStatusHistory.StatusChange[i], Manager: Manager.ManagerName });
         }
 
         // User RelateInfo
-        let relateInfo = await UserModel.relate(userInfo.P_RelatedPersonID);
+        let relateInfo = await UserModel.relate(userInfo.P_RelateGroup, userInfo.P_ID);
         for (let i = 0; i < relateInfo.length; i++) {
             relateInfo[i].P_TreatmentPlace = (await TreatmentPlacesModel.one('_id', relateInfo[i].P_TreatmentPlace)).name;
         }
@@ -216,23 +219,30 @@ class ManagerController {
         // Offset:
         let from = req.body.from;
         let to = req.body.to;
-        let offset = parseInt(to[1]) - parseInt(from[1]);
+        let offset = parseInt(from[1]) - parseInt(to[1]);  
 
         // User Info:
         let user = await UserModel.one('P_ID', req.params.UserID);
 
-        // Change Relate Status + Report StatusHistory
-        for (let i = 0; i < user.P_RelatedPersonID.length; i++) {
-            let relate = await UserModel.one('P_ID', user.P_RelatedPersonID[i]);
-            if (relate.P_Status !== "Không" && parseInt(relate.P_Status[1]) < parseInt(user.P_Status[1])) continue;
-            else {
+        // Relate Info
+        let relate = await UserModel.relate(user.P_RelateGroup, user.P_ID);
+        console.log(user.P_ID);
+        console.log(user.P_RelateGroup);
+        console.log(relate);
+
+        if (user.P_Status === "F0" && !relate.some(r => r.P_Status === "F0")) {
+            // Change Relate Status + Report StatusHistory
+            for (let i = 0; i < relate.length; i++) {
+                if (relate[i].P_Status === "Khỏi bệnh" || relate[i].P_Status === "F0") continue;
+                
                 // Change Relate Status
-                let newRelateStatus = { P_ID: relate.P_ID, P_Status: calStatus(relate.P_Status, offset) };
+                if (relate[i].P_Status !== "Không") relate[i].P_Status = "F4";
+                let newRelateStatus = { P_ID: relate[i].P_ID, P_Status: calStatus(relate[i].P_Status, offset) };
                 await UserModel.updateUser(newRelateStatus);
                 // Report StatusHistory
-                let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate.P_Status + " → " + calStatus(relate.P_Status, offset), Manager_ID: manager._id }
-                await StatusHistoryModel.append(relate.P_ID, reportRelateStatus);
-            }
+                let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate[i].P_Status + " → " + calStatus(relate[i].P_Status, offset), Manager_ID: manager._id }
+                await StatusHistoryModel.append(relate[i].P_ID, reportRelateStatus);
+            }    
         }
 
         // Change User Status
