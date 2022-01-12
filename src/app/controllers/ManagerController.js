@@ -294,13 +294,12 @@ class ManagerController {
         // Relate Info
         let relate = await UserModel.relate(user.P_RelateGroup, user.P_ID);
 
-        if (user.P_Status === "F0" && !relate.some(r => r.P_Status === "F0")) {
+        if (!(user.P_Status === "F0" && relate.some(r => r.P_Status === "F0"))) {
             // Change Relate Status + Report StatusHistory
             for (let i = 0; i < relate.length; i++) {
                 if (relate[i].P_Status === "Khỏi bệnh" || relate[i].P_Status === "F0") continue;
-                
                 // Change Relate Status
-                if (relate[i].P_Status !== "Không") relate[i].P_Status = "F4";
+                if (relate[i].P_Status === "Không") relate[i].P_Status = "F4";
                 let newRelateStatus = { P_ID: relate[i].P_ID, P_Status: calStatus(relate[i].P_Status, offset) };
                 await UserModel.updateUser(newRelateStatus);
                 // Report StatusHistory
