@@ -117,7 +117,6 @@ const displayTreatmentPlaces = (places) => {
 };
 
 $('#searchBarTreatPlace').keyup((e) => {
-    if (e.keyCode == 8) resetLocation();
     const searchString = nonAccentVietnamese(e.target.value);
 
     const filtered = treatmentPlaces.filter((place) => {

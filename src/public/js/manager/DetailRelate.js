@@ -64,7 +64,8 @@ function changeStatusRelate(to) {
 
         let curStatus = $(this).text();
         if ($(this).text() === "Không") {
-            $(this).html(`${curStatus}<b class="${textColor} border-end-0"> → ${calStatus("F4", Offset)}</b>`)   
+            let nextStautus = calStatus("F4", Offset);
+            if (nextStautus !== "Không") $(this).html(`${curStatus}<b class="${textColor} border-end-0"> → ${nextStautus}</b>`)   
         } else {
             $(this).html(`${curStatus}<b class="${textColor} border-end-0"> → ${calStatus(curStatus, Offset)}</b>`)            
         }

@@ -98,7 +98,6 @@ class ManagerController {
                 key[eachKey] = req.query[eachKey];
             }
         }
-        console.log(key)
 
         // Search for user
         let users = await UserModel.search(key);
@@ -278,8 +277,8 @@ class ManagerController {
 
         // Create new user 
         UserData.P_ID = AccountData._id;
-        if (UserData.P_RelateGroup === 0) {
-            UserData.P_RelateGroup = (await UserModel.maxGroupID()) + 1;
+        if (parseInt(UserData.P_RelateGroup) === 0) {
+            UserData.P_RelateGroup = parseInt(await UserModel.maxGroupID()) + 1;
         }
         await UserModel.insert(UserData);
 
@@ -301,14 +300,11 @@ class ManagerController {
         // Form data
         let addOption = req.body.addOption;
         let relate = (req.body.relate).split(" ");
-        console.log(relate);
-        console.log(relate[relate.length - 1]);
         let P_RelateGroup = req.body.P_RelateGroup;
 
         // Add relate
         if (addOption === "one") {
             let newRelate = await UserModel.one('P_IdentityCard', relate[relate.length - 1]);
-            console.log(newRelate);
             let newRelateInfo = { P_ID: newRelate.P_ID, P_RelateGroup: user.P_RelateGroup };
             await UserModel.updateUser(newRelateInfo);
         } 
@@ -346,6 +342,7 @@ class ManagerController {
                 // Change Relate Status
                 if (relate[i].P_Status === "Không") relate[i].P_Status = "F4";
                 let newRelateStatus = { P_ID: relate[i].P_ID, P_Status: calStatus(relate[i].P_Status, offset) };
+                if (relate[i].P_Status === "Không" && newRelateStatus.P_Status === "Không") continue;
                 await UserModel.updateUser(newRelateStatus);
                 // Report StatusHistory
                 let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate[i].P_Status + " → " + calStatus(relate[i].P_Status, offset), Manager_ID: manager._id }
