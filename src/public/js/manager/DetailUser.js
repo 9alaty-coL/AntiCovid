@@ -38,6 +38,11 @@ setInterval(function () {
     $("#Time").text(time);
 }, 500);
 
+function resetLocation() {
+    $('#menuBarTreatPlace').val('');
+    $('#IDsearchBarRelate').val(0);
+}
+
 // Search Treatment Place
 const placeLists = document.getElementById('searchBarTreatPlace');
 const searchBarPlace = document.getElementById('menuBarTreatPlace');
@@ -102,6 +107,7 @@ const displayTreatmentPlaces = (places) => {
 };
 
 $('#searchBarTreatPlace').keyup((e) => {
+    if (e.keyCode == 8) resetLocation();
     const searchString = nonAccentVietnamese(e.target.value);
 
     const filtered = treatmentPlaces.filter((place) => {

@@ -22,6 +22,7 @@ router.get('/package', ManagerController.Package);
 router.get('/addRelate/UserID=:UserID', ManagerController.addRelate);
 
 // >> POST
+router.post('/addUser', ManagerController.postAddUser);
 
 // >> PUT
 router.put('/detail/UserID=:UserID/changeStatus', ManagerController.changeStatus)
@@ -30,6 +31,8 @@ router.put('/detail/UserID=:UserID/changeLocation', ManagerController.changeLoca
 
 // >> GET FETCH
 router.get('/username', ManagerController.fetchUserName)
+
+router.get('/relate', ManagerController.fetchRelateGroup)
 
 router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
 

@@ -87,6 +87,16 @@ class Users {
         }
     }
 
+    async insert(user) {
+        try {
+            const res = await db.insert(user, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User/insert: ' + err.message);
+            return null;
+        }
+    }
+
     async update(value){
         try{
             const res = await db.update('_id', value, tbName);
@@ -103,6 +113,16 @@ class Users {
             return res;
         }catch(err){
             console.log('error in User/updateUser: ' + err.message);
+            return null;
+        }
+    }
+
+    async maxGroupID() {
+        try{
+            const res = await db.maximum('P_RelateGroup', tbName);
+            return res;
+        }catch(err){
+            console.log('error in User/maxGroupID: ' + err.message);
             return null;
         }
     }

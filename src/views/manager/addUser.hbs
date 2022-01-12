@@ -116,81 +116,108 @@
     <div class="col-9" style="flex:1;">
         <div class="section general-information">
             <h1 class="mx-5 mb-5"><i class="fas fa-user"></i> Thêm tài khoản cho người liên quan đến covid-19</h1>
-            <form id="addUser">
+            <form id="addUser" autocomplete="off" action="/manager/addUser" method="post">
                 <div class="card card-bg mb-3 text-dark">
                     <div class="card-body w-100">
-                        <h1>Thông tin tài khoản : </h1>
+                        <h1>Thông tin tài khoản : <b class="text-danger">{{AccountError}}</b></h1>
+                        {{#with AccountData}}
                         <div class="input-group mb-3">
                             <label class="input-group-text text-form" for="username" style="width: 15%;">User
                                 Name</label>
-                            <input id="username" name="username" type="text"
-                                class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                style="width: 85%;">
+                            <input type="text" id="username" name="username"
+                                class="form-control text-form text-location-form" placeholder="username"
+                                style="width: 85%;" autocomplete="new-username" value="{{username}}">
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text text-form" for="password"
                                 style="width: 15%;">Password</label>
                             <input id="password" name="password" type="password"
                                 class="form-control text-form text-location-form" placeholder="Mật khẩu"
-                                style="width: 85%;">
+                                style="width: 85%;" autocomplete="new-password" value="{{password}}">
                         </div>
                         <div class="input-group">
                             <label class="input-group-text text-form" for="repassword" style="width: 15%;">Repeat
                                 Password</label>
-                            <input id="password" name="repassword" type="repassword"
+                            <input id="repassword" name="repassword" type="password"
                                 class="form-control text-form text-location-form" placeholder="Nhập lại mật khẩu"
-                                style="width: 85%;">
+                                style="width: 85%;" value="{{password}}">
                         </div>
+                        {{/with}}
                     </div>
                 </div>
                 <div class="card card-bg mb-3 text-dark">
                     <div class="card-body w-100">
-                        <h1>Thông tin cơ bản: </h1>
+                        <h1>Thông tin cơ bản: <b class="text-danger">{{UserError}}</b></h1>
+                        {{#with UserData}}
                         <div class="input-group mb-3">
                             <label class="input-group-text text-form" for="P_FullName" style="width: 15%;">Họ và
                                 tên</label>
                             <input id="P_FullName" name="P_FullName" type="text"
                                 class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                style="width: 85%;">
+                                style="width: 85%;" value="{{P_FullName}}">
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text text-form" for="P_IdentityCard"
                                 style="width: 15%;">CMND/CCCD</label>
-                            <input id="P_IdentityCard" name="P_IdentityCard" type="text"
+                            <input id="P_IdentityCard" name="P_IdentityCard" type="number"
                                 class="form-control text-form text-location-form"
-                                placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;">
+                                placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;" value="{{P_IdentityCard}}">
                             <label class="input-group-text text-form" for="P_YearOfBirth" style="width: 10%;">Năm
                                 sinh</label>
-                            <input id="P_YearOfBirth" name="P_YearOfBirth" type="text"
+                            <input id="P_YearOfBirth" name="P_YearOfBirth" type="number"
                                 class="form-control text-form text-location-form" placeholder="Năm sinh"
-                                style="width: 15%;">
+                                style="width: 15%;" value="{{P_YearOfBirth}}">
                             <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
                                 thái</label>
                             <select class="form-select text-form" id="P_Status" name="P_Status" style="width: 10%;">
                                 <option class="text-form" value="F0" selected>F0</option>
-                                <option class="text-form" value="F1">F1</option>
-                                <option class="text-form" value="F2">F2</option>
-                                <option class="text-form" value="F3">F3</option>
+                                <option class="text-form" value="F1" {{#ifStr P_Status 'F1'}}selected{{/ifStr}}>F1</option>
+                                <option class="text-form" value="F2" {{#ifStr P_Status 'F2'}}selected{{/ifStr}}>F2</option>
+                                <option class="text-form" value="F3" {{#ifStr P_Status 'F3'}}selected{{/ifStr}}>F3</option>
                             </select>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa chỉ nơi
                                 ở</label>
                             <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;">
+                                placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;" value="{{P_Address}}">
                         </div>
                         <div class="input-group">
                             <label class="input-group-text text-form" for="P_HospitalAddress" style="width: 15%;">Nơi
                                 đang điều trị</label>
-                            <input id="P_HospitalAddress" name="P_HospitalAddress" type="text"
-                                class="form-control text-form" placeholder="Tên bệnh viện đang điều trị"
-                                style="width: 85%;">
+                            <div class="form-control form-control-dark text-form search-packet no-gutter"
+                                style="width: 55%;" id="inputOutline">
+                                <input name="location" autocomplete="off" type="text" id="searchBarTreatPlace"
+                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp">
+                                <input name="P_HospitalAddress" type="number" id="IDsearchBarTreatPlace" value="0" hidden>
+                                <ul class="search-menu" id="menuBarTreatPlace" style="z-index: 10;"></ul>
+                            </div>
+                        </div>
+                        {{/with}}
+                    </div>
+                </div>
+                <div class="card card-bg mb-3 text-dark">
+                    <div class="card-body w-100">
+                        <h1>Tìm người liên đới (nếu có): </h1>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text text-form" for="username" style="width: 15%;">Tên người liên
+                                đới</label>
+                            <div class="form-control form-control-dark text-form search-packet no-gutter"
+                                style="width: 55%;" id="inputOutline">
+                                <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
+                                    <input name="relate" autocomplete="off" type="text" id="searchBarRelate"
+                                        class="form-control search-input" placeholder="Người liên đới">
+                                    <input name="P_RelateGroup" type="number" id="IDsearchBarRelate" value="0" hidden>
+                                </div>
+                                <ul class="search-menu" id="menuBarRelate"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
             <div class="w-100 text-center">
-                <button type="submit" form="addUser" class="btn btn-success w-25 text-center" style="font-size: 1.5em;">Tạo tài khoản</button>      
+                <button type="submit" form="addUser" class="btn btn-success w-25 text-center"
+                    style="font-size: 1.5em;">Tạo tài khoản</button>
             </div>
         </div>
     </div>

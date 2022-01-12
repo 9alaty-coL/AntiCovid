@@ -1,3 +1,4 @@
+const UserM = require('../models/Authen')
 const UserModel = require('../models/User')
 const ManagerModel = require('../models/Manager')
 const ProductsModel = require('../models/Product')
@@ -6,6 +7,7 @@ const LocationHistoryModel = require('../models/LocationHistory')
 const StatusHistoryModel = require('../models/StatusHistory')
 const TreatmentPlacesModel = require('../models/TreatmentPlaces')
 const TimeUtils = require('../../utils/Time')
+const bcrypt = require('bcrypt');
 const e = require('express')
 
 function calStatus(Status, offset) {
@@ -164,8 +166,12 @@ class ManagerController {
     addUser(req, res, next) {
         res.render('manager/addUser', {
             layout: 'manager',
+            AccountError: '',
+            UserError: '',
+            AccountData: {username: '', password: ''},
+            UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
             css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
+            js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
         });
     }
 
@@ -209,7 +215,68 @@ class ManagerController {
     }
 
     ///>> Method → <POST> <<///
+    async postAddUser(req, res, next) {
+        // Post by:
+        let manager = req.user;
 
+        // Form input
+        let AccountData = {username: req.body.username, password: req.body.password, role: 'user', isLocked: false};
+        let UserData = {P_FullName: req.body.P_FullName, P_IdentityCard: req.body.P_IdentityCard, P_YearOfBirth: req.body.P_YearOfBirth, 
+            P_Status: req.body.P_Status, P_Address: req.body.P_Address, P_TreatmentPlace: parseInt(req.body.P_HospitalAddress), P_RelateGroup: req.body.P_RelateGroup};
+
+        // Account data
+        let existAccount = await UserM.getUserByUN(req.body.username);
+        if (existAccount) {
+            return res.render('manager/addUser', {
+                layout: 'manager',
+                AccountError: 'username đã tồn tại',
+                UserError: '',
+                AccountData: AccountData,
+                UserData: UserData,
+                css: ['ManagerPage'],
+                js: ['AddUser','DetailUser','UserSearchBar','ManagerPage'],
+            });
+        }
+
+        // User data
+        let existUser = await UserModel.one('P_IdentityCard', req.body.P_IdentityCard);
+        if (existUser) {
+            return res.render('manager/addUser', {
+                layout: 'manager',
+                AccountError: '',
+                UserError: 'Identity Card đã tồn tại',
+                AccountData: AccountData,
+                UserData: UserData,
+                css: ['ManagerPage'],
+                js: ['AddUser','DetailUser','UserSearchBar','ManagerPage'],
+            });
+        }
+
+        //->> if data if valid
+
+        // Create new user account
+        AccountData.password = await bcrypt.hash(req.body.password, 10);
+        AccountData._id = await UserM.nextID();
+        await UserM.insert(AccountData);
+
+        // Create new user 
+        UserData.P_ID = AccountData._id;
+        if (UserData.P_RelateGroup === 0) {
+            UserData.P_RelateGroup = (await UserModel.maxGroupID()) + 1;
+        }
+        await UserModel.insert(UserData);
+
+        // Create new user LocationHistory
+        let LocationHistoryData = {P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], HospitalLocation: [UserData.P_TreatmentPlace] , Manager_ID: [manager._id]}
+        await LocationHistoryModel.insert(LocationHistoryData);
+
+        // Create new user StatusHistory
+        let StatusHistoryData = {P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], StatusChange: [`Không → ${UserData.P_Status}`] , Manager_ID: [manager._id]}
+        await StatusHistoryModel.insert(StatusHistoryData);
+
+        // Redirect to User detail
+        res.redirect(`/manager/detail/UserID=${AccountData._id}`);
+    }
 
     ///>> Method → <PUT> <<///
     async changeStatus(req, res, next) {
@@ -226,9 +293,6 @@ class ManagerController {
 
         // Relate Info
         let relate = await UserModel.relate(user.P_RelateGroup, user.P_ID);
-        console.log(user.P_ID);
-        console.log(user.P_RelateGroup);
-        console.log(relate);
 
         if (user.P_Status === "F0" && !relate.some(r => r.P_Status === "F0")) {
             // Change Relate Status + Report StatusHistory
@@ -284,6 +348,16 @@ class ManagerController {
         const User = await UserModel.all();
         let UserName = User.map(each => each.P_FullName);
         res.send(UserName);
+    }
+
+    async fetchRelateGroup(req, res, next) {
+        const User = await UserModel.all();
+        
+        let Relate = [];
+        for (let i = 0; i < User.length; i++) {
+            Relate.push({P_FullName: User[i].P_FullName, P_Status: User[i].P_Status, P_IdentityCard: User[i].P_IdentityCard , P_RelateGroup: User[i].P_RelateGroup} )
+        }
+        res.send(Relate);
     }
 }
 

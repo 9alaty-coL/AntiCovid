@@ -69,6 +69,15 @@ class Users {
         }
     }
     
+    async nextID() {
+        try{
+            const res = await db.maximum('_id', tbName);
+            return res + 1;
+        }catch(err){
+            console.log('error in account next: ' + err.message);
+            return null;
+        }
+    }
 }
 
 module.exports = new Users();
