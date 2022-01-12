@@ -1,3 +1,5 @@
+$('#locationButton').prop('disabled', true);
+
 // Validate Status Form JS
 $("#ChangeStatusForm").submit(function () {
     if ($("#from").val() === $("#to :selected").val()) {
@@ -39,8 +41,14 @@ setInterval(function () {
 }, 500);
 
 function resetLocation() {
+    buttonLocation(true);
     $('#menuBarTreatPlace').val('');
+    $('#searchBarTreatPlace').val('');
     $('#IDsearchBarRelate').val(0);
+}
+
+function buttonLocation(isOn) {
+    $('#locationButton').prop('disabled', isOn);
 }
 
 // Search Treatment Place
@@ -77,6 +85,7 @@ const displayTreatmentPlaces = (places) => {
                 <li class="">
                     <a class="" onclick="document.getElementById('searchBarTreatPlace').value = '${places.name}'; 
                                         document.getElementById('menuBarTreatPlace').innerHTML = '';
+                                        buttonLocation(false);
                                 ">
                         ${places.name} → ${places.current} / ${places.capacity}
                     </a> 
@@ -95,6 +104,7 @@ const displayTreatmentPlaces = (places) => {
                 <li class="">
                     <a class="" onclick="document.getElementById('searchBarTreatPlace').value = '${places.name}'; 
                                         document.getElementById('menuBarTreatPlace').innerHTML = '';
+                                        buttonLocation(false);
                                 ">
                         ${places.name} → ${places.current} / ${places.capacity}
                     </a> 

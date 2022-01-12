@@ -1,3 +1,8 @@
+function filterRelate() {
+    let identity = $('#Identity').text();
+    relate = relate.filter(fullname => fullname.P_IdentityCard !== identity);
+};
+
 function cancelChange() {
     $("#Null").prop('selected', true);
     resetStatus();

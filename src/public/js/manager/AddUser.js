@@ -1,3 +1,5 @@
+$('#relateButton').prop('disabled', true);
+
 // Form validation
 $("#addUser").submit(function () {
     let checkVNcharOnly = /^[a-zA-Z ]*$/;
@@ -77,10 +79,15 @@ function setRelate(P_FullName, P_RelateGroup) {
 }
 
 function resetRelate() {
+    buttonRelate(true);
     $('#searchBarRelate').removeClass("text-success");
     $('#inputOutline').removeClass("border-success");
     $('#searchBarRelate').val('');
     $('#IDsearchBarRelate').val(0);
+}
+
+function buttonRelate(isOn) {
+    $('#relateButton').prop('disabled', isOn);
 }
 
 // Search Treatment Place
@@ -95,6 +102,7 @@ const loadRelate = async () => {
         const res = await fetch('/manager/relate');
         relate = await res.json();
         console.log(relate);
+        filterRelate();
     } catch (err) {
         console.error(err);
     }
@@ -116,7 +124,7 @@ const displayRelate = (data) => {
         htmlString = data
             .map((d) => {
                 return `
-                <li class="row searchbar-hover" onclick="setRelate('${d.P_FullName} - Status: ${d.P_Status} - ID: ${d.P_IdentityCard}', '${d.P_RelateGroup}');">
+                <li class="row searchbar-hover" onclick="setRelate('${d.P_FullName} - Status: ${d.P_Status} - ID: ${d.P_IdentityCard}', '${d.P_RelateGroup}'); buttonRelate(false);">
                     <div class="col-6">${d.P_FullName}</div>
                     <div class="col-3">Status: ${d.P_Status}</div>
                     <div class="col-3">ID: ${d.P_IdentityCard}</div>
@@ -132,7 +140,7 @@ const displayRelate = (data) => {
         htmlString = results
             .map((d) => {
                 return `
-                <li class="row searchbar-hover" onclick="setRelate('${d.P_FullName} - Status: ${d.P_Status} - ID: ${d.P_IdentityCard}', '${d.P_RelateGroup}');">
+                <li class="row searchbar-hover" onclick="setRelate('${d.P_FullName} - Status: ${d.P_Status} - ID: ${d.P_IdentityCard}', '${d.P_RelateGroup}'); buttonRelate(false);">
                     <div class="col-6">${d.P_FullName}</div>
                     <div class="col-3">Status: ${d.P_Status}</div>
                     <div class="col-3">ID: ${d.P_IdentityCard}</div>
@@ -145,7 +153,6 @@ const displayRelate = (data) => {
 };
 
 $('#searchBarRelate').keyup((e) => {
-    if (e.keyCode == 8) resetRelate();
     const searchString = nonAccentVietnamese(e.target.value);
 
     const filtered = relate.filter((d) => {

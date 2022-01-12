@@ -182,14 +182,16 @@
                             <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
                                 placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;" value="{{P_Address}}">
                         </div>
+                        {{/with}}
+                        {{#with HospitalData}}
                         <div class="input-group">
                             <label class="input-group-text text-form" for="P_HospitalAddress" style="width: 15%;">Nơi
                                 đang điều trị</label>
                             <div class="form-control form-control-dark text-form search-packet no-gutter"
                                 style="width: 55%;" id="inputOutline">
                                 <input name="location" autocomplete="off" type="text" id="searchBarTreatPlace"
-                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp">
-                                <input name="P_HospitalAddress" type="number" id="IDsearchBarTreatPlace" value="0" hidden>
+                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp" value="{{hospitalData}}">
+                                <input name="P_HospitalAddress" type="number" id="IDsearchBarTreatPlace" value="{{IDHospital}}" hidden>
                                 <ul class="search-menu" id="menuBarTreatPlace" style="z-index: 10;"></ul>
                             </div>
                         </div>
@@ -204,11 +206,13 @@
                                 đới</label>
                             <div class="form-control form-control-dark text-form search-packet no-gutter"
                                 style="width: 55%;" id="inputOutline">
+                                {{#with RelateData}}
                                 <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
                                     <input name="relate" autocomplete="off" type="text" id="searchBarRelate"
-                                        class="form-control search-input" placeholder="Người liên đới">
-                                    <input name="P_RelateGroup" type="number" id="IDsearchBarRelate" value="0" hidden>
+                                        class="form-control search-input" placeholder="Người liên đới" value="{{relateData}}">
+                                    <input name="P_RelateGroup" type="number" id="IDsearchBarRelate" value="{{IDGroup}}" hidden>
                                 </div>
+                                {{/with}}
                                 <ul class="search-menu" id="menuBarRelate"></ul>
                             </div>
                         </div>

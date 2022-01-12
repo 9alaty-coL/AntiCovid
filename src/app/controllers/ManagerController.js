@@ -158,7 +158,7 @@ class ManagerController {
             relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['UserSearchBar','DetailUser', 'DetailRelate', 'ManagerPage'],
+            js: ['DetailRelate','UserSearchBar','DetailUser','AddUser', 'ManagerPage'],
         });
     }
 
@@ -170,17 +170,28 @@ class ManagerController {
             UserError: '',
             AccountData: {username: '', password: ''},
             UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
+            HospitalData: {hospitalData: '', IDHospital: 0},
+            RelateData: {relateData: '', IDGroup: 0},
             css: ['ManagerPage'],
             js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
         });
     }
 
-    // Get → /addRelate
-    addRelate(req, res, next) {
-        res.render('manager/addRelate', {
+    // Get → /addRelate/UserID=:UserID
+    async addRelate(req, res, next) {
+        let user = await UserModel.one('P_ID', req.params.UserID);
+        let RelateData = {relateData: user.P_FullName + " - Status: " + user.P_Status + " - ID: " + user.P_IdentityCard, IDGroup: user.P_RelateGroup}
+
+        res.render('manager/addUser', {
             layout: 'manager',
+            AccountError: '',
+            UserError: '',
+            AccountData: {username: '', password: ''},
+            UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
+            HospitalData: {hospitalData: '', IDHospital: 0},
+            RelateData: RelateData,
             css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
+            js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
         });
     }
 
@@ -223,6 +234,8 @@ class ManagerController {
         let AccountData = {username: req.body.username, password: req.body.password, role: 'user', isLocked: false};
         let UserData = {P_FullName: req.body.P_FullName, P_IdentityCard: req.body.P_IdentityCard, P_YearOfBirth: req.body.P_YearOfBirth, 
             P_Status: req.body.P_Status, P_Address: req.body.P_Address, P_TreatmentPlace: parseInt(req.body.P_HospitalAddress), P_RelateGroup: req.body.P_RelateGroup};
+        let HospitalData = {hospitalData: req.body.location, IDHospital: req.body.P_HospitalAddress};
+        let RelateData = {relateData: req.body.relate, IDGroup: req.body.P_RelateGroup};
 
         // Account data
         let existAccount = await UserM.getUserByUN(req.body.username);
@@ -233,6 +246,8 @@ class ManagerController {
                 UserError: '',
                 AccountData: AccountData,
                 UserData: UserData,
+                HospitalData: HospitalData,
+                RelateData: RelateData,
                 css: ['ManagerPage'],
                 js: ['AddUser','DetailUser','UserSearchBar','ManagerPage'],
             });
@@ -247,6 +262,8 @@ class ManagerController {
                 UserError: 'Identity Card đã tồn tại',
                 AccountData: AccountData,
                 UserData: UserData,
+                HospitalData: HospitalData,
+                RelateData: RelateData,
                 css: ['ManagerPage'],
                 js: ['AddUser','DetailUser','UserSearchBar','ManagerPage'],
             });
@@ -276,6 +293,34 @@ class ManagerController {
 
         // Redirect to User detail
         res.redirect(`/manager/detail/UserID=${AccountData._id}`);
+    }
+
+    async postAddRelate(req, res, next) {
+        let user = await UserModel.one('P_ID', req.params.UserID);
+
+        // Form data
+        let addOption = req.body.addOption;
+        let relate = (req.body.relate).split(" ");
+        console.log(relate);
+        console.log(relate[relate.length - 1]);
+        let P_RelateGroup = req.body.P_RelateGroup;
+
+        // Add relate
+        if (addOption === "one") {
+            let newRelate = await UserModel.one('P_IdentityCard', relate[relate.length - 1]);
+            console.log(newRelate);
+            let newRelateInfo = { P_ID: newRelate.P_ID, P_RelateGroup: user.P_RelateGroup };
+            await UserModel.updateUser(newRelateInfo);
+        } 
+        else {
+            let newRelate = await UserModel.relate(P_RelateGroup);
+            for (let i = 0; i < newRelate.length; i++) {
+                let newRelateInfo = { P_ID: newRelate[i].P_ID, P_RelateGroup: user.P_RelateGroup };
+                await UserModel.updateUser(newRelateInfo);
+            }
+        }
+
+        res.redirect(`/manager/detail/UserID=${user.P_ID}`);
     }
 
     ///>> Method → <PUT> <<///
