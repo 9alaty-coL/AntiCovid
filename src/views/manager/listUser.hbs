@@ -171,19 +171,19 @@
             <nav aria-label="Page navigation mt-5">
                 <ul class="pagination pagination-lg justify-content-center">
                     <li class="page-item">
-                        <button type="submit" form="formList" onclick="submit(0, -1)"
+                        <button type="submit" form="formList" onclick="submitPageForm(0, -1)"
                                 style="font-size: 1.5em;" class="page-link" aria-label="Previous" {{#ifStr Previous 'off'}}disabled{{/ifStr}}>
                             <span aria-hidden="true">&laquo;</span>
                         </button>
                     </li>
                     {{#each pages}}
                     <li class="page-item">
-                        <button type="submit" form="formList" onclick="submit({{this.pageNumber}})"
-                                style="font-size: 1.5em;" class="page-link" >{{this.pageNumber}}</button>
+                        <button type="submit" form="formList" onclick="submitPageForm({{this.pageNumber}})"
+                                style="font-size: 1.5em;" class="page-link {{#ifStr isCurrentPage 'on'}}text-warning{{/ifStr}}" {{#ifStr isCurrentPage 'on'}}disabled{{/ifStr}}>{{this.pageNumber}}</button>
                     </li>
                     {{/each}}
                     <li class="page-item">
-                        <button type="submit" form="formList" onclick="submit(0, 1)"
+                        <button type="submit" form="formList" onclick="submitPageForm(0, 1)"
                                 style="font-size: 1.5em;" class="page-link" aria-label="Next" {{#ifStr Next 'off'}}disabled{{/ifStr}}>
                             <span aria-hidden="true">&raquo;</span>
                         </button>

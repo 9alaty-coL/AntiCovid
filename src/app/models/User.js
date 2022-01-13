@@ -76,16 +76,28 @@ class Users {
         }
     }
 
-    async relate(arrayID) {
+    async relate(groupID, userID = 0) {
         try {
-            let res = [];
-            for (let element of arrayID) {
-                let user = await db.one('P_ID', element, tbName);
-                if (user != null) res.push(user);
+            let group = await db.rows('P_RelateGroup', groupID, tbName);
+            if (userID !== 0) {
+                let relate = group.filter(g => g.P_ID !== userID);
+                return relate;
+            } else {
+                return group;
             }
-            return res;
+            
         } catch (err) {
             console.log('error in User/relate: ' + err.message);
+            return null;
+        }
+    }
+
+    async insert(user) {
+        try {
+            const res = await db.insert(user, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User/insert: ' + err.message);
             return null;
         }
     }
@@ -106,6 +118,16 @@ class Users {
             return res;
         }catch(err){
             console.log('error in User/updateUser: ' + err.message);
+            return null;
+        }
+    }
+
+    async maxGroupID() {
+        try{
+            const res = await db.maximum('P_RelateGroup', tbName);
+            return res;
+        }catch(err){
+            console.log('error in User/maxGroupID: ' + err.message);
             return null;
         }
     }

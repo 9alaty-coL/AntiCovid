@@ -1,47 +1,75 @@
+function filterRelate() {
+    let identity = $('#Identity').text();
+    relate = relate.filter(fullname => fullname.P_IdentityCard !== identity);
+};
+
+function cancelChange() {
+    $("#Null").prop('selected', true);
+    resetStatus();
+}
+
 function resetStatus() {
-    console.log($('#LeftStatus').text());
-    $('#LeftStatus').text($('#LeftStatus').text().split(" ")[0]);
+    $("#submitBtn").attr("disabled", true);
+
+    $('#LeftStatus').text($('#LeftStatus').text().split(" → ")[0]);
 
     $('.status').each(function() {
-        $(this).text($(this).text().split(" ")[0]);
+        $(this).text($(this).text().split(" → ")[0]);
     });
+}
+
+function calOffset(Status, to) {
+    if (Status.length !== 2)  return 0;
+    return parseInt(Status[1]) - parseInt(to[1]);
 }
 
 function calStatus(Status, offset) {
-    if (Status === "Không") Status = "F4";
-    let nextStatus = parseInt(Status[1]) + offset;
-    if (nextStatus < 0) return "F0";
-    else if (nextStatus > 3) return "Không";
-    else return "F" + nextStatus;
+    if (offset < 0) {
+        if (Status === "F0") return "Khỏi bệnh"
+        else return "Không"
+    }
+    else {
+        let nextF = Math.max(0, parseInt(Status[1]) - offset);
+        return Status[0] + nextF;
+    }
 }
+
+$('#to').change(function(){
+    changeStatusRelate($(this).val());
+    $("#submitBtn").removeAttr("disabled");
+});
 
 function changeStatusRelate(to) {
-    if ($('#LeftStatus').text().length > 2) resetStatus();
+    resetStatus();
     let Status = $('#LeftStatus').text();
+    let Offset = calOffset(Status, to);
+
+    let textColor = "text-danger";
+    if($('#LeftStatus').text().includes("F0"))
+        textColor = "text-success";
     
-    let from;
-    if (Status === "Không") from = 4; else from = Status[1];
-    let offset = to - from;
-
-    if (offset === 0) return;
-
-    $('#LeftStatus').html(`${Status}<b class="text-danger"> → ${calStatus(Status, offset)}</b>`);
+    if ($('#LeftStatus').text().includes("F0")) {
+        $('#LeftStatus').html(`${Status}<b class="${textColor}"> → ${calStatus(Status, Offset)}</b>`);
+        let isReturn = false;
+        $('.status').each(function(index) {
+            if ($(this).text().includes("F0")) isReturn = true;
+        })
+        if (isReturn) return;          
+    } else {
+        $('#LeftStatus').html(`${Status}<b class="${textColor}"> → ${calStatus(Status, Offset)}</b>`);
+    }
 
     $('.status').each(function(index) {
+        if ($(this).text() === "Khỏi bệnh" || $(this).text() === "F0") return;
+
         let curStatus = $(this).text();
-        $(this).html(`${curStatus}<b class="text-danger border-end-0"> → ${calStatus(curStatus, offset)}</b>`)
+        if ($(this).text() === "Không") {
+            let nextStautus = calStatus("F4", Offset);
+            if (nextStautus !== "Không") $(this).html(`${curStatus}<b class="${textColor} border-end-0"> → ${nextStautus}</b>`)   
+        } else {
+            $(this).html(`${curStatus}<b class="${textColor} border-end-0"> → ${calStatus(curStatus, Offset)}</b>`)            
+        }
     });
 }
-
-// Check Status Option
-$(document).ready(function(){
-    let StatusOption = $("#from").val();
-    $(".StaOp").each(function() {
-        if ($(this).text() === StatusOption) {
-            $(this).attr('selected', 'selected');
-            $(this).attr('disabled', 'disabled');
-        }
-    })
-});
 
 

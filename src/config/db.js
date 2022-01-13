@@ -146,6 +146,16 @@ class dbQuery {
             return null;
         }
     }
+
+    async maximum(colName, tbName) {
+        try{
+            let res = await db.one(`SELECT MAX("${colName}") FROM public."${tbName}"`);
+            return res.max;
+        }catch(err){
+            console.log('error db/maximum: ' + err.message);
+            return null;
+        } 
+    }
 }
 
 module.exports = new dbQuery();

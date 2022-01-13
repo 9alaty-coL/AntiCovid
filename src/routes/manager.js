@@ -15,13 +15,16 @@ router.get('/detail/UserID=:UserID', ManagerController.detail);
 
 router.get('/addUser', ManagerController.addUser);
 
+router.get('/addRelate/UserID=:UserID', ManagerController.addRelate);
+
 router.get('/product', ManagerController.Product);
 
 router.get('/package', ManagerController.Package);
 
-router.get('/addRelate/UserID=:UserID', ManagerController.addRelate);
-
 // >> POST
+router.post('/addUser', ManagerController.postAddUser);
+
+router.post('/addRelate/UserID=:UserID', ManagerController.postAddRelate);
 
 // >> PUT
 router.put('/detail/UserID=:UserID/changeStatus', ManagerController.changeStatus)
@@ -30,6 +33,8 @@ router.put('/detail/UserID=:UserID/changeLocation', ManagerController.changeLoca
 
 // >> GET FETCH
 router.get('/username', ManagerController.fetchUserName)
+
+router.get('/relate', ManagerController.fetchRelateGroup)
 
 router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
 

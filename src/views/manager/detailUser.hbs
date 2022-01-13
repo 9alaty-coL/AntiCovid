@@ -135,7 +135,7 @@
                                         <h3><b>CMND/CCCD:</b></h3>
                                     </div>
                                     <div class="col-9">
-                                        <h3 class="card-title">{{P_IdentityCard}}</h3>
+                                        <h3 class="card-title" id="Identity">{{P_IdentityCard}}</h3>
                                     </div>
                                     <div class="col-3">
                                         <p class="card-text">Địa chỉ nơi ở:</p>
@@ -181,13 +181,24 @@
                                             <div class="mb-3 w-100">
                                                 <label for="to" class="form-label text-form ">Chỉnh sửa
                                                     thành:</label>
-                                                <select id="to" class="form-select text-center text-form " name="to"
-                                                    onclick="if (typeof(this.selectedIndex) != 'undefined') changeStatusRelate(this.selectedIndex)">
-                                                    <option class="StaOp text-form ">F0</option>
-                                                    <option class="StaOp text-form ">F1</option>
-                                                    <option class="StaOp text-form ">F2</option>
-                                                    <option class="StaOp text-form ">F3</option>
-                                                    <option class="StaOp text-form ">Không</option>
+                                                <select id="to" class="form-select text-center text-form " name="to">
+                                                    <option id="Null" class="text-form" value="" selected disabled>
+                                                    </option>
+                                                    {{#ifStr P_Status 'F0'}}
+                                                    <option class="text-form" value="F4">Khỏi bệnh</option>
+                                                    {{/ifStr}}
+                                                    {{#ifStr P_Status 'F1'}}
+                                                    <option class="text-form" value="F0">F0</option>
+                                                    {{/ifStr}}
+                                                    {{#ifStr P_Status 'F2'}}
+                                                    <option class="text-form" value="F0">F0</option>
+                                                    <option class="text-form" value="F1">F1</option>
+                                                    {{/ifStr}}
+                                                    {{#ifStr P_Status 'F3'}}
+                                                    <option class="text-form" value="F0">F0</option>
+                                                    <option class="text-form" value="F1">F1</option>
+                                                    <option class="text-form" value="F2">F2</option>
+                                                    {{/ifStr}}
                                                 </select>
                                             </div>
                                         </div>
@@ -195,10 +206,11 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <button type="button" class="btn btn-warning w-100"
-                                                onclick="resetStatus();">Hủy bỏ chỉnh sửa</button>
+                                                onclick="cancelChange();">Hủy bỏ chỉnh sửa</button>
                                         </div>
                                         <div class="col-6">
-                                            <button type="submit" class="btn btn-success w-100">Hoàn tất chỉnh
+                                            <button type="submit" class="btn btn-success w-100" id="submitBtn"
+                                                disabled>Hoàn tất chỉnh
                                                 sửa</button>
                                         </div>
                                     </div>
@@ -256,17 +268,25 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h1 class="mb-4"><b>Chuyển nơi điều trị / cách ly:</b></h1>
-                            <form action="/manager/detail/UserID={{P_ID}}/changeLocation?_method=PUT" method="post" id="ChangeLocationForm">
+                            <form action="/manager/detail/UserID={{P_ID}}/changeLocation?_method=PUT" method="post"
+                                id="ChangeLocationForm">
                                 <div class="input-group">
-                                    <span id="Time" class="form-control text-form text-center" style="width: 10%;"></span>
-                                    <div class="form-control form-control-dark text-form search-packet no-gutter" style="width: 55%;">
-                                        <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
-                                            <input name="location" autocomplete="off" type="text" id="searchBarTreatPlace" class="form-control search-input" placeholder="Vị trí chuyển đến">
-                                            <input name="location_id" type="number" id="IDsearchBarTreatPlace" value="0" hidden>
+                                    <span id="Time" class="form-control text-form text-center"
+                                        style="width: 10%;"></span>
+                                    <div class="form-control form-control-dark text-form search-packet no-gutter"
+                                        style="width: 55%;">
+                                        <div class="d-inline-block"
+                                            style="width: 100%; height: 100%; position: relative;">
+                                            <input name="location" autocomplete="off" type="text"
+                                                id="searchBarTreatPlace" class="form-control search-input"
+                                                placeholder="Vị trí chuyển đến" onfocus="resetLocation()">
+                                            <input name="location_id" type="number" id="IDsearchBarTreatPlace" value="0"
+                                                hidden>
                                         </div>
                                         <ul class="search-menu" id="menuBarTreatPlace"></ul>
                                     </div>
-                                    <button class="btn btn-outline-info text-form" type="submit" style="width: 15%;">Hoàn tất</button>
+                                    <button class="btn btn-outline-info text-form" type="submit"
+                                        style="width: 15%;" id="locationButton">Hoàn tất</button>
                                 </div>
                             </form>
                         </div>
@@ -295,6 +315,39 @@
                             {{else}}
                             <p class="card-text">Không có người nào liên đới với người nầy cả</p>
                             {{/each}}
+
+                            {{#with user}}
+                            <h1 class="my-4"><b>Thêm người liên đới sẵn có:</b></h1>
+                            <form action="/manager/addRelate/UserID={{P_ID}}" method="post" id="AddRelateForm">
+                                <div class="input-group">
+                                    <div class="form-control form-control-dark text-form search-packet no-gutter"
+                                        style="width: 35%;">
+                                        <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
+                                            <div class="d-inline-block"
+                                                style="width: 100%; height: 100%; position: relative;">
+                                                <input name="relate" autocomplete="off" type="text" id="searchBarRelate" onfocus="resetRelate()"
+                                                    class="form-control search-input" placeholder="Người liên đới" value="">
+                                                <input name="P_RelateGroup" type="number" id="IDsearchBarRelate" value="0" hidden>
+                                            </div>
+                                        </div>
+                                        <ul class="search-menu" id="menuBarRelate" style="z-index: 10;"></ul>
+                                    </div>
+                                    <select class="custom-select text-form" name="addOption">
+                                        <option value="one" selected>Thêm người nầy vào danh sách liên đới</option>
+                                        <option value="all">Thêm tất cả người liên đới với người nầy</option>
+                                    </select>
+                                    <button class="btn btn-outline-info text-form" type="submit"
+                                        style="width: 15%;"  id="relateButton">Thêm vào</button>
+                                </div>
+                            </form>
+                            <h1 class="my-4"><b>Tạo thêm người liên đới mới:</b></h1>
+                            <li class="page-item">
+
+                                <div class="input-group">
+                                    <a class="btn btn-outline-success text-form" href="/manager/addRelate/UserID={{P_ID}}">Tạo thêm người liên đới</a>
+                                </div>
+                            </li>
+                            {{/with}}
                         </div>
                     </div>
                 </div>

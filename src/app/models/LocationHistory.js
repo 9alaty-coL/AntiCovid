@@ -24,6 +24,16 @@ class LocationHistory {
 
     }
 
+    async insert(user) {
+        try {
+            const res = await db.insert(user, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in LocationHistory/insert: ' + err.message);
+            return null;
+        }
+    }
+
     async all() {
         try {
             const res = await db.all(tbName);
