@@ -3,6 +3,11 @@ const router = express.Router();
 
 const AdminController = require('../app/controllers/AdminController');
 
+router.get('/test', function (req, res, next){
+
+    res.redirect('http://localhost:8000')
+})
+
 router.post('/create', AdminController.newAccount);
 
 router.get('/create', AdminController.create);
