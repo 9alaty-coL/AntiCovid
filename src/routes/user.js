@@ -40,6 +40,8 @@ router.get('/:id/bHistory/notpaid', UserController.notPaid);
 
 router.post('/pay/:billID', UserController.pay);
 
+router.get('/result', UserController.paymentResult);
+
 router.get('/:id', UserController.home);
 
 module.exports = router;

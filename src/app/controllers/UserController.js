@@ -688,11 +688,27 @@ class UserController {
 
         let token = req.query.token ?? null
 
+        let success = null, fail = null
+        
+
         try {
             let decoded = await jwt.verifyToken(token, process.env.TOKEN_SECRET_KEY)
-            res.render('user/payResult', { 
+            if(decoded.result == 'success'){
+                success = decoded
+            }
+            else if (decoded.result == 'fail'){
+                fail = decoded
+            }
+            else{
+                return res.send('invalid token')
+            }
+            return res.render('user/payResult', { 
                 layout: 'user',
                 css: ['UserPage'],
+                js: ['UserPage'],
+                user:user,
+                success:success,
+                fail:fail,
             });
         } catch (error) {
             res.send(`<h4>${error}</h4>`)

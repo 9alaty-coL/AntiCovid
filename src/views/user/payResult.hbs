@@ -1,0 +1,111 @@
+ <div class="content row">
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Thông tin cá nhân
+            </div>
+            <ul class="list d-none">
+                <li class="list-item general-information ">
+                    <a href="/user/{{user.P_ID}}/infor" class="d-block" ><i class="fas fa-user"></i> Thông tin chung</a>
+                </li>
+                <li class="list-item password">
+                    <a href="/user/{{user.P_ID}}/pwd" class="d-block"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                </li>
+                <li class="list-item managed-history">
+                    <a href="/user/{{user.P_ID}}/mHistory" class="d-block"><i class="fas fa-history"></i> Lịch sử được quản lý</a>
+                </li>
+                <li class="list-item accountbalance">
+                    <a href="/user/{{user.P_ID}}/accBal" class="d-block"><i class="fas fa-search-dollar"></i> Số dư tài khoản</a>
+                </li>
+                <li class="list-item deposit">
+                    <a href="/user/{{user.P_ID}}/deposit" class="d-block"><i class="fas fa-dollar-sign"></i> Nạp tiền</a>
+                </li>
+                <li class="list-item paid-history">
+                    <a href="/user/{{user.P_ID}}/pHistory" class="d-block"><i class="fas fa-history"></i> Lịch sử thanh toán</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-đown d-none"><i class="fas fa-angle-down"></i> </span>
+                Nhu yếu phẩm
+            </div>
+            <ul class="list d-none">
+                    <li class="list-item packet">
+                    <a href="/user/{{user.P_ID}}/package" class="d-block">
+                        <i class="fas fa-list"></i> Danh sách các gói
+                    </a>
+                </li>
+                <li class="list-item buy-history">
+                    <a href="/user/{{user.P_ID}}/bHistory" class="d-block">
+                        <i class="fas fa-history"></i> Lịch sử mua hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+    <div class="col-1"></div>
+    <div class="col-7">
+        <div class="section general-information">
+            {{#if success}}
+            <div class="pay_result container">
+                <img width="100" src="https://mayphunsuonganthinh.com/wp-content/uploads/2018/10/kisspng-check-mark-bottle-material-green-tick-5ad25467123860.2792666715237336070746.png" alt="success-img">
+                <h2>Giao dịch thành công</h2>
+                <div class="content-row">
+                    <span class="title">Hệ thống</span>
+                    <span>Vinabank</span>
+                </div>
+                <div class="content-row">
+                    <span class="title">Tài khoản thanh toán</span>
+                    <span>{{success.username}}</span>
+                </div>
+                <div class="content-row">
+                    <span class="title">Mã hóa đơn</span>
+                    <span>{{success.billId}}</span>
+                </div>
+                <div class="content-row" style="border:none;">
+                    <span class="title">Số tiền</span>
+                    <span>{{success.money}} đ</span>
+                </div>
+
+                <div class="btn-gr">
+                    <a href="/user/{{user.P_ID}}/bHistory" class="btn btn-outline-primary">Lịch sử mua hàng</a>
+                    <a href="https://vinabank.herokuapp.com/history" class="btn btn-outline-warning">Lịch sử giao dịch</a>
+                </div>
+            </div>
+            {{/if}}
+            {{#if fail}}
+            <div class="pay_result container">
+                <img width="100" src="https://icones.pro/wp-content/uploads/2021/08/icone-x-avec-cercle-rouge.png" alt="success-img">
+                <h2 class="mt-3">Giao dịch thất bại</h2>
+                <div class="content-row">
+                    <span class="title">Hệ thống</span>
+                    <span>Vinabank</span>
+                </div>
+                <div class="content-row">
+                    <span class="title">Tài khoản thanh toán</span>
+                    <span>{{fail.username}}</span>
+                </div>
+                <div class="content-row">
+                    <span class="title">Mã hóa đơn</span>
+                    <span>{{fail.billId}}</span>
+                </div>
+                <div class="content-row" style="border:none;">
+                    <span class="title">Lời nhắn</span>
+                    <span>Vui lòng thử lại</span>
+                </div>
+
+                <div class="btn-gr">
+                    <a href="/user/{{user.P_ID}}/bHistory" class="btn btn-outline-primary">Lịch sử mua hàng</a>
+                    <a href="https://vinabank.herokuapp.com/history" class="btn btn-outline-warning">Lịch sử giao dịch</a>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    
+</div>
