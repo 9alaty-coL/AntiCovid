@@ -7,6 +7,7 @@ const TreatmentPlaces = require('../models/TreatmentPlaces');
 const Packages = require('../models/Package');
 const Products = require('../models/Product');
 const bcrypt = require('bcrypt');
+const jwt = require('../../helpers/jwt.helper')
 
 var currDate = new Date();
 
@@ -42,11 +43,11 @@ class UserController {
 
         user = await Users.one('P_ID', id);
 
-        let list = user.P_RelatedPersonID;
-        for(let x of list) { 
-            let person =  await Users.one('P_ID', x);
-            relatedPeople.push(person);
-        }
+        // let list = user.P_RelatedPersonID;
+        // for(let x of list) { 
+        //     let person =  await Users.one('P_ID', x);
+        //     relatedPeople.push(person);
+        // }
 
         listOfPlaces = await TreatmentPlaces.all();
         listOfPlaces.sort(function(a,b){
@@ -667,6 +668,35 @@ class UserController {
             message2: msg2,
         });
         return;
+    }
+
+    //GET /user/pay/:billID
+    async pay(req, res, next){
+        let bill = await Bills.getBillById(req.params.billID)
+        let newBill = {
+            "code_bill": bill.B_ID,
+            "total_money": bill.B_Totalpayment,
+            "bill": bill.B_Products
+        }
+
+        const token = await jwt.generateToken(newBill, process.env.TOKEN_SECRET_KEY)
+        
+        res.redirect('https://vinabank.herokuapp.com/confirm?token=' + token)
+    }
+
+    async paymentResult(req, res, next) {
+
+        let token = req.query.token ?? null
+
+        try {
+            let decoded = await jwt.verifyToken(token, process.env.TOKEN_SECRET_KEY)
+            res.render('user/payResult', { 
+                layout: 'user',
+                css: ['UserPage'],
+            });
+        } catch (error) {
+            res.send(`<h4>${error}</h4>`)
+        }
     }
 }
 

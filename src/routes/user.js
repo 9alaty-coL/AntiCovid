@@ -38,6 +38,8 @@ router.get('/:id/bHistory/paid', UserController.paid);
 
 router.get('/:id/bHistory/notpaid', UserController.notPaid);
 
+router.post('/pay/:billID', UserController.pay);
+
 router.get('/:id', UserController.home);
 
 module.exports = router;
