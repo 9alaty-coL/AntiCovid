@@ -55,7 +55,21 @@
                     <div class="section-title">
                         Danh sách các gói nhu yếu phẩm
                     </div>
-                    <div class="section-content mt-4 me-2">
+                    <div class="option">
+                        <select id="sort" class="form-select select-type" aria-label="Sắp xếp">
+                                <option value="" selected>Sắp xếp</option>
+                                <option value="tăng">Tăng dần số lượng gói đã bán </option>
+                                <option value="giảm">Giảm dần số lượng gói đã bán </option>
+                        </select>
+                        
+                        <select id="filter" class="form-select select-type" aria-label="Lọc theo">
+                                <option value="" selected>Lọc theo</option>
+                                <option value="Thực phẩm">Thực phẩm</option>
+                                <option value="Thuốc men">Thuốc men</option>
+                        </select>
+                    </div>
+
+                    <div class="section-content mb-5 mt-2 me-2">
                         <div class="row">
                             {{#each listOfPackages}}
                             <div class="col-3 my-3">
@@ -63,21 +77,24 @@
                                     <img src="{{this.P_Image}}" class="card-img-top" height="200" alt="...">
                                     <div class="card-body">
                                       <h4 class="card-title">{{this.P_Name}}</h4>
-                                      <p class="card-text text-ellipsis--3 fs-5" style="height: 54px;">Bao gồm:
+                                      <p class="card-text text-ellipsis--2 fs-5" style="height: 40px;">Bao gồm:
                                           {{#each this.Product_List}}
                                             {{this}},  
                                           {{/each}}
+                                      </p>
+                                      <p class="card-text d-flex flex-row-reverse" style="color: red; font-style:italic; font-size: 1.2rem!important;">
+                                          Đã bán: {{this.P_SoldQuantity}}
                                       </p>
                                       <a href="/user/package/{{this.P_ID}}" class="btn btn-primary fs-4">Xem chi tiết </a>
                                     </div>
                                 </div>
                             </div>
                             {{/each}}
-                            <form action="/user/{{user.P_ID}}/package/more" method="get">
+                            {{!-- <form action="/user/{{user.P_ID}}/package/more" method="get">
                                     <div class="d-flex justify-content-center my-5">
                                         <button class="text-center btn more" {{message1}}>Xem thêm</button>
                                     </div>
-                            </form>
+                            </form> --}}
                  
                         </div>
                     </div>

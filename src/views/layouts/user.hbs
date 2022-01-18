@@ -23,7 +23,7 @@
                     </div>
                     <div class="searchbar-item search-packet d-lg-flex">
                         <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
-                            <input type="text" id="searchBar" class="form-control search-input" placeholder="Bạn cứ nhập từ khóa, còn lại để AntiCovid lo nè">
+                            <input type="text" id="searchBar" class="form-control search-input" placeholder="Nhập tên sản phẩm hoặc gói cần tìm kiếm">
                             <div class="search-select-btn"><i class="fas fa-search"></i></div>
                         </div>
                         <ul class="search-menu">
@@ -113,22 +113,37 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+        let userID = {{user.P_ID}};
         let packages = [];
         let products = [];
         let currPackageID = {{currPackage.P_ID}};
         let currPackage;
         let temp;
         let p ;
+        let img;
+        let list
 
         {{#each listOfPackages}}
             p = [];
+            img= [];
+            list = [];
             {{#each this.P_ProductsID}}
                 p.push({{this}})
+            {{/each}}
+            {{#each this.P_Image}}
+                img.push(`{{this}}`)
+            {{/each}}
+            {{#each this.Product_List}}
+                list.push(`{{this}}`)
             {{/each}}
             temp = {
                 P_ID : `{{this.P_ID}}`,
                 P_Name: `{{this.P_Name}}`,
+                P_SoldQuantity: `{{this.P_SoldQuantity}}`,
+                P_Type: `{{this.P_Type}}`,
                 P_ProductsID: p,
+                P_Image: img,
+                Product_List: list
             }
             packages.push(temp)
         {{/each}}
