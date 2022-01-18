@@ -693,11 +693,16 @@ class UserController {
 
         try {
             let decoded = await jwt.verifyToken(token, process.env.TOKEN_SECRET_KEY)
-            if(decoded.result == 'success'){
-                success = decoded
+            if(decoded?.data?.result == 'success'){
+                success = decoded.data
+                let bill = await Bills.getBillById(success.billId)
+                let newBill = {...bill}
+                newBill.B_IsPaid = 'true';
+                newBill.B_PaymentDatetime = currDate.toString()
+                await Bills.update(newBill)
             }
-            else if (decoded.result == 'fail'){
-                fail = decoded
+            else if (decoded?.data?.result == 'fail'){
+                fail = decoded.data
             }
             else{
                 return res.send('invalid token')
