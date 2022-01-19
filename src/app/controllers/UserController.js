@@ -1,3 +1,4 @@
+const alert = require('alert');
 const Users = require('../models/User');
 const Authens = require('../models/Authen');
 const Bills = require('../models/Bill');
@@ -288,12 +289,21 @@ class UserController {
     }
 
     // GET /user/:id/accBal
-    async accountBalance(req, res, next) {
+    accountBalance(req, res, next) {
+        let payment = 0;
+        let debt = parseInt(user.P_Debt);
+        let paid = parseInt(user.P_Paid);
+        let minPayment = parseInt(user.P_MinPayment);
+        if ( debt > minPayment && minPayment > paid) {
+            payment = parseInt(user.P_MinPayment) - parseInt(user.P_Paid);
+        }
+        
         res.render('user/accountBalance', {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'accountBalance'],
             user: user,
+            minPaid: payment,
             notPaidBillsList: notPaidBills,
             currPackage: currPackage,
             listOfPackages: listOfPackages,
@@ -472,6 +482,10 @@ class UserController {
         let bill;
         let temp = [];
 
+        for (let i = 0; i <quantity.length; i++) {
+            quantity[i] = parseInt(quantity[i]);
+        }
+
         let currPack =  listOfPackages.filter(pack => pack.P_ID == packageID)[0];
         for (let i = 0; i < currPack.P_ProductsID.length; i++) {
             let p = listOfProducts.filter(product => product.Product_ID === currPack.P_ProductsID[i])[0];
@@ -489,12 +503,13 @@ class UserController {
                 B_PaymentDatetime: null,
                 B_Datetime: currDate.toString(), 
                 B_Products : temp,
+                B_PackageID: packageID,
+                B_Quantity: quantity
             }
             
         } while(bill.B_ID === await Bills.one('B_ID', bill.B_ID ) )
         
         const result = await Bills.insert(bill);
-
         // Load all bills again
         listOfBills = await Bills.getBillsByUserID(id) 
         for(let i = 0; i < listOfBills.length; i++) {
@@ -509,6 +524,15 @@ class UserController {
         });
         paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)
         notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
+
+        // Increase dept
+        let debt = parseInt(user.P_Debt) + totalPrice;
+        let u = {
+            P_ID: id,
+            P_Debt: debt,
+        }
+        const result4 = await Users.updateUser(u);
+        user = await Users.one('P_ID', id);
 
 
         // Update package sold quantity
@@ -533,7 +557,7 @@ class UserController {
         for (let i = 0; i < currPack.P_ProductsID.length; i++) {
             let temp = listOfProducts.filter(product => product.Product_ID == currPackage.P_ProductsID[i])[0];
             productsId[i] = temp.Product_ID;
-            soldQuantity[i] = temp.Product_SoldQuantity + parseInt(quantity[i]);
+            soldQuantity[i] = temp.Product_SoldQuantity + (quantity[i]);
         }
 
         for (let i = 0; i < productsId.length; i++) {
@@ -697,7 +721,15 @@ class UserController {
                 let newBill = {...bill}
                 newBill.B_IsPaid = 'true';
                 newBill.B_PaymentDatetime = currDate.toString()
-                await Bills.update(newBill)
+                await Bills.update(newBill);
+
+                let paid = parseInt(user.P_Paid) + parseInt(bill.B_Totalpayment);
+                let u = {
+                    P_ID: id,
+                    P_Paid: paid,
+                }
+                const result4 = await Users.updateUser(u);
+                user = await Users.one('P_ID', id);
             }
             else if (decoded?.data?.result == 'fail'){
                 fail = decoded.data
@@ -719,6 +751,18 @@ class UserController {
             });
             paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)      
             notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
+
+            let payment = 0;
+            let debt = parseInt(user.P_Debt);
+            let paid = parseInt(user.P_Paid);
+            let minPayment = parseInt(user.P_MinPayment);
+            if ( debt > minPayment && minPayment > paid) {
+                payment = parseInt(user.P_MinPayment) - parseInt(user.P_Paid);
+                alert(`Bạn cần thanh toán ${payment}đ để đạt hạn múc thanh toán tối thiểu kỳ này`);
+            }
+            else {
+                alert(`Bạn đã hoàn thành hạn múc thanh toán tối thiểu kỳ này`);
+            }
 
             return res.render('user/payResult', { 
                 layout: 'user',
