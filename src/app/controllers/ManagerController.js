@@ -8,6 +8,8 @@ const StatusHistoryModel = require('../models/StatusHistory')
 const TreatmentPlacesModel = require('../models/TreatmentPlaces')
 const TimeUtils = require('../../utils/Time')
 const bcrypt = require('bcrypt');
+const axios = require('axios');
+const jwtHelper = require('../../helpers/jwt.helper')
 
 const ProvinceModel = require('../models/AddressProvince')
 const DistrictModel = require('../models/AddressDistrict')
@@ -343,6 +345,18 @@ class ManagerController {
         AccountData.password = await bcrypt.hash(req.body.password, 10);
         AccountData._id = await UserM.nextID();
         await UserM.insert(AccountData);
+
+        // Create vinabank account
+        let token = await jwtHelper.generateToken({username: AccountData.username}, process.env.TOKEN_SECRET_KEY)
+        let resultV = await axios.get('https://vinabank.herokuapp.com/create?token=' + token)
+        resultV = await resultV.data;
+        console.log(resultV);
+        if (resultV.result == 'Success'){
+
+        }else{
+            console.log('Lỗi khi tạo tài khoản banking cho bệnh nhân');
+            console.log(resultV.result);
+        }
 
         // Create new user 
         UserData.P_ID = AccountData._id;
