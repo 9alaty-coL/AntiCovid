@@ -563,12 +563,16 @@ a:hover {
     flex-direction: row-reverse;
 }
 
+.select-type {
+    display: inline-block;
+}
+
 .option #filter {
     font-size: 1.4rem;
     width: 12.8rem;
     padding:.6rem 1.6rem;
     text-align:justify;
-    margin: 0 1rem;
+    margin-right: 3.6rem;
 }
 
 .option #sort {
@@ -722,3 +726,4 @@ a:hover {
 .pay_result .content-row .title{
     font-weight: bold;
 }
+

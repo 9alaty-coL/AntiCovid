@@ -36,11 +36,11 @@
                <li class="list-item active ">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
-                <li class="list-item">
+                {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
-                </li>
+                </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhập</a>
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -54,9 +54,9 @@
                 <li class="list-item ">
                     <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
-                <li class="list-item">
+                {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
-                </li>
+                </li> --}}
                 <li class="list-item">
                     <a class="d-block" href="/manager/search"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
@@ -108,21 +108,46 @@
     {{!-- end sidebar --}}
 
    <div class="col-9" style="flex:1;">
-                 <div class="section packet-list">
+                 <div class="section product-list">
                     <div class="section-title">
                         Danh sách các  nhu yếu phẩm
                     </div>
-                    
+                    <div class="option">
+                        <div class="d-inline-block">
+                            <label for="sort">Sắp xếp</label>
+                            <select id="sort" class="form-select select-type" aria-label="Sắp xếp">
+                                    <option value="" selected>Không</option>
+                                    <option value="tăng">Tăng dần số lượng gói đã bán </option>
+                                    <option value="giảm">Giảm dần số lượng gói đã bán </option>
+                            </select>
+                        </div>
+
+                        <div class="d-inline-block">
+                            <label for="filter">Lọc theo</label>
+                            <select id="filter" class="form-select select-type" aria-label="Lọc theo">
+                                    <option value="" selected>Tất cả</option>
+                                    <option value="Thực phẩm">Thực phẩm</option>
+                                    <option value="Thuốc men">Thuốc men</option>
+                                    <option value="Nước giải khát">Nước giải khát</option>
+                                    <option value="Nước rửa tay">Nước rửa tay</option>
+                            </select>
+                        </div>
+                        
+                        
+                    </div>
                     <div class="section-content mt-4 me-2">
                         <div class="row">
                             {{#each Products}}
-                            <div class="col-3 " >
-                                <div class="card" style="width: 100%;">
+                            <div class="col-3 my-3" >
+                                 <div class="card" style="width: 100%; box-shadow: 0 2px 4px rgba(0, 0, 0, .15), 0 8px 16px rgba(0, 0, 0, .15);">
                                     <img src="{{this.Product_MainImage}}" class="card-img-top" height="200" alt="..." >
                                     <div class="card-body">
                                       <h4 class="card-title fs-2">{{this.Product_Name}}</h4>
-                                      <p class="card-text  text-ellipsis--3 fs-4">Giá: {{this.Product_Price}} ₫ </p>
-                                      <p class="card-text  text-ellipsis--3 fs-4">Đơn vị: {{this.Product_Unit}}</p>
+                                      <p class="card-text  text-ellipsis--3 fs-4 mb-1">Giá: {{this.Product_Price}} ₫ </p>
+                                      <p class="card-text  text-ellipsis--3 fs-4 mb-1">Đơn vị: {{this.Product_Unit}}</p>
+                                      <p class="card-text d-flex flex-row-reverse" style="color: red; font-style:italic; font-size: 1.2rem!important;">
+                                          Đã bán: {{this.Product_SoldQuantity}}
+                                      </p>
                                       <a href="/manager/product/{{this.Product_ID}}" class="btn btn-primary fs-5">Xem chi tiết </a>
                                     </div>
                                 </div>
