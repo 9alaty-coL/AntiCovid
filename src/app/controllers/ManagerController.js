@@ -25,6 +25,7 @@ function calStatus(Status, offset) {
         return Status[0] + nextF;
     }
 }
+
 let Products;
 let Packages
 class ManagerController {
@@ -178,7 +179,7 @@ class ManagerController {
             layout: 'manager',
             AccountError: '',
             UserError: '',
-            AccountData: {username: '', password: ''},
+            AccountData: {username: ''},
             UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
             HospitalData: {hospitalData: '', IDHospital: 0},
             RelateData: {relateData: '', IDGroup: 0, Lock: 'off'},
@@ -196,7 +197,7 @@ class ManagerController {
             layout: 'manager',
             AccountError: '',
             UserError: '',
-            AccountData: {username: '', password: ''},
+            AccountData: {username: ''},
             UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
             HospitalData: {hospitalData: '', IDHospital: 0},
             RelateData: RelateData,
@@ -205,6 +206,27 @@ class ManagerController {
         });
     }
 
+    // Get → /chartStatusByTime
+    async chartStatusByTime(req, res, next) {
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        // Last 6 months ago
+        let labels = [];
+        for (let i = 0; i < 6; i++) {
+            labels.push({TimeLabels: "Tháng " + month + " Năm " + year});
+            if (parseInt(month) === 1) { month = 12; year--; }
+            else month--;
+        }
+        labels.reverse();
+        
+        // Render
+        res.render('manager/chartStatusByTime', {
+            labels: labels,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['UserSearchBar','ManagerPage'],
+        });
+    }
 
     Product(req, res, next) {
         
@@ -271,7 +293,7 @@ class ManagerController {
         let manager = req.user;
 
         // Form input
-        let AccountData = {username: req.body.username, password: req.body.password, role: 'user', isLocked: false};
+        let AccountData = {username: req.body.username, role: 'user', isLocked: false};
         let UserData = {P_FullName: req.body.P_FullName, 
                         P_IdentityCard: req.body.P_IdentityCard, 
                         P_YearOfBirth: req.body.P_YearOfBirth, 
