@@ -411,31 +411,6 @@ class UserController {
         return;
     }
 
-    package(req, res, next) {
-        // currPage1 = 1;
-        // msg1 = '';
-        // n1 = currPage1 * 6;
-        // if(n1 >= listOfPackages.length) {
-        //     n1 = listOfPackages.length;
-        //     msg1 = 'disabled';
-        // }
-        // let packages = listOfPackages.slice(0, n1);
-        let packages = listOfPackages;
-
-        res.render('user/package', {
-            layout: 'user',
-            css: ['UserPage'],
-            js: ['UserPage', 'package'],
-            user: user,
-            notPaidBillsList: notPaidBills,
-            currPackage: currPackage,
-            listOfPackages: packages,
-            listOfProducts: listOfProducts,
-            // message1: msg1,
-        });
-        return;
-    }
-
     morePackage(req, res, next) {
         currPage1++;
         msg1 = '';

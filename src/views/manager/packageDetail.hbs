@@ -1,118 +1,57 @@
-<div class="content row">
-    {{!-- sidebar --}}
-    <div class="sidebar">
-        <div class="sidebar-item">
-            <a class="title" href="/manager/">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                <i class="fa fa-home d-none" aria-hidden="true"></i>
-                Trang chủ
-            </a>
+  <div class="content">
+           <div class="container-fluid" style="background-color: white;">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="big-img mb-4">
+                            <img class="big" src="{{currPackage.P_Image}}" alt="" style="width: 100%; height: 500px;">
+                        </div>
+                        <ul class="img-list d-flex" style="padding: 0;">
+                           <div class="row">
+                                <li class="col-3"> 
+                                    <img class="small mb-2" src="{{currPackage.P_Image}}" alt="" style="width: 120px; height: 120px; ">
+                                </li>
+                                {{#each productsInPackage}}
+                                <li class="col-3"> 
+                                    <img class="small mb-2" src="{{this.Product_MainImage}}" alt="" style="width: 120px; height: 120px; ">
+                                </li>
+                                {{/each}}
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="col-7">
+                       <form action="/user/package/{{currPackage.P_ID}}" method="post">
+                        <div class="packet-title mb-4">
+                            <div class="box">AntiCovid+</div>  {{currPackage.P_Name}}
+                        </div>
+
+                        <ul class="products-list mb-5" style="padding: 0; font-size: 2rem;"> Bao gồm:
+                            {{#each productsInPackage}}
+                            <li class="product">
+                                <div class="row">
+                                    <div class="col-7 product-desc ">
+                                       <a href="/manager/product/{{this.Product_ID}}">
+                                            <div class="d-inline-block">
+                                                <img src="{{this.Product_MainImage}}" alt="" class="me-2" style="width: 60px; height: 60px;">    
+                                            </div>
+                                            <div class="d-inline-block " style="width:32rem;">
+                                                {{this.Product_Name}} : {{this.Product_Price}}đ/{{this.Product_Unit}} 
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-5 product-quantity ">
+                                        Số lượng mua tối đa: {{this.Product_Limit}} {{this.Product_Unit}} 
+                                    </div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+
+                           
+                           
+                        
+                       </form>
+                        
+                    </div>
+                </div>
+           </div>
         </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
-                Quản lý người liên quan
-            </div>
-            <ul class="list d-none ">
-                <li class="list-item active">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý s.phẩm / n.y.phẩm
-            </div>
-            <ul class="list d-none">
-                <li class="list-item ">
-                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý gói nhu yếu phẩm
-            </div>
-            <ul class="list d-none">
-                <li class="list-item active">
-                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Thống kê thông tin
-            </div>
-            <ul class="list d-none">
-                <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý thanh toán
-            </div>
-            <ul class="list d-none">
-                <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    {{!-- end sidebar --}}
-    

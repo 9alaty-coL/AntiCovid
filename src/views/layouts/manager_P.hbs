@@ -9,19 +9,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     
     {{#each css}}
-       <link rel="stylesheet" href="/css/user/{{this}}.css">
+       <link rel="stylesheet" href="/css/manager/{{this}}.css">
     {{/each}}
-    <title>AntiCovid_UserPage</title>
+    <title>AntiCovid_ManagerPage</title>
 </head>
 <body>
     <div class="main">
-         <header id="header">
+        <header id="header">
             <div class="container-xl">
-                <div class="searchbar">               
+                <div class="searchbar">
                     <div class="searchbar-item">
-                        <a href="/user/{{user.P_ID}}" class="logo"><h1>Anti<span style="color: #F18121;">Covid</span></h1></a>
+                        <a href="/manager" class="logo">
+                            <h1>Anti<span style="color: #F18121;">Covid</span></h1>
+                        </a>
                     </div>
-                    <div class="searchbar-item search-packet d-lg-flex">
+                   <div class="searchbar-item search-packet d-lg-flex">
                         <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
                             <input type="text" id="searchBar" class="form-control search-input" placeholder="Nhập tên sản phẩm hoặc gói cần tìm kiếm">
                             <div class="search-select-btn"><i class="fas fa-search"></i></div>
@@ -39,73 +41,42 @@
                             </li>  --}}
                         </ul>
                     </div>
-                    <div class="searchbar-item ">
-                        <div class="searchbar-btn notification-btn">
-                                <a href="#">
-                                    <span><i class="fas fa-bell"></i></span>
-                                    <span class="notification-badge"> {{notPaidBillsList.length}}</span>
-                                </a>
-                                <ul class="notification-menu d-none">
-                                    {{#each notPaidBillsList}}
-                                        <li class="d-flex ">
-                                            <a href="./bHistory" class="notification-content text-ellipsis--3">
-                                            Bạn có đơn hàng {{this.B_ID}} chờ thanh toán
-                                            </a>
-                                        </li>
-                                    {{/each}}
-                                </ul>
-                        </div>
+                   <div class="searchbar-item ">
                         <div class="searchbar-btn Dropdown">
-                            <a href="#" >   
-                                <i class="fas fa-history"></i>
-                                <div class="droplist droplist-normal">
-                                    <li class="border-bottom"><a href="/user/{{user.P_ID}}/mHistory">Lịch sử quản lý</a></li>
-                                    <li class="border-bottom"><a href="/user/{{user.P_ID}}/bHistory">Lịch sử mua nhu yếu phẩm</a></li>
-                                    <li class="border-bottom"><a href="/user/{{user.P_ID}}/pHistory">Lịch sử thanh toán</a></li>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="searchbar-btn Dropdown">
-                            <a href="#">   
+                            <a href="#">
                                 <div class="user">
                                     <i class="fas fa-user-circle"></i>
-                                    <span class="user-name">User</span>
+                                    <span class="user-name">Manager</span>
                                 </div>
                                 <div class="droplist droplist-normal">
-                                    <li>
-                                        <form action="/logout?_method=DELETE" method="post">
-                                            <button type="submit" class="btn btn-logout" style="font-weight:500; font-size:1.6rem;">
-                                                Đăng xuất
-                                            </button>
-                                        </form>
-                                    </li>
+                                    <li><a id="logout" href="#" type="submit">Đăng xuất</a></li>
                                 </div>
                             </a>
                         </div>
-                    
+
                     </div>
                 </div>
             </div>
         </header>
 
         {{{body}}}
-        
 
         <footer id="footer">
             <div class="social-list">
-                <a href="#"><i class="fab fa-facebook-square"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-facebook-square"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-pinterest-p"></i></a>
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
             </div>
-            <p class="copy-right"> 
+            <p class="copy-right">
                 Đồ án cuối kì môn Phát triển ứng dụng Web <br>
                 Maded by <a href="#">19120479 - 19120502 - 19120564 - 19120595</a>
             </p>
         </footer>
-      
+
+
     </div>
 
 
@@ -113,11 +84,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        let userID = {{user.P_ID}};
         let packages = [];
         let products = [];
-        let currPackageID = {{currPackage.P_ID}};
-        let currPackage;
         let temp;
         let p ;
         let img;
@@ -153,16 +121,16 @@
                     Product_Name: `{{this.Product_Name}}`,
                     Product_Price: `{{this.Product_Price}}`,
                     Product_Unit: `{{this.Product_Unit}}`,
+                    Product_MainImage: `{{this.Product_MainImage}}`,
+                    Product_SoldQuantity: `{{this.Product_SoldQuantity}}`,
+                    Product_Type: `{{this.Product_Type}}`
                 }
             products.push(temp)
         {{/each}}
-
-        currPackage = packages[currPackageID-1];
-
     </script>
 
     {{#each js}}
-       <script type="text/javascript" src="/js/user/{{this}}.js"></script>
+       <script type="text/javascript" src="/js/manager/{{this}}.js"></script>
     {{/each}}
 
     

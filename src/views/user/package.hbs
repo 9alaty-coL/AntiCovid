@@ -56,17 +56,25 @@
                         Danh sách các gói nhu yếu phẩm
                     </div>
                     <div class="option">
-                        <select id="sort" class="form-select select-type" aria-label="Sắp xếp">
-                                <option value="" selected>Sắp xếp</option>
-                                <option value="tăng">Tăng dần số lượng gói đã bán </option>
-                                <option value="giảm">Giảm dần số lượng gói đã bán </option>
-                        </select>
+                        <div class="d-inline-block">
+                            <label for="sort">Sắp xếp</label>
+                            <select id="sort" class="form-select select-type" aria-label="Sắp xếp">
+                                    <option value="" selected>Không</option>
+                                    <option value="tăng">Tăng dần số lượng gói đã bán </option>
+                                    <option value="giảm">Giảm dần số lượng gói đã bán </option>
+                            </select>
+                        </div>
+
+                        <div class="d-inline-block">
+                            <label for="filter">Lọc theo</label>
+                            <select id="filter" class="form-select select-type" aria-label="Lọc theo">
+                                    <option value="" selected>Tất cả</option>
+                                    <option value="Thực phẩm">Thực phẩm</option>
+                                    <option value="Thuốc men">Thuốc men</option>
+                            </select>
+                        </div>
                         
-                        <select id="filter" class="form-select select-type" aria-label="Lọc theo">
-                                <option value="" selected>Lọc theo</option>
-                                <option value="Thực phẩm">Thực phẩm</option>
-                                <option value="Thuốc men">Thuốc men</option>
-                        </select>
+                        
                     </div>
 
                     <div class="section-content mb-5 mt-2 me-2">
