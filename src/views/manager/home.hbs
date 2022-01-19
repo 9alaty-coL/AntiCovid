@@ -22,9 +22,6 @@
                     <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
-                </li>
-                <li class="list-item">
                     <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
@@ -36,20 +33,14 @@
                 Quản lý s.phẩm / n.y.phẩm
             </div>
             <ul class="list d-none">
-                <li class="list-item">
+                <li class="list-item ">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -60,14 +51,14 @@
                 Quản lý gói nhu yếu phẩm
             </div>
             <ul class="list d-none">
-                <li class="list-item">
+                <li class="list-item ">
                     <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-edit"></i> Cập nhật</a>
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -79,16 +70,19 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
                 </li>
             </ul>
         </div>
@@ -100,16 +94,10 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
                 </li>
             </ul>
         </div>
@@ -128,7 +116,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://static.thenounproject.com/png/2204677-200.png"
+                                    <img src="https://icons.iconarchive.com/icons/dtafalonso/modern-xp/512/ModernXP-15-Group-icon.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Danh sách người liên quan</h3>
@@ -143,7 +131,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/addUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://cdn.iconscout.com/icon/free/png-256/user-circle-plus-3609979-3014619.png"
+                                    <img src="data:image/png;base64,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"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Thêm người liên quan</h3>
@@ -157,7 +145,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/search" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://static.thenounproject.com/png/88308-200.png"
+                                    <img src="https://www.kindpng.com/picc/m/79-790958_transparent-search-icon-png-white-business-user-png.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Tìm kiếm chi tiết</h3>
@@ -290,11 +278,11 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh4zTdcNKkZX072SYH3U51kVbeEtrOSnO0qIIkEoDfrbt1jtHCnkO8b9xCA1Gzl8fLrd0&usqp=CAU"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Danh sách người liên quan</h3>
-                                        <p class="card-text text-center">Xem chi tiết danh sách người liên quan Covid-19
+                                        <h3 class="card-title text-center">Lượng người trạng thái</h3>
+                                        <p class="card-text text-center">Thống kê số lượng người ở từng trạng thái theo thời gian
                                         </p>
                                     </div>
                                 </div>
@@ -305,11 +293,11 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
+                                    <img src="https://static.vecteezy.com/system/resources/previews/004/590/572/original/people-icon-with-chart-business-symbol-simple-illustration-editable-stroke-design-template-vector.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thêm người liên quan</h3>
-                                        <p class="card-text text-center">Tạo thêm tài khoản cho người liên quan Covid-19
+                                        <h3 class="card-title text-center">Số chuyển trạng thái</h3>
+                                        <p class="card-text text-center">Thống kê : số chuyển trạng thái, khỏi bệnh,… 
                                         </p>
                                     </div>
                                 </div>
@@ -318,18 +306,42 @@
 
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
-
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
+                                    <img src="https://cdn2.iconfinder.com/data/icons/seo-internet-marketing-services/91/SEO_Internet_marketing_business_12-512.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thay dổi trạng thái</h3>
-                                        <p class="card-text text-center">Thay đổi trạng thái bệnh lý của người liên quan
-                                            Covid-19</p>
+                                        <h3 class="card-title text-center">Tiêu thụ gói nhu yếu phẩm</h3>
+                                        <p class="card-text text-center">Thống kê tiêu thụ các gói Nhu yếu phẩm</p>
                                     </div>
                                 </div>
                             </a>
-                        </div>                        
+                        </div>       
+                        
+                        <div class="col-3 my-5 mx-5">
+                            <a href="/manager/listUser" class="text-dark">
+                                <div class="card" style="width: 30rem;">
+                                    <img src="https://kingly.vn/khuyenmai/upload/images/product-combo.png"
+                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center">Tiêu thụ sản phẩm</h3>
+                                        <p class="card-text text-center">Thống kê tiêu thụ các gói Nhu yếu phẩm</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>     
+                        
+                        <div class="col-3 my-5 mx-5">
+                            <a href="/manager/listUser" class="text-dark">
+                                <div class="card" style="width: 30rem;">
+                                    <img src="https://png.pngtree.com/png-vector/20190814/ourlarge/pngtree-increase-profit-chart-vector-icon-filled-flat-sign-for-mobile-png-image_1692145.jpg"
+                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center">Dư nợ, thanh toán</h3>
+                                        <p class="card-text text-center">Thống kê dư nợ<br> Thống kê thanh toán</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>              
                     </div>
                 </div>
             </div>
@@ -340,31 +352,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row mx-auto justify-content-center">
-
-                        {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
+                                    <img src="https://cdn-icons-png.flaticon.com/128/1999/1999259.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Danh sách người liên quan</h3>
-                                        <p class="card-text text-center">Xem chi tiết danh sách người liên quan Covid-19
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        {{!-- end --}}
-
-                        <div class="col-3 my-5 mx-5">
-                            <a href="/manager/listUser" class="text-dark">
-                                <div class="card" style="width: 30rem;">
-                                    <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
-                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
-                                    <div class="card-body">
-                                        <h3 class="card-title text-center">Thêm người liên quan</h3>
-                                        <p class="card-text text-center">Tạo thêm tài khoản cho người liên quan Covid-19
+                                        <h3 class="card-title text-center">Thay đổi hạn mức thanh toán tối thiểu</h3>
+                                        <p class="card-text text-center">Chỉnh sửa hạn mức tối thiểu có thể thanh toán của người dùng
                                         </p>
                                     </div>
                                 </div>
@@ -375,12 +370,11 @@
                             <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
+                                    <img src="https://static.vecteezy.com/system/resources/previews/002/553/023/non_2x/mobile-banking-message-notification-money-flat-style-icon-free-vector.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thay dổi trạng thái</h3>
-                                        <p class="card-text text-center">Thay đổi trạng thái bệnh lý của người liên quan
-                                            Covid-19</p>
+                                        <h3 class="card-title text-center">Duyệt danh sách và gửi thông báo nhắc thanh toán</h3>
+                                        <p class="card-text text-center">Duyệt danh sách thanh toán <br> Gửi thông báo nhắc thanh toán</p>
                                     </div>
                                 </div>
                             </a>
