@@ -21,7 +21,7 @@
                             <a href="/user/{{user.P_ID}}/accBal" class="d-block"><i class="fas fa-search-dollar"></i> Số dư tài khoản</a>
                         </li>
                         <li class="list-item deposit">
-                            <a href="/user/{{user.P_ID}}/deposit" class="d-block"><i class="fas fa-dollar-sign"></i> Nạp tiền</a>
+                            <a href="/user/{{user.P_ID}}/debt" class="d-block"><i class="fas fa-dollar-sign"></i> Quản lý dư nợ</a>
                         </li>
                         <li class="list-item paid-history">
                             <a href="/user/{{user.P_ID}}/pHistory" class="d-block"><i class="fas fa-history"></i> Lịch sử thanh toán</a>
@@ -52,11 +52,14 @@
             <div class="col-9" style="flex:1;">
                 <div class="section deposit">
                     <div class="section-title">
-                        Nạp tiền
+                        Dư nợ
                     </div>
                     <div class="section-content mt-4 ">
                         <div class="information">
-                            <div class="fs-2">Số dư tài khoản của bạn hiện tại là:  <span style="font-weight: 700;"> 1000000đ</span></div>
+                            <div class="fs-2">Thời hạn thanh toán:  <span style="font-weight: 500;"> Sep Sat Thu 25:44:33</span></div>
+                            <div class="fs-2">Hạn mức thanh toán tối thiểu:  <span style="font-weight: 500;"> 200000đ</span></div>
+                            <div class="fs-2">Số tiền đang nợ:  <span style="font-weight: 500;"> 200000đ</span></div>
+                            <div class="fs-2">Đã thanh toán:  <span style="font-weight: 500;"> 200000đ</span></div>
                                 <form action="">
                                     <div class="mb-3 mt-4" style="margin-bottom: 2rem!important;">
                                         <label for="money" class="form-label" style="font-weight: 500;">Số tiền nạp</label>

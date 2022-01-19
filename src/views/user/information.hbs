@@ -95,7 +95,8 @@
                                     <!-- <input type="text" class="form-control" name="quarantineaddress" id="quarantineaddress" value="123 Đường 456, P. 789, Q10, TP HCM" readonly style="padding:.6rem; font-size:1.4rem"> -->
                                     {{#each relatedPeople}}
                                         <div class="d-flex my-3">
-                                            <input type="text" class="form-control d-inline-block me-4" id="" value="{{this.P_FullName}}" readonly style="padding:.6rem; font-size:1.4rem; flex:3;">
+                                            <input type="text" class="form-control d-inline-block me-3" id="" value="{{this.P_FullName}}" readonly style="padding:.6rem; font-size:1.3rem; flex:3;">
+                                            <input type="text" class="form-control d-inline-block me-3" id="" value="{{this.P_Address}}" readonly style="padding:.6rem; font-size:1.3rem; flex:9;">
                                             <input type="text" class="form-control d-inline-block" id="" value="{{this.P_Status}}" readonly style="padding:.6rem; font-size:1.4rem; flex:1;">
                                         </div>
                                     {{/each}}

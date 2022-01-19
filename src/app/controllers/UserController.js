@@ -43,12 +43,8 @@ class UserController {
 
         user = await Users.one('P_ID', id);
 
-        // let list = user.P_RelatedPersonID;
-        // for(let x of list) { 
-        //     let person =  await Users.one('P_ID', x);
-        //     relatedPeople.push(person);
-        // }
-
+        relatedPeople = await Users.relate(user.P_RelateGroup, user.P_ID)
+        
         listOfPlaces = await TreatmentPlaces.all();
         listOfPlaces.sort(function(a,b){
             return a._id - b._id;
@@ -391,14 +387,15 @@ class UserController {
 
     // GET /user/:id/package
     package(req, res, next) {
-        currPage1 = 1;
-        msg1 = '';
-        n1 = currPage1 * 6;
-        if(n1 >= listOfPackages.length) {
-            n1 = listOfPackages.length;
-            msg1 = 'disabled';
-        }
-        let packages = listOfPackages.slice(0, n1);
+        // currPage1 = 1;
+        // msg1 = '';
+        // n1 = currPage1 * 6;
+        // if(n1 >= listOfPackages.length) {
+        //     n1 = listOfPackages.length;
+        //     msg1 = 'disabled';
+        // }
+        // let packages = listOfPackages.slice(0, n1);
+        let packages = listOfPackages;
 
         res.render('user/package', {
             layout: 'user',
@@ -409,7 +406,7 @@ class UserController {
             currPackage: currPackage,
             listOfPackages: packages,
             listOfProducts: listOfProducts,
-            message1: msg1,
+            // message1: msg1,
         });
         return;
     }
@@ -676,7 +673,8 @@ class UserController {
         let newBill = {
             "code_bill": bill.B_ID,
             "total_money": bill.B_Totalpayment,
-            "bill": bill.B_Products
+            "bill": bill.B_Products,
+            "user": req.user.username,
         }
 
         const token = await jwt.generateToken(newBill, process.env.TOKEN_SECRET_KEY)
@@ -693,15 +691,35 @@ class UserController {
 
         try {
             let decoded = await jwt.verifyToken(token, process.env.TOKEN_SECRET_KEY)
-            if(decoded.result == 'success'){
-                success = decoded
+            if(decoded?.data?.result == 'success'){
+                success = decoded.data
+                let bill = await Bills.getBillById(success.billId)
+                let newBill = {...bill}
+                newBill.B_IsPaid = 'true';
+                newBill.B_PaymentDatetime = currDate.toString()
+                await Bills.update(newBill)
             }
-            else if (decoded.result == 'fail'){
-                fail = decoded
+            else if (decoded?.data?.result == 'fail'){
+                fail = decoded.data
             }
             else{
                 return res.send('invalid token')
             }
+
+            listOfBills = await Bills.getBillsByUserID(id) 
+            for(let i = 0; i < listOfBills.length; i++) {
+                let tokens = listOfBills[i].B_Datetime.split(' ');
+                let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
+                let time = tokens[4];
+                listOfBills[i].B_Date = date;
+                listOfBills[i].B_Time = time;
+            }
+            listOfBills.sort(function(a,b){
+                return new Date(b.B_Datetime) - new Date(a.B_Datetime);
+            });
+            paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)      
+            notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
+
             return res.render('user/payResult', { 
                 layout: 'user',
                 css: ['UserPage'],
@@ -710,6 +728,7 @@ class UserController {
                 success:success,
                 fail:fail,
             });
+
         } catch (error) {
             res.send(`<h4>${error}</h4>`)
         }

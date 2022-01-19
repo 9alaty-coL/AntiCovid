@@ -1,0 +1,68 @@
+
+<div class="app">
+    <div class="container">
+        <div class="sign-in">
+            <div class="sign-in-img">
+                <img src="/img/Coronavirus.jpg" alt="AntiCovid Logo Image">
+            </div>
+            <div class="card sign-in-form">
+                <div class="card-body">
+                    <form id="login" action="/sign-up" method="post">
+                            <div class="mb-3 row ">
+                                <input type="text" name="username" class="form-control" autofocus value="admin" readonly>
+                            </div>
+                            <div class="mb-3 row ">
+                                <input type="email" name="email" class="form-control" placeholder="Email" required id="email">
+                            </div>
+                             <div class="mb-3 row password">
+                                <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required id="password">
+                            </div>
+                            <div class="mb-3 row py-2 ">
+                                <button type="submit" class="btn btn-primary" id="login-btn">Đăng kí tài khoản</button>
+                            </div>
+                            <div class="mb-3 row d-flex justify-content-center mt-4">
+                                <a href="/sign-in" class="btn btn-outline-success" id="register-btn">Đăng nhập</a>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        console.log(type);
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+        this.classList.toggle('fa-eye');
+    });
+
+    {{!-- function setFormMessage(formElement, type, message) {
+        const messageElement = formElement.querySelector(".loginmes");
+        messageElement.textContent = message;
+        messageElement.classList.remove("loginmes-success, loginmes-error");
+        messageElement.classList.add('loginmes-${type}');
+    } --}}
+
+    {{!-- document.addEventListener("DOMContentLoaded", () => {
+
+        const loginForm = document.querySelector("#login");
+
+        loginForm.addEventListener("submit", e => {
+            e.preventDefault();
+            setFormMessage(loginForm, "error", "Tên tài khoản hoặc mật khẩu không đúng! Vui lòng nhập lại");
+        });
+
+    }); --}}
+</script>
+
+
+                       

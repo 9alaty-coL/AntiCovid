@@ -25,12 +25,19 @@ function calStatus(Status, offset) {
         return Status[0] + nextF;
     }
 }
-
+let Products;
+let Packages
 class ManagerController {
     ///>> Method → <GET> <<///
 
     // Get → /
-    home(req, res, next) {
+    async home(req, res, next) {
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function(a,b){
+            return a.P_ID - b.P_ID;
+        });
+
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
@@ -198,34 +205,64 @@ class ManagerController {
         });
     }
 
-    product(req, res, next) {
-        res.render('manager/product', {
-            layout: 'manager',
-            css: ['ManagerPage'],
-            js: ['ManagerPage'],
-        });
-    }
 
-    async Product(req, res, next) {
-        let Products = await ProductsModel.all();
-
+    Product(req, res, next) {
+        
         res.render('manager/product', {
-            layout: 'manager',
+            layout: 'manager_P',
             Products: Products,
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            listOfPackages: Packages,
+            listOfProducts: Products,
         });
     }
 
-    async Package(req, res, next) {
-        let Packages = await PackagesModel.all();
+    Package(req, res, next) {
 
-        res.render('manager/Package', {
-            layout: 'manager',
-            Packages: Packages,
+        res.render('manager/package', {
+            layout: 'manager_P',
             css: ['ManagerPage'],
-            js: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            listOfPackages: Packages,
+            listOfProducts: Products,
         });
+    }
+
+    packageDetail(req, res, next) {
+        const packageID = req.params.p_id;
+        let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
+        let productsInPackage = [];
+        for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
+            productsInPackage[i] = Products.filter(product => product.Product_ID == currPackage.P_ProductsID[i])[0];
+            productsInPackage[i].Product_Limit = currPackage.Product_Limit[i];
+        }
+
+        res.render('manager/packageDetail', {
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            currPackage: currPackage,
+            productsInPackage: productsInPackage,
+            listOfPackages: Packages,
+            listOfProducts: Products,
+        });
+        return;
+    }
+
+    productDetail(req, res, next) {
+        const productID = req.params.p_id;
+        let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+
+        res.render('manager/productDetail', {
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            currProduct: currProduct,
+            listOfPackages: Packages,
+            listOfProducts: Products,
+        });
+        return;
     }
 
     ///>> Method → <POST> <<///

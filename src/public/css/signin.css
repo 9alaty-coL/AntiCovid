@@ -90,3 +90,11 @@ html {
 #login #forgotten-password:hover {
     text-decoration: underline;
 }
+
+#register-btn{
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding: .5rem;
+    border-radius: 1rem;
+    width: 16rem;
+}

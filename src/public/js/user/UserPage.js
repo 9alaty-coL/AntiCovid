@@ -23,7 +23,7 @@ $('.small').click(function (event) {
     $('.big')[0].src = event.target.src;
 })
 
-// Search novel
+
 const pLists = document.querySelector('.search-menu');
 const searchBar = document.getElementById('searchBar');
 

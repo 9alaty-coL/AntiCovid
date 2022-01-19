@@ -12,6 +12,11 @@ router.get(
     AuthenController.signInG,
 );
 
+router.get(
+    '/sign-up', AuthenController.signUp,
+);
+
+
 router.post(
     '/sign-in',
     authenMiddleware.isNotLoggedIn,

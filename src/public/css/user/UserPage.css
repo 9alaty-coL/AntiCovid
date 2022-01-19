@@ -397,7 +397,7 @@ a:hover {
 
 .content {
     margin: 2rem 0;
-    min-height: 50rem;
+    min-height: 70rem;
 }
 
 .sidebar {
@@ -556,6 +556,32 @@ a:hover {
     transform: scale(1.08);
 }
 
+.option {
+    margin-top: 3rem;
+    font-size: 1.4rem;
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.select-type {
+    display: inline-block;
+}
+
+.option #filter {
+    font-size: 1.4rem;
+    width: 12.8rem;
+    padding:.6rem 1.6rem;
+    text-align:justify;
+    margin-right: 3.6rem;
+}
+
+.option #sort {
+    font-size: 1.4rem;
+    width: 12.8rem;
+    padding:.6rem 1.6rem;
+    text-align:justify;
+}
+
 .pay {
     padding: .4rem 1.2rem;
     font-size: 1.8rem;
@@ -700,3 +726,4 @@ a:hover {
 .pay_result .content-row .title{
     font-weight: bold;
 }
+

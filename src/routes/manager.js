@@ -19,7 +19,11 @@ router.get('/addRelate/UserID=:UserID', ManagerController.addRelate);
 
 router.get('/product', ManagerController.Product);
 
+router.get('/product/:p_id', ManagerController.productDetail);
+
 router.get('/package', ManagerController.Package);
+
+router.get('/package/:p_id', ManagerController.packageDetail);
 
 // >> POST
 router.post('/addUser', ManagerController.postAddUser);
