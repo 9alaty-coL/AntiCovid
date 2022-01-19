@@ -16,7 +16,7 @@ router.get('/:id/mHistory/status', UserController.status);
 
 router.get('/:id/accBal', UserController.accountBalance);
 
-router.get('/:id/deposit', UserController.deposit);
+router.get('/:id/debt', UserController.deposit);
 
 router.get('/:id/pHistory', UserController.paidHistory);
 

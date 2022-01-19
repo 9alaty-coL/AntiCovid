@@ -698,7 +698,8 @@ class UserController {
         let newBill = {
             "code_bill": bill.B_ID,
             "total_money": bill.B_Totalpayment,
-            "bill": bill.B_Products
+            "bill": bill.B_Products,
+            "user": req.user.username,
         }
 
         const token = await jwt.generateToken(newBill, process.env.TOKEN_SECRET_KEY)
