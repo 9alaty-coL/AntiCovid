@@ -465,6 +465,7 @@ class ManagerController {
         
         res.send(Ward);
     }
+
 }
 
 module.exports = new ManagerController();
