@@ -7,6 +7,7 @@ const LocationHistoryModel = require('../models/LocationHistory')
 const StatusHistoryModel = require('../models/StatusHistory')
 const TreatmentPlacesModel = require('../models/TreatmentPlaces')
 const TimeUtils = require('../../utils/Time')
+const StringSupportUtils = require('../../utils/stringSupport');
 const bcrypt = require('bcrypt');
 
 const ProvinceModel = require('../models/AddressProvince')
@@ -207,21 +208,59 @@ class ManagerController {
     }
 
     // Get → /chartStatusByTime
-    async chartStatusByTime(req, res, next) {
-        let month = (new Date()).getMonth() + 1;
-        let year = (new Date()).getFullYear();
+    async chartStatusByTime(req, res, next) {    
         // Last 6 months ago
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();     
         let labels = [];
+        let times = [];
         for (let i = 0; i < 6; i++) {
             labels.push({TimeLabels: "Tháng " + month + " Năm " + year});
-            if (parseInt(month) === 1) { month = 12; year--; }
+            times.push({month: month, year: year});
+            if (month === 1) { month = 12; year--; }
             else month--;
         }
         labels.reverse();
+
+        // Getting Database from User StatusHistory
+        let usersStatusHistory = await StatusHistoryModel.all();
+        let Status = {
+            F0: [0,0,0,0,0,0],
+            F1: [0,0,0,0,0,0],
+            F2: [0,0,0,0,0,0],
+            F3: [0,0,0,0,0,0],
+            KhoiBenh: [0,0,0,0,0,0]
+        }
+
+        for (let i = 0; i < usersStatusHistory.length; i++) {
+            console.log("ID=" + usersStatusHistory[i].P_ID + " with TimeLength=" + usersStatusHistory[i].Time.length);
+            for (let j = 0; j < usersStatusHistory[i].Time.length; j++) {
+                // From
+                let from = new Date(usersStatusHistory[i].Time[j]);
+                // To
+                let to;
+                if (j === usersStatusHistory[i].Time.length - 1) to = new Date();
+                else to = new Date(usersStatusHistory[i].Time[j + 1]);
+
+                for (let k = 0; k < times.length; k++) {
+                    let newTime = TimeUtils.createDate(times[k].month - 1, times[k].year)
+                    if (TimeUtils.isMonthBetween(from, to, newTime)) {
+                        let StatusSlice = usersStatusHistory[i].StatusChange[j].split(' → ')[1];
+
+                        if (StatusSlice === "F0") Status.F0[5-k]++;
+                        else if (StatusSlice === "F1") Status.F1[5-k]++;
+                        else if (StatusSlice === "F2") Status.F2[5-k]++;
+                        else if (StatusSlice === "F3") Status.F3[5-k]++;
+                        else if (StringSupportUtils.nonAccentVietnamese(StatusSlice) === StringSupportUtils.nonAccentVietnamese("Khỏi bệnh")) Status.KhoiBenh[5-k]++;
+                    }
+                }
+            }
+        }
         
         // Render
         res.render('manager/chartStatusByTime', {
             labels: labels,
+            status: Status,
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['UserSearchBar','ManagerPage'],

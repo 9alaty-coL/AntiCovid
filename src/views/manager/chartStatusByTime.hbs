@@ -64,12 +64,12 @@
         </div>
         <div class="sidebar-item">
             <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
                 Thống kê thông tin
             </div>
-            <ul class="list d-none">
-                <li class="list-item">
+            <ul class="list">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-users" aria-hidden="true"></i> Lượng
                         người trạng thái</a>
                 </li>
@@ -121,27 +121,29 @@
             type: 'bar',
             data: {
                 labels: [{{#each labels}}'{{this.TimeLabels}}',{{/each}}], 
+                {{#with status}}
                 datasets: [{
                     label: 'F0',
-                    data: [0, 8],
+                    data: [{{#each F0}}{{this}},{{/each}}],
                     backgroundColor: '#22aa99'
                 }, {
                     label: 'F1',
-                    data: [0, 2],
+                    data: [{{#each F1}}{{this}},{{/each}}],
                     backgroundColor: '#994499'
                 }, {
                     label: 'F2',
-                    data: [0, 1],
+                    data: [{{#each F2}}{{this}},{{/each}}],
                     backgroundColor: '#316395'
                 }, {
                     label: 'F3',
-                    data: [5, 2],
+                    data: [{{#each F3}}{{this}},{{/each}}],
                     backgroundColor: '#b82e2e'
                 }, {
                     label: 'Khỏi bệnh',
-                    data: [0, 1],
+                    data: [{{#each KhoiBenh}}{{this}},{{/each}}],
                     backgroundColor: '#66aa00'
                 }]
+                {{/with}}
             },
             options: {
                 responsive: false,
