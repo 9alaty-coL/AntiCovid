@@ -27,6 +27,8 @@ router.get('/package/:p_id', ManagerController.packageDetail);
 
 router.get('/chartStatusByTime', ManagerController.chartStatusByTime);
 
+router.get('/chartStatusChange', ManagerController.chartStatusChange);
+
 // >> POST
 router.post('/addUser', ManagerController.postAddUser);
 

@@ -20,6 +20,9 @@ class Time {
         // Compare date between from and to
         return (newFrom <= date && date <= newTo);
     }
+    isMonthIn(month, date) {
+        return (month.getMonth() === date.getMonth());
+    }
 }
 
 module.exports = new Time();

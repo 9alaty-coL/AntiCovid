@@ -69,11 +69,11 @@
                 Thống kê thông tin
             </div>
             <ul class="list">
-                <li class="list-item active">
+                <li class="list-item">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-users" aria-hidden="true"></i> Lượng
                         người trạng thái</a>
                 </li>
-                <li class="list-item">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
                 </li>
                 <li class="list-item">
@@ -111,7 +111,7 @@
 
     <div class="col-9" style="flex:1;">
         <div class="row section general-information">
-            <h1>Thống kê số lượng người ở từng trạng thái theo thời gian</h1>
+            <h1>Thống kê số chuyển trạng thái và khỏi bệnh</h1>
             <canvas id="myChart" style="width:100%;"></canvas>
         </div>
     </div>
@@ -123,25 +123,29 @@
                 labels: [{{#each labels}}'{{this.TimeLabels}}',{{/each}}], 
                 {{#with status}}
                 datasets: [{
-                    label: 'F0',
+                    label: 'chuyển thành F0',
                     data: [{{#each F0}}{{this}},{{/each}}],
                     backgroundColor: '#ff0000'
                 }, {
-                    label: 'F1',
+                    label: 'chuyển thành F1',
                     data: [{{#each F1}}{{this}},{{/each}}],
                     backgroundColor: '#fe05af'
                 }, {
-                    label: 'F2',
+                    label: 'chuyển thành F2',
                     data: [{{#each F2}}{{this}},{{/each}}],
                     backgroundColor: '#d805fe'
                 }, {
-                    label: 'F3',
+                    label: 'chuyển thành F3',
                     data: [{{#each F3}}{{this}},{{/each}}],
                     backgroundColor: '#7d05fe'
                 }, {
                     label: 'Khỏi bệnh',
                     data: [{{#each KhoiBenh}}{{this}},{{/each}}],
                     backgroundColor: '#00e62e'
+                }, {
+                    label: 'Không liên quan do F0 khỏi bệnh',
+                    data: [{{#each Khong}}{{this}},{{/each}}],
+                    backgroundColor: '#00a6ff'
                 }]
                 {{/with}}
             },
