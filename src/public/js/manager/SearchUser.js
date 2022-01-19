@@ -4,7 +4,7 @@ function validateForm() {
         $("#P_YearOfBirth").val() === "" && 
         $("#P_IdentityCard").val() === "" &&
         $("#P_Status :selected").val() === "" &&
-        $("#P_Address").val() === "" &&
+        $("#Province").val() === null && 
         $("#P_HospitalAddress").val() === "") {
             alert("Điều kiện tìm kiếm không hợp lệ")
             return false;

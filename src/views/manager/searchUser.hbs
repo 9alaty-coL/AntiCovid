@@ -34,16 +34,16 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Hậu</a>
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Hậu</a>
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Hậu</a>
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
         </div>
@@ -55,16 +55,16 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Hậu</a>
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Hậu</a>
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Hậu</a>
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
         </div>
@@ -140,31 +140,56 @@
                                         style="width: 15%;">CMND/CCCD</label>
                                     <input id="P_IdentityCard" name="P_IdentityCard" type="number"
                                         class="form-control text-form text-location-form"
-                                        placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;" value="{{P_IdentityCard}}">
+                                        placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;"
+                                        value="{{P_IdentityCard}}">
 
                                     <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
                                         thái</label>
                                     <select class="form-select text-form" id="P_Status" name="P_Status"
                                         style="width: 10%;">
                                         <option class="text-form" value="" selected></option>
-                                        <option class="text-form" value="F0" {{#ifStr P_Status 'F0'}}selected{{/ifStr}}>F0</option>
-                                        <option class="text-form" value="F1" {{#ifStr P_Status 'F1'}}selected{{/ifStr}}>F1</option>
-                                        <option class="text-form" value="F2" {{#ifStr P_Status 'F2'}}selected{{/ifStr}}>F2</option>
-                                        <option class="text-form" value="F3" {{#ifStr P_Status 'F3'}}selected{{/ifStr}}>F3</option>
+                                        <option class="text-form" value="F0" {{#ifStr P_Status 'F0'
+                                            }}selected{{/ifStr}}>F0</option>
+                                        <option class="text-form" value="F1" {{#ifStr P_Status 'F1'
+                                            }}selected{{/ifStr}}>F1</option>
+                                        <option class="text-form" value="F2" {{#ifStr P_Status 'F2'
+                                            }}selected{{/ifStr}}>F2</option>
+                                        <option class="text-form" value="F3" {{#ifStr P_Status 'F3'
+                                            }}selected{{/ifStr}}>F3</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa
+                                        chỉ nơi ở</label>
+                                    <select class="form-select text-form" id="Province" name="Province"
+                                        style="width: 28%;" onchange="changeProvince(value);" disabled>
+                                        <option class="text-form" value="" selected>[Chọn] Tỉnh Thành</option>
+                                    </select>
+                                    <select class="form-select text-form" id="District" name="District"
+                                        style="width: 28%;" onchange="changeDistrict(value);" disabled>
+                                        <option class="text-form" value="" selected>[Chọn] Quận Huyện</option>
+                                    </select>
+                                    <select class="form-select text-form" id="Ward" name="Ward" style="width: 28%;"
+                                        disabled>
+                                        <option class="text-form" value="" selected>[Chọn] Phường Xã</option>
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa
-                                        chỉ nơi ở</label>
+                                    <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Thêm
+                                        chi tiết</label>
                                     <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                        placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;" value="{{P_Address}}">
+                                        placeholder="Số nhà, đường . . ." style="width: 85%;" value="{{P_Address}}">
                                 </div>
                                 <div class="input-group">
                                     <label class="input-group-text text-form" for="P_HospitalAddress"
                                         style="width: 15%;">Nơi đang điều trị</label>
-                                    <div class="form-control form-control-dark text-form search-packet no-gutter" style="width: 85%;">
-                                        <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
-                                            <input name="P_TreatmentPlace" autocomplete="off" type="text" id="searchBarTreatPlace" class="form-control search-input" placeholder="Vị trí cần tìm" value="{{P_TreatmentPlace}}">
+                                    <div class="form-control form-control-dark text-form search-packet no-gutter"
+                                        style="width: 85%;">
+                                        <div class="d-inline-block"
+                                            style="width: 100%; height: 100%; position: relative;">
+                                            <input name="P_TreatmentPlace" autocomplete="off" type="text"
+                                                id="searchBarTreatPlace" class="form-control search-input"
+                                                placeholder="Vị trí cần tìm" value="{{P_TreatmentPlace}}" onfocus="resetLocation()">
                                         </div>
                                         <ul class="search-menu" id="menuBarTreatPlace"></ul>
                                     </div>
@@ -172,7 +197,8 @@
                             </div>
                             {{/with}}
                             <div class="col-2">
-                                <button type="submit" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm kiếm</button>
+                                <button type="submit" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm
+                                    kiếm</button>
                             </div>
                         </div>
 
@@ -187,8 +213,10 @@
                     <div class="card mb-1 user-card" onclick="window.location='/manager/detail/UserID={{this.P_ID}}'">
                         <div class="row card-body h-100" style="min-height: 70px;">
                             <span class="col-2 border-end border-dark border-1"> {{this.P_FullName}}</span>
-                            <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
-                            <span class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
+                            <span
+                                class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
+                            <span
+                                class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
                             <span class="col-4 border-end border-dark border-1">{{this.P_Address}}</span>
                             <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Status}}</span>
                             <span class="col-3">{{this.P_TreatmentPlace}}</span>
@@ -196,7 +224,7 @@
                     </div>
                     {{/each}}
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
 </div>

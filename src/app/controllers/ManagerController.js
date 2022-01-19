@@ -8,6 +8,11 @@ const StatusHistoryModel = require('../models/StatusHistory')
 const TreatmentPlacesModel = require('../models/TreatmentPlaces')
 const TimeUtils = require('../../utils/Time')
 const bcrypt = require('bcrypt');
+
+const ProvinceModel = require('../models/AddressProvince')
+const DistrictModel = require('../models/AddressDistrict')
+const WardModel = require('../models/AddressWard')
+
 const e = require('express')
 
 function calStatus(Status, offset) {
@@ -109,14 +114,13 @@ class ManagerController {
             users = []
         }
 
-
         // Render
         res.render('manager/searchUser', {
             key: key,
             users: users,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['SearchUser','UserSearchBar','ManagerPage'],
+            js: ['OnFocusReset','AddressControlSearch','SearchUser','UserSearchBar','ManagerPage'],
         });
     }
 
@@ -170,16 +174,16 @@ class ManagerController {
             AccountData: {username: '', password: ''},
             UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
             HospitalData: {hospitalData: '', IDHospital: 0},
-            RelateData: {relateData: '', IDGroup: 0},
+            RelateData: {relateData: '', IDGroup: 0, Lock: 'off'},
             css: ['ManagerPage'],
-            js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
+            js: ['OnFocusReset','AddressControl','DetailUser','UserSearchBar','AddUser','ManagerPage'],
         });
     }
 
     // Get → /addRelate/UserID=:UserID
     async addRelate(req, res, next) {
         let user = await UserModel.one('P_ID', req.params.UserID);
-        let RelateData = {relateData: user.P_FullName + " - Status: " + user.P_Status + " - ID: " + user.P_IdentityCard, IDGroup: user.P_RelateGroup}
+        let RelateData = {relateData: user.P_FullName + " - Status: " + user.P_Status + " - ID: " + user.P_IdentityCard, IDGroup: user.P_RelateGroup, Lock: 'on'}
 
         res.render('manager/addUser', {
             layout: 'manager',
@@ -190,7 +194,7 @@ class ManagerController {
             HospitalData: {hospitalData: '', IDHospital: 0},
             RelateData: RelateData,
             css: ['ManagerPage'],
-            js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
+            js: ['OnFocusReset','AddressControl','DetailUser','UserSearchBar','AddUser','ManagerPage'],
         });
     }
 
@@ -231,8 +235,14 @@ class ManagerController {
 
         // Form input
         let AccountData = {username: req.body.username, password: req.body.password, role: 'user', isLocked: false};
-        let UserData = {P_FullName: req.body.P_FullName, P_IdentityCard: req.body.P_IdentityCard, P_YearOfBirth: req.body.P_YearOfBirth, 
-            P_Status: req.body.P_Status, P_Address: req.body.P_Address, P_TreatmentPlace: parseInt(req.body.P_HospitalAddress), P_RelateGroup: req.body.P_RelateGroup};
+        let UserData = {P_FullName: req.body.P_FullName, 
+                        P_IdentityCard: req.body.P_IdentityCard, 
+                        P_YearOfBirth: req.body.P_YearOfBirth, 
+                        P_Status: req.body.P_Status, 
+                        P_Address: (await ProvinceModel.one(req.body.Province)).ProvinceName  + ", " 
+                                 + (await DistrictModel.one(req.body.Province, req.body.District)).DistrictName + ", " + req.body.Ward + ", " + req.body.P_Address,
+                        P_TreatmentPlace: parseInt(req.body.P_HospitalAddress), 
+                        P_RelateGroup: req.body.P_RelateGroup};
         let HospitalData = {hospitalData: req.body.location, IDHospital: req.body.P_HospitalAddress};
         let RelateData = {relateData: req.body.relate, IDGroup: req.body.P_RelateGroup};
 
@@ -399,6 +409,24 @@ class ManagerController {
             Relate.push({P_FullName: User[i].P_FullName, P_Status: User[i].P_Status, P_IdentityCard: User[i].P_IdentityCard , P_RelateGroup: User[i].P_RelateGroup} )
         }
         res.send(Relate);
+    }
+
+    async fetchProvince(req, res, next) {
+        const Province = await ProvinceModel.all();
+        
+        res.send(Province);
+    }
+
+    async fetchDistrict(req, res, next) {
+        const District = await DistrictModel.all();
+        
+        res.send(District);
+    }
+
+    async fetchWard(req, res, next) {
+        const Ward = await WardModel.all();
+        
+        res.send(Ward);
     }
 }
 

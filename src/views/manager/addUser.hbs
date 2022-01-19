@@ -34,16 +34,16 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Hậu</a>
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Hậu</a>
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Hậu</a>
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
         </div>
@@ -55,16 +55,16 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Hậu</a>
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Hậu</a>
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-user"></i> Tìm kiếm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Hậu</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Thay đổi trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Hậu</a>
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
         </div>
@@ -176,12 +176,24 @@
                                 <option class="text-form" value="F3" {{#ifStr P_Status 'F3'}}selected{{/ifStr}}>F3</option>
                             </select>
                         </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa chỉ nơi
-                                ở</label>
-                            <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;" value="{{P_Address}}">
+                        <div class="input-group">
+                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa chỉ nơi ở</label>
+                            <select class="form-select text-form" id="Province" name="Province" style="width: 28%;" onchange="changeProvince(value);" disabled>
+                                <option class="text-form" value="" selected disabled>Tỉnh Thành</option>
+                            </select>
+                            <select class="form-select text-form" id="District" name="District" style="width: 28%;" onchange="changeDistrict(value);" disabled>
+                                <option class="text-form" value="" selected>Quận Huyện</option>
+                            </select>
+                            <select class="form-select text-form" id="Ward" name="Ward" style="width: 28%;" disabled>
+                                <option class="text-form" value="" selected>Phường Xã</option>
+                            </select>
                         </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Thêm chi tiết</label>
+                            <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
+                                    placeholder="Số nhà, đường . . ." style="width: 85%;" value="{{P_Address}}">
+                        </div>
+
                         {{/with}}
                         {{#with HospitalData}}
                         <div class="input-group">
@@ -190,7 +202,7 @@
                             <div class="form-control form-control-dark text-form search-packet no-gutter"
                                 style="width: 55%;" id="inputOutline">
                                 <input name="location" autocomplete="off" type="text" id="searchBarTreatPlace"
-                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp" value="{{hospitalData}}">
+                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp" value="{{hospitalData}}" onfocus="resetForLocationBar()">
                                 <input name="P_HospitalAddress" type="number" id="IDsearchBarTreatPlace" value="{{IDHospital}}" hidden>
                                 <ul class="search-menu" id="menuBarTreatPlace" style="z-index: 10;"></ul>
                             </div>
@@ -209,7 +221,8 @@
                                 {{#with RelateData}}
                                 <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
                                     <input name="relate" autocomplete="off" type="text" id="searchBarRelate"
-                                        class="form-control search-input" placeholder="Người liên đới" value="{{relateData}}">
+                                        class="form-control search-input" placeholder="Người liên đới" value="{{relateData}}" onfocus="resetForRelateBar()"
+                                        {{#ifStr Lock 'on'}}disabled{{/ifStr}}>
                                     <input name="P_RelateGroup" type="number" id="IDsearchBarRelate" value="{{IDGroup}}" hidden>
                                 </div>
                                 {{/with}}

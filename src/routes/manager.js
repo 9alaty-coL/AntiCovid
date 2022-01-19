@@ -38,6 +38,10 @@ router.get('/relate', ManagerController.fetchRelateGroup)
 
 router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
 
+router.get('/province', ManagerController.fetchProvince)
 
+router.get('/district', ManagerController.fetchDistrict)
+
+router.get('/ward', ManagerController.fetchWard)
 
 module.exports = router;

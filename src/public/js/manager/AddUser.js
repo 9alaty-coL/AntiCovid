@@ -49,8 +49,9 @@ $("#addUser").submit(function () {
     }
 
     // Không check địa chỉ
-    if ($('#P_Address').val() === "") {
-        alert('Địa chỉ không được trống!');
+    console.log($('#Province').val())
+    if ($('#Province').val() === null) {
+        alert('Địa chỉ tỉnh thành không được trống!');
         return false;
     }
 
