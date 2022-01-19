@@ -42,14 +42,21 @@
                         </ul>
                     </div>
                    <div class="searchbar-item ">
-                        <div class="searchbar-btn Dropdown">
+                        <div class="searchbar-btn Dropdown" style="width: 12.8rem;">
                             <a href="#">
                                 <div class="user">
                                     <i class="fas fa-user-circle"></i>
                                     <span class="user-name">Manager</span>
                                 </div>
                                 <div class="droplist droplist-normal">
-                                    <li><a id="logout" href="#" type="submit">Đăng xuất</a></li>
+                                    <li>
+                                        <form action="/logout?_method=DELETE" method="post">
+                                            <button type="submit" class="btn btn-logout" style="font-weight:500; font-size:1.6rem; width:100%;">
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                    </li>
+                                    
                                 </div>
                             </a>
                         </div>
