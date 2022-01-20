@@ -42,6 +42,10 @@ router.get('/changeMinPayment', ManagerController.changeMinPayment);
 
 router.get('/sendPaymentNotification', ManagerController.sendPaymentNotification)
 
+router.get('/chartPackage', ManagerController.chartPackage);
+
+router.get('/chartProduct', ManagerController.chartProduct);
+
 // >> POST
 router.post('/addUser', ManagerController.postAddUser);
 
@@ -61,7 +65,7 @@ router.get('/relate', ManagerController.fetchRelateGroup)
 
 router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
 
-// add prodcut
+// add product
 router.get('/productEdit/add',ManagerController.addProduct);
 
 router.post('/productEdit/add', ManagerController.newProduct);

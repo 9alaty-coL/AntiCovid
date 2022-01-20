@@ -1,0 +1,186 @@
+<div class="content row">
+    {{!-- sidebar --}}
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <a class="title" href="/manager/">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <i class="fa fa-home d-none" aria-hidden="true"></i>
+                Trang chủ
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý người liên quan
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý s.phẩm / n.y.phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item">
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý gói nhu yếu phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Thống kê thông tin
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/chartProduct"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/chartDept_Payment"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý thanh toán
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{!-- end sidebar --}}
+
+           <div class="col-9" style="flex:1;">
+                <div class="section ">
+                    <div class="section-title">
+                        Thống kê tiêu thụ các gói nhu yếu phẩm
+                    </div>
+                    <div class="information">
+                        <div class="section-content mt-4 me-2">
+                            <div class="row">
+                                <h2 class="text-center">Biểu đồ thống kê số lượng tiêu thụ gói nhu yếu phẩm theo thời gian</h2>
+                                <canvas id="package" class="my-5" style="width:100%;"></canvas>
+                                <h2 class="text-center mt-5">Biểu đồ thống kê tổng số lượng tiêu thụ từng loại gói đến thời điểm hiện tại</h2>
+                                <canvas id="packageQuantity" class="my-5" style="width:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        new Chart("package", {
+            type: 'line',
+            data: {
+                labels: [{{#each labels}}'{{this.TimeLabels}}',{{/each}}], 
+                datasets:[
+                {{#each status}}
+                    {
+                        label: `{{this.Name}}`,
+                        data: [{{#each this.data}} '{{this}}',{{/each}}],
+                        backgroundColor: `{{this.borderColor}}`,
+                    },
+                {{/each}}
+                ]
+            },options: {
+                responsive: false,
+                legend: {
+                    position: 'right' // place legend on the right side of chart
+                }
+            }
+        });
+
+        let lb2 = []; 
+        {{#each labels2}}
+            lb2.push('{{this}}')
+        {{/each}}
+        console.log(lb2);
+
+        let c2 = []; 
+        {{#each colors2}}
+            c2.push('{{this}}')
+        {{/each}}
+        console.log(c2);
+
+        let dt2 = []; 
+        {{#each status2}}
+            dt2.push(parseInt({{this}}));
+        {{/each}}
+        console.log(dt2)
+
+        new Chart("packageQuantity", {
+            type: 'bar',
+            data: {
+                labels: lb2, 
+                datasets: [{
+                    label: 'thống kê số lượng gói nhu yếu phẩm theo từng loại',
+                    data: dt2,
+                    backgroundColor: c2, 
+                }], 
+            },
+            options: {
+                scales: {
+                   
+                },
+            }
+        });
+
+    </script>

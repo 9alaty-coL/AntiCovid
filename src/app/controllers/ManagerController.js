@@ -1,5 +1,6 @@
 const UserM = require('../models/Authen')
 const UserModel = require('../models/User')
+const Bills = require('../models/Bill');
 const ManagerModel = require('../models/Manager')
 const ProductsModel = require('../models/Product')
 const PackagesModel = require('../models/Package')
@@ -29,8 +30,22 @@ function calStatus(Status, offset) {
     }
 }
 
+var colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
 let Products;
 let Packages
+let listOfBills;
+let paidBills;
+let notPaidBills;
 class ManagerController {
     ///>> Method → <GET> <<///
 
@@ -41,6 +56,20 @@ class ManagerController {
         Packages.sort(function (a, b) {
             return a.P_ID - b.P_ID;
         });
+        listOfBills = await Bills.all() 
+        for(let i = 0; i < listOfBills.length; i++) {
+            let tokens = listOfBills[i].B_Datetime.split(' ');
+            let date = tokens[0] + ', ' + tokens[1] + ' ' + tokens[2] + ' ' + tokens[3] ;
+            let time = tokens[4];
+            listOfBills[i].B_Date = date;
+            listOfBills[i].B_Time = time;
+        }
+        listOfBills.sort(function(a,b){
+            return new Date(b.B_Datetime) - new Date(a.B_Datetime);
+        });
+        paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)      
+        notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
+
 
         res.render('manager/home', {
             layout: 'manager',
@@ -384,6 +413,81 @@ class ManagerController {
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],
+        })
+    }
+
+    async chartPackage(req, res, next) {
+        // Last 6 months ago
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        let labels = [];
+        let times = [];
+        for (let i = 0; i < 6; i++) {
+            labels.push({ TimeLabels: "Tháng " + month + " Năm " + year });
+            times.push(TimeUtils.createDate(month - 1, year));
+            if (month === 1) { month = 12; year--; }
+            else month--;
+        }
+        times.reverse();
+        labels.reverse();
+
+       
+        let Status = [];
+        for(let i = 0; i < Packages.length; i++) {
+            Status[i] = {
+                "name": Packages[i].P_Name,
+                "data": [0,0,0,0,0,0,0],
+                "borderColor": colors[i],
+            }
+        }
+
+        // for (let i = 0; i < listOfBills.length; i++) {
+           
+        // }
+
+     
+        let labels2 = [];
+        let status2 = [];
+        let colors2 = [];
+        for (let i = 0; i < Packages.length; i++) {
+            labels2.push(Packages[i].P_Name);
+            status2.push(Packages[i].P_SoldQuantity);
+            colors2[i] = colors[i];
+        }
+      
+        // Render
+        res.render('manager/chartPackage', {
+            labels: labels,
+            status: Status,
+            labels2: labels2,
+            status2: status2,
+            colors2: colors2,
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+        });
+    }
+
+    async chartProduct(req, res, next) {
+        // Last 6 months ago
+        
+        let labels2 = [];
+        let status2 = [];
+        let colors2 = [];
+        for (let i = 0; i < Products.length; i++) {
+            labels2.push(Products[i].Product_Name);
+            status2.push(Products[i].Product_SoldQuantity);
+            colors2[i] = colors[i];
+        }
+      
+        // Render
+        res.render('manager/chartProduct', {
+            labels2: labels2,
+            status2: status2,
+            colors2: colors2,
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
         });
     }
 
@@ -444,7 +548,7 @@ class ManagerController {
 
     productDetail(req, res, next) {
         const productID = req.params.p_id;
-        let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        let currProduct = Products.filter(product => product.Product_ID == productID)[0];
 
         res.render('manager/productDetail', {
             layout: 'manager_P',
