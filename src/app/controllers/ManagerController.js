@@ -502,8 +502,9 @@ class ManagerController {
             listOfProducts: Products,
         });
     }
-    productEdit(req, res, next) {
-        
+   async productEdit(req, res, next) {
+        req.body._id = req.params.id;
+        let product = await PackagesModel.all(); 
         res.render('manager/productEdit', {
             layout: 'manager_P',
             Products: Products,
@@ -771,10 +772,12 @@ class ManagerController {
    async product_Edit(req, res, next) {
         const productID = req.params.p_id;
         let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        req.body._id = req.params.id;
+        let product = await ProductsModel.update( req.body);
         let message = "";
         let color = "";
         if (!currProduct) {
-            message = "Treatment no found";
+            message = "P no found";
             color = "danger";
         }
         res.render('manager/product_Edit', {
@@ -784,6 +787,7 @@ class ManagerController {
             currProduct: currProduct,
             listOfPackages: Packages,
             listOfProducts: Products,
+            product:product,
         });
         return;
     }
@@ -806,7 +810,7 @@ class ManagerController {
             layout: 'manager_P',
             css: ['ManagerPage'],
             js: ['SearchProductsPackages', 'ManagerPage'],
-            currProduct: product,
+          // currProduct: product,
             listOfPackages: Packages,
             listOfProducts: Products,
             message:message,
@@ -820,7 +824,7 @@ class ManagerController {
         res.render('manager/productAdd', {
             layout: 'manager', 
             css: ['ManagerPage'], 
-            js: ['ManagerPage'],
+            js: ['fixProductLink','ManagerPage'],
             Product_ID:pID,
         })
     }
@@ -828,6 +832,7 @@ class ManagerController {
     // [POST] 
     async newProduct(req, res, next){
         let place = await ProductsModel.insert(req.body);
+      //  Products = await ProductsModel.all();
       //  let pID = await ProductsModel.nextID()
         let message = "";
         let color = "";
@@ -843,7 +848,7 @@ class ManagerController {
             layout: 'manager_P',
             css: ['ManagerPage'],
             js: ['SearchProductsPackages', 'ManagerPage'],
-            Product_ID:pID,
+           // Product_ID:pID,
             message:message,
             color:color
         });
@@ -873,7 +878,7 @@ class ManagerController {
         res.redirect('back')
     }
 
-    packageEdit(req, res, next) {
+   async packageEdit(req, res, next) {
         
         res.render('manager/packageEdit', {
             layout: 'manager_P',
@@ -883,6 +888,15 @@ class ManagerController {
             listOfPackages: Packages,
             listOfProducts: Products,
         });
+    }
+    async addPackage(req, res, next){
+        let pID = await PackagesModel.nextID()
+        res.render('manager/packageAdd', {
+            layout: 'manager', 
+            css: ['ManagerPage'], 
+            js: ['ManagerPage'],
+            P_ID:pID,
+        })
     }
 }
 
