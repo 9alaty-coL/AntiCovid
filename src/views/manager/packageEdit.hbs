@@ -158,7 +158,7 @@
         $('#delete-form').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
         var P_ID = button.data('id')
-        $('#deleteForm').attr('action',`/manager/${P_ID}?_method=DELETE`);
+        $('#deleteForm').attr('action',`/manager/packageEdit/${P_ID}?_method=DELETE`);
         })
 
             $('#delete-confirm').on('click', ()=>{

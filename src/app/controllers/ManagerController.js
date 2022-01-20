@@ -817,7 +817,6 @@ class ManagerController {
     // [DELETE] product/Product_ID
     async deleteProduct(req, res, next){
         let response = await ProductsModel.delete('Product_ID', req.params.id);
-        let place = await ProductsModel.insert(req.body);
         Products = await ProductsModel.all();
         Packages = await PackagesModel.all();
         Packages.sort(function (a, b) {
@@ -943,6 +942,15 @@ class ManagerController {
     // [DELETE] package/P_ID
     async packageDelete(req, res, next){
         let response = await PackagesModel.delete('P_ID', req.params.id);
+      //  let place = await ProductsModel.insert(req.body);
+      if(response == null){
+        return res.redirect('/manager/packageEdit?result=fail');
+    }
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
         res.redirect('back')
     }
 
@@ -951,6 +959,7 @@ class ManagerController {
         res.render('manager/packageEdit', {
             layout: 'manager_P',
             Products: Products,
+            Packages: Packages,
             css: ['ManagerPage'],
             js: ['SearchProductsPackages','ManagerPage'],
             listOfPackages: Packages,
@@ -1002,7 +1011,7 @@ class ManagerController {
         const packageID = req.params.p_id;
         let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
         req.body._id = req.params.id;
-        let product = await ProductsModel.update( req.body);
+     //  let product = await ProductsModel.update( req.body);
         let message = "";
         let color = "";
         if (!currPackage) {
@@ -1017,7 +1026,7 @@ class ManagerController {
             currPackage: currPackage,
             listOfPackages: Packages,
             listOfProducts: Products,
-            product:product,
+          //  product:product,
         });
         return;
     }
