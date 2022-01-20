@@ -444,7 +444,7 @@ class ManagerController {
 
     productDetail(req, res, next) {
         const productID = req.params.p_id;
-        let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        let currProduct = Products.filter(product => product.Product_ID == productID)[0];
 
         res.render('manager/productDetail', {
             layout: 'manager_P',
