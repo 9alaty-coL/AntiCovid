@@ -106,67 +106,58 @@
         </div>
     </div>
  {{!-- end sidebar --}}
-
- <div class="col-9" style="flex:1;">
-        <div class="card-header bg text-black m-auto w-100">
-             Thêm nhu yếu phẩm
-        </div>
-                <div class="col-1">
-                    <a href="/manager/packageEdit" class="btn btn-danger">back</a>
-                </div>
-         <div class="input">
-   
-          <form class="col g-5 mt-5 form-control-lg" onSubmit="fixProductLink()" action="/manager/packageEdit/add" method="post">
-                <div class="form-group mb-2 col-md-4">
-                    <label for="staticEmail2" class="sr-only">ID</label>
-                    <input type="text" readonly class="form-control-plaintext" name="P_ID" id="staticEmail2" value={{P_ID}}>
-                </div>
-                <div class="col-md-4  ">
-                    <label for="validationDefault01" class="form-label">Package's Name</label>
-                    <input type="text" class="form-control" name="P_Name" id="validationDefault01" placeholder="Tên nhu yếu  phẩm" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="validationDefault02" class="form-label">Link Main image</label>
-                    <input type="text" class="form-control" name="P_Image" id="fixProductLink" placeholder="Link  ảnh " required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Limit </label>
-                    <input type="number" class="form-control" name="P_Limit" id="validationDefault01" placeholder="Giới hạn gói" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Product Limit</label>
-                    <input type="text" class="form-control" name="Product_Limit" id="validationDefault01" placeholder="Giới hạn nhu yếu phẩm" required>
-                </div>
-                <div class="col-md-4 row-9">
-                    <label for="validationDefault01" class="form-label">Danh sách gói</label>
-                    <input type="text" class="form-control" name="Product_List" id="validationDefault01" placeholder="Giới thiệu" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Giới hạn thời gian</label>
-                    <input type="text" class="form-control" name="P_expire" id="validationDefault01" placeholder="Giới hạn thời gian" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Số lượng đã bán</label>
-                    <input type="text" class="form-control" name="P_SoldQuantity" id="validationDefault01" placeholder="Số lượng đã bán" required>
-                </div>
+    <div class="col-9" >
+        <h1>Chỉnh sửa gói nhu yếu phẩm</h1>
+        <h1 class="mt-4 mb-4 text-danger">{{Package.P_Name}}</h1>
+        <form action="/manager/packageEdit/{{Package.P_ID}}/edit?_method=PUT"  method="post">
+            <input type="hidden" name="P_ID" value="{{Package.P_ID}}">
+            <div style="font-size: 2rem;" class="input-group mb-3">
+                <span style="font-size: 2rem; width:15%;" class="input-group-text" id="basic-addon1">Tên gói</span>
+                <input  name="P_Name" style="font-size: 2rem;" type="text" required class="form-control" placeholder="Tên gói" aria-label="Username" aria-describedby="basic-addon1" value="{{Package.P_Name}}">
+            </div>
+            <div style="font-size: 2rem;" class="input-group mb-3">
+                <span style="font-size: 2rem; width:15%;" class="input-group-text" id="basic-addon1">Giới hạn mua</span>
+                <input name="P_Limit" style="font-size: 2rem;" type="text" required class="form-control" placeholder="Giới hạn mua" aria-label="Username" aria-describedby="basic-addon1" value="{{Package.P_Limit}}">
                 
-                <div class="col-md-4 ">
-                     <label for="validationDefault01" class="form-label">Loại gói nhu yếu phẩm</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="validationDefault01" name="P_Type" required>
-                        <option selected>Loại gói nhu yếu phẩm</option>        
+            </div>
+            <div style="font-size: 2rem;" class="input-group mb-3">
+                <span style="font-size: 2rem; width:15%;" class="input-group-text" id="basic-addon1">Hình ảnh</span>
+                <input name="P_Image" style="font-size: 2rem;" type="text" required class="form-control" placeholder="Hình ảnh" aria-label="Username" aria-describedby="basic-addon1" value="{{Package.P_Image}}">
+                
+            </div>
+            <div style="font-size: 2rem;" class="input-group mb-3">
+                <span style="font-size: 2rem; width:15%;" class="input-group-text" id="basic-addon1">Đã bán</span>
+                <input name="P_SoldQuantity" style="font-size: 2rem;" type="text" required class="form-control" placeholder="Đã bán" aria-label="Username" aria-describedby="basic-addon1" value="{{Package.P_SoldQuantity}}">
+                
+            </div>
+            <div  style="font-size: 2rem;" class="input-group mb-5">
+                  <label style="font-size: 2rem; width:15%;" class="input-group-text" for="inputGroupSelect01">Loại gói</label>
+                    <select name="P_Type" style="font-size: 2rem;" class="form-select" id="inputGroupSelect01">
+                        <option selected value="Thuốc men">Thuốc men</option>
                         <option value="Thực phẩm">Thực phẩm</option>
-                        <option value="Thuốc men">Thuốc men</option>
-                    </select> 
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-success" type="submit">Add product</button>
-                </div>
-                </form>
-                {{#if message}}
-                        <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
-                                    {{message}}
-                        </div>
-                {{/if}}
-        
- </div>
- </div>
+                    </select>
+                
+            </div>
+
+            <h2>Danh sách sản phẩm trong gói</h2>
+
+            {{#each Products}}
+            <input type="hidden" name="P_ProductsID" value="{{this.P_ProductsID}}">
+            <div style="font-size: 2rem;" class="input-group mt-5">
+                <span style="font-size: 2rem; width:15%;" class="input-group-text bg-dark text-white" id="basic-addon1">Tên sản phẩm</span>
+                <input style="font-size: 2rem;" name="Product_List"  type="text" required class="form-control" placeholder="Đã bán" aria-label="Username" aria-describedby="basic-addon1" value="{{this.Product_List}}">
+            </div>
+            <div style="font-size: 2rem;" class="input-group mb-5">
+                <span style="font-size: 2rem; width:15%;" class="input-group-text bg-secondary text-white" id="basic-addon1">Giới hạn mua</span>
+                <input style="font-size: 2rem;" name="Product_Limit" type="text" required class="form-control" placeholder="Đã bán" aria-label="Username" aria-describedby="basic-addon1" value="{{this.Product_Limit}}">
+            </div>
+                
+            {{/each}}
+
+            <button type="submit" style="font-size: 2.3rem;" class="btn btn-primary px-2" >Cập nhật</button>
+
+        </form>
+    </div>
+    
+
+</div>

@@ -817,7 +817,6 @@ class ManagerController {
     // [DELETE] product/Product_ID
     async deleteProduct(req, res, next){
         let response = await ProductsModel.delete('Product_ID', req.params.id);
-        let place = await ProductsModel.insert(req.body);
         Products = await ProductsModel.all();
         Packages = await PackagesModel.all();
         Packages.sort(function (a, b) {
@@ -943,6 +942,15 @@ class ManagerController {
     // [DELETE] package/P_ID
     async packageDelete(req, res, next){
         let response = await PackagesModel.delete('P_ID', req.params.id);
+      //  let place = await ProductsModel.insert(req.body);
+      if(response == null){
+        return res.redirect('/manager/packageEdit?result=fail');
+    }
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
         res.redirect('back')
     }
 
@@ -951,6 +959,7 @@ class ManagerController {
         res.render('manager/packageEdit', {
             layout: 'manager_P',
             Products: Products,
+            Packages: Packages,
             css: ['ManagerPage'],
             js: ['SearchProductsPackages','ManagerPage'],
             listOfPackages: Packages,
@@ -1017,63 +1026,114 @@ class ManagerController {
     }
 
     async package_Edit(req, res, next) {
-        const productID = req.params.p_id;
-        let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
-        const packageID = req.params.p_id;
-        let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
-        req.body._id = req.params.id;
-        let product = await ProductsModel.update( req.body);
-        let message = "";
-        let color = "";
-        if (!currPackage) {
-            message = "P no found";
-            color = "danger";
+        // const productID = req.params.p_id;
+        // let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        // const packageID = req.params.p_id;
+        // let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
+        // req.body._id = req.params.id;
+        // let product = await ProductsModel.update( req.body);
+        // let message = "";
+        // let color = "";
+        // if (!currPackage) {
+        //     message = "P no found";
+        //     color = "danger";
+        // }
+        // res.render('manager/package_Edit', {
+        //     layout: 'manager_P',
+        //     css: ['ManagerPage'],
+        //     js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
+        //     currProduct: currProduct,
+        //     currPackage: currPackage, 
+        //     listOfPackages: Packages,
+        //     listOfProducts: Products,
+        //     product:product,
+        //     P_ID:packageID
+        // });
+        // return;
+
+        let pk_id = req.params.p_id
+        let myPK = await PackagesModel.one('P_ID', pk_id)
+
+        let myPD = [];
+        for (let i = 0; i < myPK.P_ProductsID.length; i++) {
+            let newPD = {}
+            newPD.Product_Limit = myPK.Product_Limit[i]
+            newPD.Product_List = myPK.Product_List[i]
+            newPD.P_ProductsID = myPK.P_ProductsID[i]
+            myPD.push(newPD)
         }
+
+        
+
         res.render('manager/package_Edit', {
             layout: 'manager_P',
             css: ['ManagerPage'],
             js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
-            currProduct: currProduct,
-            currPackage: currPackage,
-            listOfPackages: Packages,
-            listOfProducts: Products,
-            product:product,
-        });
-        return;
+            Package: myPK,
+            Products: myPD,
+
+        })
+
     }
     
     async packageUpdate(req, res, next) {
-       // const productID = req.params.p_id;
+        // const productID = req.params.p_id;
         //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
-        let message = "";
-        let color = "";
-        req.body.Product_ID = req.params.id;
-        let product = await PackagesModel.update( req.body);
+<<<<<<< HEAD
+        // console.log(req.body.test);
+=======
+        console.log(req.body);
+>>>>>>> 5fda942dd8cbc46dfa77b5307f3ffd5092df9a60
+        // let message = "";
+        // let color = "";
+        // req.body.Product_ID = req.params.id;
+        // let product = await PackagesModel.update( req.body);
+        //
+        // Products = await ProductsModel.all();
+        // Packages = await PackagesModel.all();
+        // Packages.sort(function (a, b) {
+        //     return a.P_ID - b.P_ID;
+        // });
+        // if (!product) {
+        //     message = "Update failed";
+        //     color = "danger";
+        // }
+        // else{
+        //     message = "Update successfully"
+        //     color="success";
+        // }
+        // res.render('manager/package_Edit', {
+        //     layout: 'manager_P',
+        //     css: ['ManagerPage'],
+        //     js: ['SearchProductsPackages', 'ManagerPage'],
+        //   // currProduct: product,
+        //     listOfPackages: Packages,
+        //     listOfProducts: Products,
+        //     message:message,
+        //     color:color
+        // });
+        // return;
 
-        Products = await ProductsModel.all();
-        Packages = await PackagesModel.all();
-        Packages.sort(function (a, b) {
-            return a.P_ID - b.P_ID;
-        });
-        if (!product) {
-            message = "Update failed";
-            color = "danger";
-        }
-        else{
-            message = "Update successfully"
-            color="success";
-        }
-        res.render('manager/package_Edit', {
-            layout: 'manager_P',
-            css: ['ManagerPage'],
-            js: ['SearchProductsPackages', 'ManagerPage'],
-          // currProduct: product,
-            listOfPackages: Packages,
-            listOfProducts: Products,
-            message:message,
-            color:color
-        });
-        return;
+        let Product_Limit = req.body.Product_Limit;
+        if (!Array.isArray(Product_Limit)) Product_Limit = [Product_Limit];
+
+        let Product_List = req.body.Product_List;
+        if (!Array.isArray(Product_List)) Product_List = [Product_List];
+
+        let P_ProductsID = req.body.P_ProductsID;
+        if (!Array.isArray(P_ProductsID)) P_ProductsID = [P_ProductsID];
+
+
+        let PackageData = {P_ID: req.body.P_ID, P_Name: req.body.P_Name, P_Limit: req.body.P_Limit, 
+                        P_Image: req.body.P_Image, 
+                        Product_Limit: Product_Limit, 
+                        Product_List: Product_List, 
+                        P_ProductsID: P_ProductsID,
+                        P_SoldQuantity: req.body.P_SoldQuantity, P_Type: req.body.P_Type}
+
+        PackagesModel.update(PackageData);
+
+        res.redirect('back')
     }
 }
 
