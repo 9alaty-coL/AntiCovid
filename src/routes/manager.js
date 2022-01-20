@@ -19,7 +19,16 @@ router.get('/addRelate/UserID=:UserID', ManagerController.addRelate);
 
 router.get('/product', ManagerController.Product);
 
+router.get('/productEdit', ManagerController.productEdit);
+
+//put update product
+router.put('/productEdit/:id/edit', ManagerController.productUpdate);
+
 router.get('/product/:p_id', ManagerController.productDetail);
+
+router.get('/productEdit/:p_id/edit', ManagerController.product_Edit);
+
+router.delete('/:id', ManagerController.deleteProduct);
 
 router.get('/package', ManagerController.Package);
 
@@ -41,6 +50,11 @@ router.get('/username', ManagerController.fetchUserName)
 router.get('/relate', ManagerController.fetchRelateGroup)
 
 router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
+
+// add prodcut
+router.get('/productEdit/add',ManagerController.addProduct);
+
+router.post('/productEdit/add', ManagerController.newProduct);
 
 
 

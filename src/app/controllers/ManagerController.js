@@ -213,7 +213,18 @@ class ManagerController {
             listOfProducts: Products,
         });
     }
-
+    productEdit(req, res, next) {
+        
+        res.render('manager/productEdit', {
+            layout: 'manager_P',
+            Products: Products,
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages','ManagerPage'],
+            listOfPackages: Packages,
+            listOfProducts: Products,
+        });
+    }
+    
     Package(req, res, next) {
 
         res.render('manager/package', {
@@ -437,6 +448,89 @@ class ManagerController {
         }
         res.send(Relate);
     }
+    // [DELETE] product/Product_ID
+    async deleteProduct(req, res, next){
+        let response = await ProductsModel.delete('Product_ID', req.params.id);
+        res.redirect('back')
+    }
+    
+   async product_Edit(req, res, next) {
+        const productID = req.params.p_id;
+        let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        let message = "";
+        let color = "";
+        if (!currProduct) {
+            message = "Treatment no found";
+            color = "danger";
+        }
+        res.render('manager/product_Edit', {
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            currProduct: currProduct,
+            listOfPackages: Packages,
+            listOfProducts: Products,
+        });
+        return;
+    }
+    async productUpdate(req, res, next) {
+       // const productID = req.params.p_id;
+        //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        let message = "";
+        let color = "";
+        req.body.Product_ID = req.params.id;
+        let product = await ProductsModel.update( req.body);
+        if (!product) {
+            message = "Update failed";
+            color = "danger";
+        }
+        else{
+            message = "Update successfully"
+            color="success";
+        }
+        res.render('manager/product_Edit', {
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            currProduct: product,
+            listOfPackages: Packages,
+            listOfProducts: Products,
+            message:message,
+            color:color
+        });
+        return;
+    }
+    // [GET] 
+    addProduct(req, res, next){
+        res.render('manager/productAdd', {
+            layout: 'manager', 
+            css: ['ManagerPage'], 
+            js: ['ManagerPage'],
+        })
+    }
+
+    // [POST] 
+    async newProduct(req, res, next){
+        let place = await ProductsModel.insert(req.body);
+        let message = "";
+        let color = "";
+        if (place){
+            message = "Thêm thành công";
+            color = "success";
+        }
+        else{
+            message = "Có lỗi xảy ra :(("
+            color = "danger";
+        }
+        res.render('manager/productAdd', {
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+            message:message,
+            color:color
+        });
+    }
+    
 }
 
 module.exports = new ManagerController();

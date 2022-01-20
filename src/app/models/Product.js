@@ -37,12 +37,40 @@ class Products {
         }
     }
 
+  
     async update(value){
         try{
             const res = await db.update('Product_ID', value, tbName);
             return res;
         }catch(err){
-            console.log('error in Product/update: ' + err.message);
+            console.log('error in treatment update: ' + err.message);
+            return null;
+        }
+    }
+    async delete(colName, cprName){
+        try{
+            let res = await db.delete(colName, cprName, tbName);
+            return res;
+        }catch(err){
+            console.log('error: ' + err.message);
+            return null;
+        }
+    }
+    async getProductById(Product_ID) {
+        try {
+            let res = await db.one('Product_ID', Product_ID, tbName);
+            return res;
+        } catch (error) {
+            console.log('error in Treatment getTreatmentById: ', error.message);
+        }
+    }
+   
+    async insert(value) {
+        try {
+            const res = await db.insert(value, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User: ' + err.message);
             return null;
         }
     }

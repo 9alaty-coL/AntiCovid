@@ -110,9 +110,12 @@
     <div class="col-9" style="flex:1;">
                  <div class="section product-list">
                     <div class="section-title">
-                        Danh sách các  nhu yếu phẩm
-                
+                        Danh sách các  nhu yếu phẩm                    
                     </div>
+                    <div class="d-inline-block">
+           
+                         <a href="/manager/productEdit/add" class="btn btn-primary fs-5 btn btn-primary btn-lg">Thêm nhu yếu phẩm  </a>
+                        </div>
                     <div class="section-content mt-4 me-2">
                         <div class="row">
                             {{#each Products}}
@@ -124,7 +127,7 @@
                                       <p class="card-text  text-ellipsis--3 fs-4 mb-1">Giá: {{this.Product_Price}} ₫ </p>
                                       <p class="card-text  text-ellipsis--3 fs-4 mb-1">Đơn vị: {{this.Product_Unit}}</p>
                                       <a id="" class="btn btn-link btn-delete" data-id="{{this.Product_ID}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Xóa</button></a>
-                                      <a href="/manager/product/edit" class="btn btn-primary fs-5">Chỉnh sửa</a>
+                                      <a href="/manager/productEdit/{{this.Product_ID}}/edit" class="btn btn-primary fs-5">Chỉnh sửa</a>
                                     </div>
                                 </div>
                             </div>
@@ -134,3 +137,39 @@
                    
                 </div>
             </div>
+
+<div class="alert-delete modal fade" id="delete-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Xóa nhu yếu phẩm</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          Bạn có muốn xóa nhu yếu phẩm này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="delete-confirm" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form  method="post" id="deleteForm"></form>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+    $(document).ready(function(){
+
+        $('#delete-form').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var Product_ID = button.data('id')
+        $('#deleteForm').attr('action',`/manager/${Product_ID}?_method=DELETE`);
+        })
+
+            $('#delete-confirm').on('click', ()=>{
+            $('#deleteForm').submit();
+        })
+    })
+})
+</script>
