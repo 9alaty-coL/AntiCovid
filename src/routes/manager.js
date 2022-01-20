@@ -75,6 +75,15 @@ router.get('/treatmentplace', ManagerController.fetchTreatmentPlace)
 router.get('/productEdit/add',ManagerController.addProduct);
 
 router.post('/productEdit/add', ManagerController.newProduct);
+//add package
+router.get('/packageEdit/add',ManagerController.addPackage);
+
+router.post('/packageEdit/add', ManagerController.newPackage);
+
+//router.get('/packageEdit/:p_id/edit', ManagerController.package_Edit);
+
+//router.put('/packageEdit/:id/edit', ManagerController.packageUpdate);
+
 
 router.get('/province', ManagerController.fetchProvince)
 

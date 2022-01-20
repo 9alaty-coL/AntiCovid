@@ -848,6 +848,7 @@ class ManagerController {
         });
         return;
     }
+    
     async productUpdate(req, res, next) {
        // const productID = req.params.p_id;
         //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
@@ -961,10 +962,96 @@ class ManagerController {
         res.render('manager/packageAdd', {
             layout: 'manager', 
             css: ['ManagerPage'], 
-            js: ['ManagerPage'],
+            js: ['fixProductLink','ManagerPage'],
             P_ID:pID,
         })
     }
+
+    // [POST] 
+    async newPackage(req, res, next){
+        let p = await ProductsModel.insert(req.body);
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
+        //  let pID = await ProductsModel.nextID()
+        let message = "";
+        let color = "";
+        if (p){
+            message = "Thêm thành công";
+            color = "success";
+        }
+        else{
+            message = "Có lỗi xảy ra :("
+            color = "danger";
+        }
+        res.render('manager/packageAdd', {
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+           // Product_ID:pID,
+            message:message,
+            color:color
+        });
+    }
+
+    // async package_Edit(req, res, next) {
+    //     const packageID = req.params.p_id;
+    //     let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
+    //     req.body._id = req.params.id;
+    //     let product = await PackagesModel.update( req.body);
+    //     let message = "";
+    //     let color = "";
+    //     if (!currProduct) {
+    //         message = "P no found";
+    //         color = "danger";
+    //     }
+    //     res.render('manager/product_Edit', {
+    //         layout: 'manager_P',
+    //         css: ['ManagerPage'],
+    //         js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
+    //         currProduct: currProduct,
+    //         listOfPackages: Packages,
+    //         listOfProducts: Products,
+    //         product:product,
+    //     });
+    //     return;
+    // }
+    // async packageUpdate(req, res, next) {
+    //    // const productID = req.params.p_id;
+    //     //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+    //     let message = "";
+    //     let color = "";
+    //     req.body._id = req.params.id;
+    //     let packages = await PackagesModel.update( req.body);
+
+    //     Products = await ProductsModel.all();
+    //     Packages = await PackagesModel.all();
+    //     Packages.sort(function (a, b) {
+    //         return a.P_ID - b.P_ID;
+    //     });
+    //     if (!packages) {
+    //         message = "Update failed";
+    //         color = "danger";
+    //     }
+    //     else{
+    //         message = "Update successfully"
+    //         color="success";
+    //     }
+    //     res.render('manager/package_Edit', {
+    //         layout: 'manager_P',
+    //         css: ['ManagerPage'],
+    //         js: ['SearchProductsPackages', 'ManagerPage'],
+    //       // currProduct: product,
+    //         listOfPackages: Packages,
+    //         listOfProducts: Products,
+    //         message:message,
+    //         color:color
+    //     });
+    //     return;
+    // }
+    // [GET] 
 }
 
 module.exports = new ManagerController();
