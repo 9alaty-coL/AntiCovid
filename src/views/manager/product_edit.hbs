@@ -108,7 +108,7 @@
             </ul>
         </div>
     </div>
- {{!-- end sidebar --}}
+    {{!-- end sidebar --}}
     <div class="col-9" style="flex:1;">
 
         <div class="card-header bg text-black m-auto w-100">
@@ -119,7 +119,7 @@
                 </div>
          <div class="input">
    
-          <form class="col g-5 mt-5" action="/manager/productEdit/{{currProduct.Product_ID}}/edit?_method=PUT" method="post">
+          <form class="col g-5 mt-5" action="/manager/productEdit/{{currProduct.Product_ID}}/edit?_method=PUT" method="post" onsubmit="fixProductLink()">
                 <div class="form-group mb-2 col-md-4">
                     <label for="staticEmail2" class="sr-only">ID</label>
                     <input type="text" readonly class="form-control-plaintext" name="Product_ID" id="staticEmail2" value={{currProduct.Product_ID}}>
@@ -130,11 +130,11 @@
                 </div>
                 <div class="col-md-4">
                     <label for="validationDefault02" class="form-label">Link ảnh chính</label>
-                    <input type="text" class="form-control" name="Product_MainImage" id="validationDefault02" value="{{{currProduct.Product_MainImage}}}" required>
+                    <input type="text" class="form-control" name="Product_MainImage" id="link_main" value="{{{currProduct.Product_MainImage}}}" required>
                 </div>
                 <div class="col-md-4 ">
                     <label for="validationDefault01" class="form-label">Link ảnh chi tiết</label>
-                    <input type="text" class="form-control" name="Product_Image" id="validationDefault01" value="{{currProduct.Product_Image}}" required>
+                    <input type="text" class="form-control" name="Product_Image" id="link_image" value="{{currProduct.Product_Image}}" required>
                 </div>
                 <div class="col-md-4 ">
                     <label for="validationDefault01" class="form-label">Giá tiền (vnđ)</label>

@@ -545,7 +545,8 @@ class ManagerController {
             listOfProducts: Products,
         });
     }
-   async productEdit(req, res, next) {
+
+    async productEdit(req, res, next) {
         req.body._id = req.params.id;
         let product = await PackagesModel.all(); 
         res.render('manager/productEdit', {
@@ -816,10 +817,16 @@ class ManagerController {
     // [DELETE] product/Product_ID
     async deleteProduct(req, res, next){
         let response = await ProductsModel.delete('Product_ID', req.params.id);
+        let place = await ProductsModel.insert(req.body);
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
         res.redirect('back')
     }
     
-   async product_Edit(req, res, next) {
+    async product_Edit(req, res, next) {
         const productID = req.params.p_id;
         let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
         req.body._id = req.params.id;
@@ -833,7 +840,7 @@ class ManagerController {
         res.render('manager/product_Edit', {
             layout: 'manager_P',
             css: ['ManagerPage'],
-            js: ['SearchProductsPackages', 'ManagerPage'],
+            js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
             currProduct: currProduct,
             listOfPackages: Packages,
             listOfProducts: Products,
@@ -848,6 +855,12 @@ class ManagerController {
         let color = "";
         req.body.Product_ID = req.params.id;
         let product = await ProductsModel.update( req.body);
+
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
         if (!product) {
             message = "Update failed";
             color = "danger";
@@ -870,20 +883,24 @@ class ManagerController {
     }
     // [GET] 
     async addProduct(req, res, next){
-        let pID = await ProductsModel.nextID()
+        let pID = await ProductsModel.nextID();
         res.render('manager/productAdd', {
             layout: 'manager', 
             css: ['ManagerPage'], 
             js: ['fixProductLink','ManagerPage'],
-            Product_ID:pID,
+            Product_ID: pID,
         })
     }
 
     // [POST] 
     async newProduct(req, res, next){
         let place = await ProductsModel.insert(req.body);
-      //  Products = await ProductsModel.all();
-      //  let pID = await ProductsModel.nextID()
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
+        //  let pID = await ProductsModel.nextID()
         let message = "";
         let color = "";
         if (place){
@@ -891,7 +908,7 @@ class ManagerController {
             color = "success";
         }
         else{
-            message = "Có lỗi xảy ra :(("
+            message = "Có lỗi xảy ra :("
             color = "danger";
         }
         res.render('manager/productAdd', {
@@ -928,7 +945,7 @@ class ManagerController {
         res.redirect('back')
     }
 
-   async packageEdit(req, res, next) {
+    async packageEdit(req, res, next) {
         
         res.render('manager/packageEdit', {
             layout: 'manager_P',
