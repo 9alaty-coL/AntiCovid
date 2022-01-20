@@ -10,15 +10,15 @@
         </div>
         <div class="sidebar-item">
             <div class="title">
-                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
-               Quản lý người liên quan
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý người liên quan
             </div>
             <ul class="list d-none">
                 <li class="list-item">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
-                <li class="list-item ">
+                <li class="list-item">
                     <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
                 </li>
                 <li class="list-item">
@@ -28,18 +28,15 @@
         </div>
         <div class="sidebar-item">
             <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
                 Quản lý s.phẩm / n.y.phẩm
             </div>
-            <ul class="list ">
-               <li class="list-item active">
+            <ul class="list">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
-                {{!-- <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
-                </li> --}}
-                <li class="list-item ">
+                <li class="list-item">
                     <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
@@ -50,15 +47,12 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Quản lý gói nhu yếu phẩm
             </div>
-            <ul class="list d-none">
-                <li class="list-item ">
+            <ul class="list">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
-                {{!-- <li class="list-item">
-                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
-                </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-edit"></i> Cập nhật</a>
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -68,21 +62,26 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Thống kê thông tin
             </div>
-             <ul class="list d-none">
+            <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
+                    <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i>
+                        Lượng người trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
+                    <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng
+                        thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
-                </li>
-                <li class="list-item ">
-                    <a class="d-block" href="/manager/chartProduct"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
+                    <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu
+                        yếu phẩm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/manager/chartDept_Payment"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
+                    <a class="d-block" href="/manager/chartProduct"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản
+                        phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/chartDept_Payment"><i class="fa fa-credit-card"></i> Dư nợ, thanh
+                        toán</a>
                 </li>
             </ul>
         </div>
@@ -94,70 +93,69 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/changeMinPayment"><i class="fa fa-list-alt"
+                            aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/sendPaymentNotification"><i class="fa fa-exclamation-triangle"
+                            aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
                 </li>
             </ul>
         </div>
     </div>
     {{!-- end sidebar --}}
 
-   <div class="col-9" style="flex:1;">
-                 <div class="section product-list">
-                    <div class="section-title">
-                        Danh sách các  nhu yếu phẩm
-                    </div>
-                    <div class="option">
-                        <div class="d-inline-block">
-                            <label for="sort">Sắp xếp</label>
-                            <select id="sort" class="form-select select-type" aria-label="Sắp xếp">
-                                    <option value="" selected>Không</option>
-                                    <option value="tăng">Tăng dần số lượng gói đã bán </option>
-                                    <option value="giảm">Giảm dần số lượng gói đã bán </option>
-                            </select>
-                        </div>
+    <div class="col-9" style="flex:1;">
+        <div class="section product-list">
+            <div class="section-title">
+                Danh sách các nhu yếu phẩm
+            </div>
+            <div class="option">
+                <div class="d-inline-block">
+                    <label for="sort">Sắp xếp</label>
+                    <select id="sort" class="form-select select-type" aria-label="Sắp xếp">
+                        <option value="" selected>Không</option>
+                        <option value="tăng">Tăng dần số lượng gói đã bán </option>
+                        <option value="giảm">Giảm dần số lượng gói đã bán </option>
+                    </select>
+                </div>
 
-                        <div class="d-inline-block">
-                            <label for="filter">Lọc theo</label>
-                            <select id="filter" class="form-select select-type" aria-label="Lọc theo">
-                                    <option value="" selected>Tất cả</option>
-                                    <option value="Thực phẩm">Thực phẩm</option>
-                                    <option value="Thuốc men">Thuốc men</option>
-                                    <option value="Nước giải khát">Nước giải khát</option>
-                                    <option value="Nước rửa tay">Nước rửa tay</option>
-                            </select>
-                        </div>
-                        
-                        
-                    </div>
-                    <div class="section-content mt-4 me-2">
-                        <div class="row">
-                            {{#each Products}}
-                            <div class="col-3 my-3" >
-                                 <div class="card" style="width: 100%; box-shadow: 0 2px 4px rgba(0, 0, 0, .15), 0 8px 16px rgba(0, 0, 0, .15);">
-                                    <img src="{{this.Product_MainImage}}" class="card-img-top" height="200" alt="..." >
-                                    <div class="card-body">
-                                      <h4 class="card-title fs-2">{{this.Product_Name}}</h4>
-                                      <p class="card-text  text-ellipsis--3 fs-4 mb-1">Giá: {{this.Product_Price}} ₫ </p>
-                                      <p class="card-text  text-ellipsis--3 fs-4 mb-1">Đơn vị: {{this.Product_Unit}}</p>
-                                      <p class="card-text d-flex flex-row-reverse" style="color: red; font-style:italic; font-size: 1.2rem!important;">
-                                          Đã bán: {{this.Product_SoldQuantity}}
-                                      </p>
-                                      <a href="/manager/product/{{this.Product_ID}}" class="btn btn-primary fs-5">Xem chi tiết </a>
-                                    </div>
-                                </div>
+                <div class="d-inline-block">
+                    <label for="filter">Lọc theo</label>
+                    <select id="filter" class="form-select select-type" aria-label="Lọc theo">
+                        <option value="" selected>Tất cả</option>
+                        <option value="Thực phẩm">Thực phẩm</option>
+                        <option value="Thuốc men">Thuốc men</option>
+                        <option value="Nước giải khát">Nước giải khát</option>
+                        <option value="Nước rửa tay">Nước rửa tay</option>
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="section-content mt-4 me-2">
+                <div class="row">
+                    {{#each Products}}
+                    <div class="col-3 my-3">
+                        <div class="card"
+                            style="width: 100%; box-shadow: 0 2px 4px rgba(0, 0, 0, .15), 0 8px 16px rgba(0, 0, 0, .15);">
+                            <img src="{{this.Product_MainImage}}" class="card-img-top" height="200" alt="...">
+                            <div class="card-body">
+                                <h4 class="card-title fs-2">{{this.Product_Name}}</h4>
+                                <p class="card-text  text-ellipsis--3 fs-4 mb-1">Giá: {{this.Product_Price}} ₫ </p>
+                                <p class="card-text  text-ellipsis--3 fs-4 mb-1">Đơn vị: {{this.Product_Unit}}</p>
+                                <p class="card-text d-flex flex-row-reverse"
+                                    style="color: red; font-style:italic; font-size: 1.2rem!important;">
+                                    Đã bán: {{this.Product_SoldQuantity}}
+                                </p>
+                                <a href="/manager/product/{{this.Product_ID}}" class="btn btn-primary fs-5">Xem chi tiết
+                                </a>
                             </div>
-                            {{/each}}
                         </div>
                     </div>
-                   
+                    {{/each}}
                 </div>
             </div>
+
+        </div>
+    </div>
