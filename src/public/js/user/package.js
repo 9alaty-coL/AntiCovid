@@ -3,44 +3,66 @@ $('.list .packet').addClass('active');
 
 $('#sort').click(function () {
     let key = $(this).val();
-    let sort; 
-    let sortedPackages = packages;
+    let filterdKey = $('#filter').val();
+
+    let result = packages;
+    console.log(result);
+    if (filterdKey) {
+        result = packages.filter((p) => {
+            return p.P_Type == filterdKey;
+       });
+    }
+    
+
     if (key == "tăng") {
-        sortedPackages.sort(function(a,b){
+        result.sort(function(a,b){
             return a.P_SoldQuantity - b.P_SoldQuantity;
         });
-        displayPackages(sortedPackages);
         $('.option #sort').css('width', '23.4rem');
     }
     else if (key == "giảm") {
-        sortedPackages.sort(function(a,b){
+        result.sort(function(a,b){
             return b.P_SoldQuantity - a.P_SoldQuantity;
         });
-        displayPackages(sortedPackages);
         $('.option #sort').css('width', '23.4rem');
     }
     else {
         $('.option #sort').css('width', '12.8rem');
-        displayPackages(packages);
     }
 
-
+    displayPackages(result);
 })
 
 $('#filter').click(function () {
-    let key = $(this).val();
-    let sort; 
+    let key = $('#sort').val();
+    let filterdKey = $(this).val();
+
+    let result = packages;
+    console.log(result);
+    if (filterdKey) {
+        result = packages.filter((p) => {
+            return p.P_Type == filterdKey;
+       });
+    }
     
-    if (key) {
-       let filterPackages = packages.filter((p) => {
-            return p.P_Type == key;
-       })
-       displayPackages(filterPackages);
+
+    if (key == "tăng") {
+        result.sort(function(a,b){
+            return a.P_SoldQuantity - b.P_SoldQuantity;
+        });
+        $('.option #sort').css('width', '23.4rem');
+    }
+    else if (key == "giảm") {
+        result.sort(function(a,b){
+            return b.P_SoldQuantity - a.P_SoldQuantity;
+        });
+        $('.option #sort').css('width', '23.4rem');
     }
     else {
-        displayPackages(packages);
+        $('.option #sort').css('width', '12.8rem');
     }
 
+    displayPackages(result);
 })
 
 const displayPackages = (packages) => {

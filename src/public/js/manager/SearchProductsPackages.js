@@ -79,86 +79,132 @@ const display = (pro, pac) => {
 
 $('.packet-list #sort').click(function () {
     let key = $(this).val();
-    let sort; 
-    let sortedPackages = packages;
+    let filterdKey = $('.packet-list #filter').val();
+
+    let result = packages;
+    if (filterdKey) {
+        result = packages.filter((p) => {
+            return p.P_Type == filterdKey;
+       });
+    }
+    
+
     if (key == "tăng") {
-        sortedPackages.sort(function(a,b){
+        result.sort(function(a,b){
             return a.P_SoldQuantity - b.P_SoldQuantity;
         });
-        displayPackages(sortedPackages);
         $('.option #sort').css('width', '23.4rem');
     }
     else if (key == "giảm") {
-        sortedPackages.sort(function(a,b){
+        result.sort(function(a,b){
             return b.P_SoldQuantity - a.P_SoldQuantity;
         });
-        displayPackages(sortedPackages);
         $('.option #sort').css('width', '23.4rem');
     }
     else {
         $('.option #sort').css('width', '12.8rem');
-        displayPackages(packages);
     }
+
+    displayPackages(result);
 
 
 })
 
 $('.packet-list #filter').click(function () {
-    let key = $(this).val();
-    let sort; 
+    let key = $('.packet-list #sort').val();
+    let filterdKey = $(this).val();
+
+    let result = packages;
+    if (filterdKey) {
+        result = packages.filter((p) => {
+            return p.P_Type == filterdKey;
+       });
+    }
     
-    if (key) {
-       let filterPackages = packages.filter((p) => {
-            return p.P_Type == key;
-       })
-       displayPackages(filterPackages);
+
+    if (key == "tăng") {
+        result.sort(function(a,b){
+            return a.P_SoldQuantity - b.P_SoldQuantity;
+        });
+        $('.option #sort').css('width', '23.4rem');
+    }
+    else if (key == "giảm") {
+        result.sort(function(a,b){
+            return b.P_SoldQuantity - a.P_SoldQuantity;
+        });
+        $('.option #sort').css('width', '23.4rem');
     }
     else {
-        displayPackages(packages);
+        $('.option #sort').css('width', '12.8rem');
     }
 
+    displayPackages(result);
 })
 
 
 $('.product-list #sort').click(function () {
     let key = $(this).val();
-    let sortedProducts = products;
+    let filterdKey = $('.product-list #filter').val();
+
+    let result = products;
+    if (filterdKey) {
+        result = products.filter((p) => {
+            return p.Product_Type == filterdKey;
+       });
+    }
+    
 
     if (key == "tăng") {
-        sortedProducts.sort(function(a,b){
+        result.sort(function(a,b){
             return a.Product_SoldQuantity - b.Product_SoldQuantity;
         });
-        displayProducts(sortedProducts);
         $('.option #sort').css('width', '23.4rem');
     }
     else if (key == "giảm") {
-        sortedProducts.sort(function(a,b){
+        result.sort(function(a,b){
             return b.Product_SoldQuantity - a.Product_SoldQuantity;
         });
-        displayProducts(sortedProducts);
         $('.option #sort').css('width', '23.4rem');
     }
     else {
         $('.option #sort').css('width', '12.8rem');
-        displayProducts(products);
     }
 
+    displayProducts(result);
+    console.log(result);
 
 })
 
 $('.product-list #filter').click(function () {
-    let key = $(this).val();
-    let filterProducts;
-    if (key) {
-       filterProducts = products.filter((p) => {
-            return p.Product_Type == key;
-       })
-       console.log(filterProducts)
-       displayProducts(filterProducts);
+    let key = $('.product-list #sort').val();
+    let filterdKey = $(this).val();
+
+    let result = products;
+    if (filterdKey) {
+        result = products.filter((p) => {
+            return p.Product_Type == filterdKey;
+       });
+    }
+    
+
+    if (key == "tăng") {
+        result.sort(function(a,b){
+            return a.Product_SoldQuantity - b.Product_SoldQuantity;
+        });
+        $('.option #sort').css('width', '23.4rem');
+    }
+    else if (key == "giảm") {
+        result.sort(function(a,b){
+            return b.Product_SoldQuantity - a.Product_SoldQuantity;
+        });
+        $('.option #sort').css('width', '23.4rem');
     }
     else {
-        displayProducts(products);
+        $('.option #sort').css('width', '12.8rem');
     }
+
+    displayProducts(result);
+    console.log(result);
 
 })
 
@@ -230,7 +276,6 @@ const displayProducts = (products) => {
         return result;
     }).join('');
 
-    // console.log(htmlString)
     $('.section-content .row').html(htmlString);
 }
 
