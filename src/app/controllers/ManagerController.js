@@ -390,7 +390,7 @@ class ManagerController {
     // Get → /sendPaymentNotification
     async sendPaymentNotification(req, res, next) {
         let users = await UserModel.all();
-        let NeedNotification = users.filter(g => (g.P_Paid < g.P_MinPayment && g.P_Paid < g.P_Debt));
+        let NeedNotification = users.filter(g => (g.P_Paid < g.P_MinPayment && g.P_MinPayment < g.P_Debt));
         NeedNotification = NeedNotification.slice(0, 50);
 
         // Render
