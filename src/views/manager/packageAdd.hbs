@@ -151,65 +151,11 @@
                     </div>
         </div>
    
-<<<<<<< HEAD
         {{#if message}}
             <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
                 {{message}}
             </div>
         {{/if}}
-=======
-          <form class="col g-5 mt-5 form-control-lg" onSubmit="fixProductLink()" action="/manager/packageEdit/add" method="post">
-                <div class="form-group mb-2 col-md-4">
-                    <label for="staticEmail2" class="sr-only">ID</label>
-                    <input type="text" readonly class="form-control-plaintext" name="P_ID" id="staticEmail2" value={{P_ID}}>
-                </div>
-                <div class="col-md-4  ">
-                    <label for="validationDefault01" class="form-label">Package's Name</label>
-                    <input type="text" class="form-control" name="P_Name" id="validationDefault01" placeholder="Tên nhu yếu  phẩm" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="validationDefault02" class="form-label">Link Main image</label>
-                    <input type="text" class="form-control" name="P_Image" id="fixProductLink" placeholder="Link  ảnh " required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Limit </label>
-                    <input type="number" class="form-control" name="P_Limit" id="validationDefault01" placeholder="Giới hạn gói" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Productsss Limit</label>
-                    <input type="text" class="form-control" name="Product_Limit" id="validationDefault01" placeholder="Giới hạn nhu yếu phẩm" required>
-                </div>
-                <div class="col-md-4 row-9">
-                    <label for="validationDefault01" class="form-label">Danh sách gói</label>
-                    <input type="text" class="form-control" name="Product_List" id="validationDefault01" placeholder="Giới thiệu" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Giới hạn thời gian</label>
-                    <input type="text" class="form-control" name="P_expire" id="validationDefault01" placeholder="Giới hạn thời gian" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Số lượng đã bán</label>
-                    <input type="text" class="form-control" name="P_SoldQuantity" id="validationDefault01" placeholder="Số lượng đã bán" required>
-                </div>
-                
-                <div class="col-md-4 ">
-                     <label for="validationDefault01" class="form-label">Loại gói nhu yếu phẩm</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="validationDefault01" name="P_Type" required>
-                        <option selected>Loại gói nhu yếu phẩm</option>        
-                        <option value="Thực phẩm">Thực phẩm</option>
-                        <option value="Thuốc men">Thuốc men</option>
-                    </select> 
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-success" type="submit">Add product</button>
-                </div>
-                </form>
-                {{#if message}}
-                        <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
-                                    {{message}}
-                        </div>
-                {{/if}}
->>>>>>> 739adac49698cdb035a26e12ded2634fcf0aea41
         
  </div>
  </div>
