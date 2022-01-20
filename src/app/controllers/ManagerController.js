@@ -325,6 +325,62 @@ class ManagerController {
         });
     }
 
+    // Get → /changeMinPayment
+    async changeMinPayment(req, res, next) {
+        // Key
+        let key = {};
+
+        for (let eachKey in req.query) {
+            if (req.query[eachKey] !== "") {
+                key[eachKey] = req.query[eachKey];
+            }
+        }
+
+        let users;
+        if (Object.keys(key).length === 0) {
+            users = await UserModel.top(10);
+        }
+        else {
+            // Search for user
+            users = await UserModel.search(key);
+            if (users === null) users = [];            
+        }
+
+        // Render
+        res.render('manager/changeMinPayment', {
+            key: key,
+            users: users,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],
+        });
+    }
+
+    // Get → /sendPaymentNotification
+    async sendPaymentNotification(req, res, next) {
+        // Key
+        let key = {};
+
+        for (let eachKey in req.query) {
+            if (req.query[eachKey] !== "") {
+                key[eachKey] = req.query[eachKey];
+            }
+        }
+
+        // Search for user
+        let users = await UserModel.search(key);
+        if (users === null) users = [];
+
+        // Render
+        res.render('manager/sendPaymentNotification', {
+            key: key,
+            users: users,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['OnFocusReset', 'AddressControlSearch', 'SearchUser', 'UserSearchBar', 'ManagerPage'],
+        });
+    }
+
     Product(req, res, next) {
 
         res.render('manager/product', {
@@ -557,6 +613,11 @@ class ManagerController {
 
         // Redirect
         return res.redirect(`/manager/detail/UserID=${req.params.UserID}`);
+    }
+
+    async putChangeMinPayment(req, res, next) {
+        let newUserStatus = { P_ID: req.body.P_ID, P_MinPayment: req.body.P_MinPayment };
+        await UserModel.updateUser(newUserStatus);
     }
 
     ///>> Method → <GET> + FETCH <<///

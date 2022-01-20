@@ -41,6 +41,15 @@ class dbQuery {
         }
     }
 
+    async top(tbName, total) {
+        try {
+            const res = await db.any(`SELECT * FROM "${tbName}" LIMIT ${total}`);
+            return res;
+        } catch (err) {
+            console.log('error in db/top: ' + err.message);
+        }
+    }
+
     async order(colName, byOrder, tbName) {
         try {
             const res = await db.any(`SELECT * FROM "${tbName}" ORDER BY "${colName}" ${byOrder}`);

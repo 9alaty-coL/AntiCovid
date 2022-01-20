@@ -27,6 +27,15 @@ class Users {
         }
     }
 
+    async top(total) {
+        try {
+            const res = await db.top(tbName, total);
+            return res;
+        } catch (err) {
+            console.log('error in User/Top: ' + err.message);
+        }
+    }
+
     async one(colName, cprName) {
         try {
             const res = await db.one(colName, cprName, tbName);
