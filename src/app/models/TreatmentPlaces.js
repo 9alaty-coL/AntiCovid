@@ -62,6 +62,29 @@ class TreatmentPlaces {
         }
     }
 
+    async add(_id) {
+        try{
+            let location = await db.one("_id", _id, tbName);
+            location.current = Math.min(location.current + 1, location.capacity);
+            const res = await db.update('_id', location, tbName);
+            return res;
+        }catch(err){
+            console.log('error in treatment update: ' + err.message);
+            return null;
+        }
+    }
+
+    async minus(_id) {
+        try{
+            let location = await db.one("_id", _id, tbName);
+            location.current = Math.max(location.current - 1, 0);
+            const res = await db.update('_id', location, tbName);
+            return res;
+        }catch(err){
+            console.log('error in treatment update: ' + err.message);
+            return null;
+        }
+    }
 }
 
 module.exports = new TreatmentPlaces();

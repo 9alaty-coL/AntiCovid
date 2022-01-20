@@ -690,6 +690,9 @@ class ManagerController {
         let StatusHistoryData = { P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], StatusChange: [`Không → ${UserData.P_Status}`], Manager_ID: [manager._id] }
         await StatusHistoryModel.insert(StatusHistoryData);
 
+        // Add one to TreatmentPlaces
+        await TreatmentPlacesModel.add(UserData.P_TreatmentPlace);
+
         // Redirect to User detail
         res.redirect(`/manager/detail/UserID=${AccountData._id}`);
     }
@@ -767,10 +770,14 @@ class ManagerController {
 
         // User Info:
         let user = await UserModel.one('P_ID', req.params.UserID);
+        // Old hospital location info
+        await TreatmentPlacesModel.minus(user.P_TreatmentPlace);
+
 
         // Update User Location + Report LocationHistory
         let newUserStatus = { P_ID: user.P_ID, P_TreatmentPlace: req.body.location_id };
         await UserModel.updateUser(newUserStatus);
+        await TreatmentPlacesModel.add(req.body.location_id);
 
         let reportLocation = { Time: TimeUtils.getNow(), HospitalLocation: req.body.location_id, Manager_ID: manager._id }
         await LocationHistoryModel.append(user.P_ID, reportLocation);
