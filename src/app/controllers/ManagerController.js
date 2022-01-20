@@ -389,29 +389,13 @@ class ManagerController {
 
     // Get → /sendPaymentNotification
     async sendPaymentNotification(req, res, next) {
-        // Key
-        let key = {};
-
-        for (let eachKey in req.query) {
-            if (req.query[eachKey] !== "") {
-                key[eachKey] = req.query[eachKey];
-            }
-        }
-
-        let users;
-        if (Object.keys(key).length === 0) {
-            users = await UserModel.top(10);
-        }
-        else {
-            // Search for user
-            users = await UserModel.search(key);
-            if (users === null) users = [];            
-        }
+        let users = await UserModel.all();
+        let NeedNotification = users.filter(g => (g.P_Paid < g.P_MinPayment && g.P_Paid < g.P_Debt));
+        NeedNotification = NeedNotification.slice(0, 50);
 
         // Render
         res.render('manager/sendPaymentNotification', {
-            key: key,
-            users: users,
+            users: NeedNotification,
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],

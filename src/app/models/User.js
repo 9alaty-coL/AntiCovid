@@ -60,6 +60,9 @@ class Users {
                 // Filter conditions
                 if (eachKey === "P_FullName"|| eachKey === "P_Address" ) {
                     res = await db.likes(eachKey, key[eachKey],"Users");
+                } else if (eachKey === "P_YearOfBirth") {
+                    res = await db.rows(eachKey, key[eachKey], tbName);
+                    console.log(res);
                 } else if (eachKey === "Province" || eachKey === "District" || eachKey === "Ward") {
                     // Null 
                     if (key[eachKey] === null) continue;

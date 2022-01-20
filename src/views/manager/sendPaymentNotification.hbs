@@ -114,86 +114,33 @@
         <div class="section general-information">
             <h1 class="mx-5 mb-2 d-flex">
                 <div class="me-auto" style="width: 50%;">
-                    <i class="fa fa-list-ul"></i> Danh sách người liên quan đến covid-19
+                    <i class="fa fa-list-ul"></i> Danh sách người chưa thanh toán đủ hạn mức:
                 </div>
             </h1>
-            <div class="card card-bg mb-3 text-dark">
-                <div class="card-body w-100">
-                    <form action="/manager/changeMinPayment" method="get">
-                        <h1>Tìm kiếm: </h1>
-                        <div class="row">
-                            {{#with key}}
-                            <div class="col-10">
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text text-form" for="P_FullName" style="width: 15%;">Họ và
-                                        tên</label>
-                                    <input id="P_FullName" name="P_FullName" type="text"
-                                        style="width: 40%;" class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                        value="{{P_FullName}}">
-                                    <label class="input-group-text text-form" for="P_YearOfBirth"
-                                        style="width: 10%;">Năm sinh</label>
-                                    <input id="P_YearOfBirth" name="P_YearOfBirth" type="number"
-                                        class="form-control text-form text-location-form" placeholder="Năm sinh"
-                                        style="width: 10%;" value="{{P_YearOfBirth}}">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text text-form" for="P_IdentityCard"
-                                        style="width: 15%;">CMND/CCCD</label>
-                                    <input id="P_IdentityCard" name="P_IdentityCard" type="number"
-                                        class="form-control text-form text-location-form"
-                                        placeholder="Chứng minh dân nhân / Căn cước công dân" style="width: 40%;"
-                                        value="{{P_IdentityCard}}">
-
-                                    <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
-                                        thái</label>
-                                    <select class="form-select text-form" id="P_Status" name="P_Status" style="width: 10%;">
-                                        <option class="text-form" value="" selected></option>
-                                        <option class="text-form" value="F0" {{#ifStr P_Status 'F0' }}selected{{/ifStr}}>F0
-                                        </option>
-                                        <option class="text-form" value="F1" {{#ifStr P_Status 'F1' }}selected{{/ifStr}}>F1
-                                        </option>
-                                        <option class="text-form" value="F2" {{#ifStr P_Status 'F2' }}selected{{/ifStr}}>F2
-                                        </option>
-                                        <option class="text-form" value="F3" {{#ifStr P_Status 'F3' }}selected{{/ifStr}}>F3
-                                        </option>
-                                    </select>
-                                </div>
-                                {{/with}}
-                            </div>
-
-                            <div class="col-2">
-                                <button type="submit" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm
-                                    kiếm</button>
-                            </div>
-                        </div>
-
-                    </form>                
-                </div>    
-            </div>
             <div class="card bg-info mb-3 text-light">
                 <div class="row card-body h-100">
                     <span class="col-4 border-end border-dark border-2"><b>Full Name</b></span>
                     <span class="col-1 border-end border-dark border-2 text-center"><b>Id Card</b></span>
-                    <span class="col-1 border-end border-dark border-2 text-center"><b>Unpaid</b></span>
-                    <span class="col-1 border-end border-dark border-2 text-center"><b>Paid</b></span>
-                    <span class="col-1 border-end border-dark border-2 text-center"><b>MinPay</b></span>
-                    <span class="col-4 text-center"><b>Change MinPayment</b></span>
+                    <span class="col-2 border-end border-dark border-2 text-center"><b>Paid</b> < <b>Unpaid</b></span>
+                    <span class="col-2 text-center"><b>Paid</b> < <b>MinPayment</b></span>
+                    <button class="col-3 text-center btn btn-lg btn-danger" style="font-size: 0.85em;"><b>Send All Notifications</b></button>
                 </div>
             </div>
             
             {{#each users}}
             <div class="card mb-1">
-                <form class="row card-body h-100 change-min-payment" style="min-height: 35px;" action="/manager/putChangeMinPayment?_method=PUT" method="post">
+                <form class="row card-body h-100 change-min-payment" style="min-height: 35px;" action="" method="post">
                     <a class="col-4 border-end border-dark border-1" href="/manager/detail/UserID={{this.P_ID}}"> {{this.P_FullName}}</a>
                     <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
-                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Debt}}</span>
-                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Paid}}</span>
-                    <span class="col-1 text-center" id='{{this.P_ID}}'>{{this.P_MinPayment}}</span>
+                    <span class="col-2 border-end border-dark border-1 text-center">{{this.P_Paid}} < {{this.P_Debt}}</span>
+                    <span class="col-2 text-center">{{this.P_Paid}} < {{this.P_MinPayment}}</span>
                     <input hidden name="P_ID" value="{{this.P_ID}}"></input>
-                    <button type="submit" class="col-2" style="z-index: 999;">Send Payment Notifications</button>
+                    <button type="submit" class="col-3 btn btn-lg btn-warning" style="font-size: 0.85em;">Send Payment Notifications</button>
                 </form>
             </div>
             {{/each}}
+
+
         </div>
     </div>
 </div>
