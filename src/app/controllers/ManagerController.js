@@ -431,21 +431,31 @@ class ManagerController {
         times.reverse();
         labels.reverse();
 
-       
         let Status = [];
         for(let i = 0; i < Packages.length; i++) {
             Status[i] = {
                 "name": Packages[i].P_Name,
-                "data": [0,0,0,0,0,0,0],
+                "data": [0,0,0,0,0,0],
                 "borderColor": colors[i],
             }
         }
 
-        // for (let i = 0; i < listOfBills.length; i++) {
-           
-        // }
+        for (let i = 0; i < Packages.length; i++) {
+            let packageId = Packages[i].P_ID;
+            let billList = listOfBills.filter((bill) => bill.B_PackageID == packageId);
 
-     
+            for(let j = 0; j<billList.length; j++) {
+                let dateTime = new Date(billList[j].B_Datetime);
+                for (let k = 0; k < times.length; k++) {   
+                    if (TimeUtils.isMonthIn(times[k], dateTime)) {
+                        Status[i].data[k] = Status[i].data[k] + 1;
+                    }
+                }
+            }
+        }
+        
+        console.log(Status)
+      
         let labels2 = [];
         let status2 = [];
         let colors2 = [];
