@@ -6,6 +6,7 @@ class Authen {
             return next();
         }
         if (req.isAuthenticated()) {
+            // console.log(req.path);
             if(req.path == '/logout'){return next();}
             if(req.user.role == 'user' && (await bcrypt.compare('0', req.user.password) && req.path != '/user/'+req.user._id+'/pwd')){
                 // console.log(req.path);

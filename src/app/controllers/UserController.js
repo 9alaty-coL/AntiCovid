@@ -102,6 +102,14 @@ class UserController {
             return a.Product_ID - b.Product_ID;
         });
 
+        let payment = 0;
+        let debt = parseInt(user.P_Debt);
+        let paid = parseInt(user.P_Paid);
+        let minPayment = parseInt(user.P_MinPayment);
+        if ( debt > minPayment && minPayment > paid) {
+            payment = parseInt(user.P_MinPayment) - parseInt(user.P_Paid);
+            alert(`Bạn cần thanh toán ${payment}đ để đạt hạn múc thanh toán tối thiểu kỳ này`);
+        }
         
         res.redirect(`/user/${id}/infor`);
         return;
@@ -174,12 +182,11 @@ class UserController {
                 password: pwdHashed,
             }
 
-            const res = await Authens.update(user);
+            const _res = await Authens.update(user);
             // console.log(res)
             message = 'Đổi mật khẩu thành công';
             color = 'green';
             acc = await Authens.one('_id', req.user._id);
-
             if(password == '0'){
                 return res.redirect('/')
             }
@@ -195,10 +202,6 @@ class UserController {
             user: user,
             color: color,
             message: message,
-            notPaidBillsList: notPaidBills,
-            currPackage: currPackage,
-            listOfPackages: listOfPackages,
-            listOfProducts: listOfProducts,
         });
         return;
         

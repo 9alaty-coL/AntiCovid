@@ -111,13 +111,15 @@
   </div>
 </div>
 
-
+<input type="hidden" id="del" value="{{del}}">
     
 <form  method="post" id="deleteForm"></form>
 <script>
     document.addEventListener('DOMContentLoaded', ()=>{
     $(document).ready(function(){
-
+        if(document.getElementById('del').value == 'fail'){
+            alert('Do nơi điều trị này đang chứa dữ liệu được tham chiếu bởi bệnh nhân nên không thể xóa')
+        }
         $('#delete-form').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
         var _id = button.data('id')
