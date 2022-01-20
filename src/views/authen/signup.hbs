@@ -7,22 +7,26 @@
             </div>
             <div class="card sign-in-form">
                 <div class="card-body">
-                    <form id="login" action="/sign-up" method="post">
-                            <div class="mb-3 row ">
+                    <form id="login" action="/initAdmin" method="post">
+                            {{!-- <div class="mb-3 row ">
                                 <input type="text" name="username" class="form-control" autofocus value="admin" readonly>
-                            </div>
+                            </div> --}}
+                            <h2 class="text-center mb-4">Khởi tạo tài khoản admin</h2>
                             <div class="mb-3 row ">
-                                <input type="email" name="email" class="form-control" placeholder="Email" required id="email">
+                                <input type="text" name="username" class="form-control" placeholder="username" required id="username">
                             </div>
                              <div class="mb-3 row password">
                                 <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required id="password">
                             </div>
-                            <div class="mb-3 row py-2 ">
-                                <button type="submit" class="btn btn-primary" id="login-btn">Đăng kí tài khoản</button>
+                             <div class="mb-3 row password">
+                                <input type="password" name="password2" class="form-control" placeholder="Nhập lại mật khẩu" required id="password2">
                             </div>
-                            <div class="mb-3 row d-flex justify-content-center mt-4">
+                            <div class="mb-3 row py-2 " >
+                                <button type="button"style="font-size: 2rem;"style="font-size: 2rem;" class="btn btn-primary" id="init-btn">Tạo tài khoản</button>
+                            </div>
+                            {{!-- <div class="mb-3 row d-flex justify-content-center mt-4">
                                 <a href="/sign-in" class="btn btn-outline-success" id="register-btn">Đăng nhập</a>
-                            </div>
+                            </div> --}}
                     </form>
                 </div>
             </div>
@@ -32,6 +36,26 @@
 
 
 <script>
+
+    init_btn = document.getElementById('init-btn')
+    init_btn.onclick = function(e){
+        e.preventDefault();
+        if(document.getElementById('password').value == ''){
+            alert('Vui lòng nhập mật khẩu')
+            return;
+        }
+        if(document.getElementById('username').value == ''){
+            alert('Vui lòng nhập mật khẩu')
+            return;
+        }
+        if(document.getElementById('password').value != document.getElementById('password2').value){
+            alert('Mật khẩu không trùng khớp')
+
+        }else{
+            document.getElementById('login').submit()
+        }
+    }
+
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
 

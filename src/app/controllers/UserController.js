@@ -132,7 +132,7 @@ class UserController {
             layout: 'user',
             css: ['UserPage'],
             js: ['UserPage', 'password'],
-            user: user,
+            user: {P_ID:req.user._id},
             color: '',
             message: '',
             notPaidBillsList: notPaidBills,
@@ -147,7 +147,7 @@ class UserController {
     async changePassword(req, res, next) {
         let message ;
         let color;
-
+        acc = await Authens.one('_id', req.user._id);
         const password = req.body.currpwd;
         const newPassword = req.body.newpwd;
         const confirm = req.body.confirm;
@@ -162,38 +162,41 @@ class UserController {
         else if (!challengeResult) {
             message = 'Mật khẩu hiện tại bạn nhập không đúng';
             color = 'red';
+
         }
         else if(newPassword !== confirm) {
             message = 'Xác nhận nhận mật khẩu mới không trùng khớp';
             color = 'red';
+
         }
         else {
             let user = {
-                _id: id,
+                _id: req.user._id,
                 password: pwdHashed,
             }
 
             const res = await Authens.update(user);
-            console.log(res)
+            // console.log(res)
             message = 'Đổi mật khẩu thành công';
             color = 'green';
-            acc = await Authens.one('_id', id);
+            acc = await Authens.one('_id', req.user._id);
         }
 
 
-        res.render('user/password', {
-            layout: 'user',
-            css: ['UserPage'],
-            js: ['UserPage', 'password'],
-            user: user,
-            color: color,
-            message: message,
-            notPaidBillsList: notPaidBills,
-            currPackage: currPackage,
-            listOfPackages: listOfPackages,
-            listOfProducts: listOfProducts,
-        });
-        return;
+        // res.render('user/password', {
+        //     layout: 'user',
+        //     css: ['UserPage'],
+        //     js: ['UserPage', 'password'],
+        //     user: user,
+        //     color: color,
+        //     message: message,
+        //     notPaidBillsList: notPaidBills,
+        //     currPackage: currPackage,
+        //     listOfPackages: listOfPackages,
+        //     listOfProducts: listOfProducts,
+        // });
+        // return;
+        return res.redirect('/')
     }
 
     // GET /user/:id/mHistory

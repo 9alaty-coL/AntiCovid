@@ -41,7 +41,7 @@ class AdminController {
         
         req.body.role = 'manager';
         // req.body.password = await bcrypt.hash(req.body.password, 10);
-        req.body.password = '0';
+        req.body.password = await bcrypt.hash('0', 10);
         req.body.isLocked = 'false';
         let newID = await UserM.nextID()
         var newManager = {
