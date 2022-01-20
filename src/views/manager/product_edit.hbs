@@ -120,13 +120,17 @@
          <div class="input">
    
           <form class="col g-5 mt-5" action="/manager/productEdit/{{currProduct.Product_ID}}/edit?_method=PUT" method="post">
+                <div class="form-group mb-2 col-md-4">
+                    <label for="staticEmail2" class="sr-only">ID</label>
+                    <input type="text" readonly class="form-control-plaintext" name="Product_ID" id="staticEmail2" value={{currProduct.Product_ID}}>
+                </div>
                 <div class="col-md-4  ">
                     <label for="validationDefault01" class="form-label">Tên nhu yếu phẩm</label>
                     <input type="text" class="form-control" name="Product_Name" id="validationDefault01" value="{{currProduct.Product_Name}}" required>
                 </div>
                 <div class="col-md-4">
                     <label for="validationDefault02" class="form-label">Link ảnh chính</label>
-                    <input type="text" class="form-control" name="Product_MainImage" id="validationDefault02" value="{{currProduct.Product_MainImage}}" required>
+                    <input type="text" class="form-control" name="Product_MainImage" id="validationDefault02" value="{{{currProduct.Product_MainImage}}}" required>
                 </div>
                 <div class="col-md-4 ">
                     <label for="validationDefault01" class="form-label">Link ảnh chi tiết</label>
@@ -149,8 +153,14 @@
                     <input type="text" class="form-control" name="Product_SoldQuantity" id="validationDefault01" value="{{currProduct.Product_SoldQuantity}}" required>
                 </div>
                 <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Loại nhu yếu phẩm</label>
-                    <input type="text" class="form-control" name="Product_Type" id="validationDefault01" value="{{currProduct.Product_Type}}" required>
+                     <label for="validationDefault01" class="form-label">Loại nhu yếu phẩm</label>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="validationDefault01" name="Product_Type" required>
+                         <option placeholder="{{currProduct.Product_Type}}" selected>{{currProduct.Product_Type}} </option>
+                        <option value="Thực phẩm">Thực phẩm</option>
+                        <option value="Thuốc men">Thuốc men</option>
+                        <option value="Nước giải khát">Nước giải khát</option>
+                        <option value="Nước rửa tay">Nước rửa tay </option>
+                    </select> 
                 </div>
                 
                 

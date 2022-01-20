@@ -34,6 +34,10 @@ router.get('/package', ManagerController.Package);
 
 router.get('/package/:p_id', ManagerController.packageDetail);
 
+router.get('/packageEdit', ManagerController.packageEdit);
+
+router.delete('/:id', ManagerController.packageDelete);
+
 router.get('/chartStatusByTime', ManagerController.chartStatusByTime);
 
 router.get('/chartStatusChange', ManagerController.chartStatusChange);

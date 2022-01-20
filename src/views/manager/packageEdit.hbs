@@ -1,0 +1,175 @@
+<div class="content row">
+    {{!-- sidebar --}}
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <a class="title" href="/manager/">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <i class="fa fa-home d-none" aria-hidden="true"></i>
+                Trang chủ
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
+               Quản lý người liên quan
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý s.phẩm / n.y.phẩm
+            </div>
+            <ul class="list d-none">
+               <li class="list-item ">
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý gói nhu yếu phẩm
+            </div>
+            <ul class="list">
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/packageEdit"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Thống kê thông tin
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý thanh toán
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{!-- end sidebar --}}
+
+    <div class="col-9" style="flex:1;">
+                 <div class="section packet-list">
+                    <div class="section-title">
+                        Danh sách các gói nhu yếu phẩm
+                    </div>
+                    <div class="d-inline-block">         
+                         <a href="/manager/packageEdit/add" class="btn btn-primary fs-5 btn btn-primary btn-lg">Thêm nhu yếu phẩm  </a>
+                    </div>
+                
+                    <div class="section-content mb-5 mt-2 me-2">
+                        <div class="row">
+                            {{#each listOfPackages}}
+                            <div class="col-3 my-3">
+                                <div class="card" style="width: 100%; box-shadow: 0 2px 4px rgba(0, 0, 0, .15), 0 8px 16px rgba(0, 0, 0, .15);">
+                                    <img src="{{this.P_Image}}" class="card-img-top" height="200" alt="...">
+                                    <div class="card-body">
+                                      <h4 class="card-title">{{this.P_Name}}</h4>
+                                      <p class="card-text text-ellipsis--2 fs-5" style="height: 40px;">Bao gồm:
+                                          {{#each this.Product_List}}
+                                            {{this}},  
+                                          {{/each}}
+                                      </p>
+                                     <a id="" class="btn btn-link btn-delete" data-id="{{this.P_ID}}"  data-bs-toggle="modal" data-bs-target="#delete-form"><button type="button" class="btn btn-outline-danger">Xóa</button></a>
+                                      <a href="/manager/packageEdit/{{this.P_ID}}/edit" class="btn btn-primary fs-5">Chỉnh sửa</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+  <div class="alert-delete modal fade" id="delete-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Xóa nhu yếu phẩm</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          Bạn có muốn xóa nhu yếu phẩm này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="delete-confirm" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form  method="post" id="deleteForm"></form>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+    $(document).ready(function(){
+
+        $('#delete-form').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var P_ID = button.data('id')
+        $('#deleteForm').attr('action',`/manager/${P_ID}?_method=DELETE`);
+        })
+
+            $('#delete-confirm').on('click', ()=>{
+            $('#deleteForm').submit();
+        })
+    })
+})
+</script>

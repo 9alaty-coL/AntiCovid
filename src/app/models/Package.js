@@ -46,6 +46,33 @@ class Packages {
             return null;
         }
     }
+    async delete(colName, cprName){
+        try{
+            let res = await db.delete(colName, cprName, tbName);
+            return res;
+        }catch(err){
+            console.log('error: ' + err.message);
+            return null;
+        }
+    }
+    async insert(value) {
+        try {
+            const res = await db.insert(value, tbName);
+            return res;
+        } catch (err) {
+            console.log('error in User: ' + err.message);
+            return null;
+        }
+    }
+    async nextID() {
+        try{
+            const res = await db.maximum('P_ID', tbName);
+            return res + 1;
+        }catch(err){
+            console.log('error in account next: ' + err.message);
+            return null;
+        }
+    }
 }
 
 module.exports = new Packages();
