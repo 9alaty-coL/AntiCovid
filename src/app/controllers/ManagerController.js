@@ -1057,14 +1057,18 @@ class ManagerController {
     }
     
     async packageUpdate(req, res, next) {
-       // const productID = req.params.p_id;
+        // const productID = req.params.p_id;
         //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+<<<<<<< HEAD
+        // console.log(req.body.test);
+=======
         console.log(req.body);
+>>>>>>> 5fda942dd8cbc46dfa77b5307f3ffd5092df9a60
         // let message = "";
         // let color = "";
         // req.body.Product_ID = req.params.id;
         // let product = await PackagesModel.update( req.body);
-
+        //
         // Products = await ProductsModel.all();
         // Packages = await PackagesModel.all();
         // Packages.sort(function (a, b) {
@@ -1090,7 +1094,26 @@ class ManagerController {
         // });
         // return;
 
-        res.send('ok')
+        let Product_Limit = req.body.Product_Limit;
+        if (!Array.isArray(Product_Limit)) Product_Limit = [Product_Limit];
+
+        let Product_List = req.body.Product_List;
+        if (!Array.isArray(Product_List)) Product_List = [Product_List];
+
+        let P_ProductsID = req.body.P_ProductsID;
+        if (!Array.isArray(P_ProductsID)) P_ProductsID = [P_ProductsID];
+
+
+        let PackageData = {P_ID: req.body.P_ID, P_Name: req.body.P_Name, P_Limit: req.body.P_Limit, 
+                        P_Image: req.body.P_Image, 
+                        Product_Limit: Product_Limit, 
+                        Product_List: Product_List, 
+                        P_ProductsID: P_ProductsID,
+                        P_SoldQuantity: req.body.P_SoldQuantity, P_Type: req.body.P_Type}
+
+        PackagesModel.update(PackageData);
+
+        res.redirect('back')
     }
 }
 
