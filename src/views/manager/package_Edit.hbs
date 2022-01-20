@@ -114,9 +114,9 @@
                 <div class="col-1">
                     <a href="/manager/packageEdit" class="btn btn-danger">back</a>
                 </div>
-         <div class="input">
+         <div class="input"> 
    
-          <form class="col g-5 mt-5 form-control-lg" onSubmit="fixProductLink()" action="/manager/packageEdit/add" method="post">
+          <form class="col g-5 mt-5 form-control-lg" onSubmit="fixProductLink()" action="/manager/packageEdit/{{P_ID}}/edit?_method=PUT" method="post">
                 <div class="form-group mb-2 col-md-4">
                     <label for="staticEmail2" class="sr-only">ID</label>
                     <input type="text" readonly class="form-control-plaintext" name="P_ID" id="staticEmail2" value={{P_ID}}>
@@ -161,12 +161,16 @@
                 <div class="col-12">
                     <button class="btn btn-success" type="submit">Add product</button>
                 </div>
+                        <input type="hidden" value="1" name="test">
+        <input type="hidden" value="2" name="test">
+        <input type="hidden" value="3" name="test">
+        <input type="hidden" value="4" name="test">
                 </form>
                 {{#if message}}
                         <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
                                     {{message}}
                         </div>
                 {{/if}}
-        
+
  </div>
  </div>

@@ -8,11 +8,11 @@ const userRoute = require('./user');
 function route(app) {
     app.use(isLoggedIn);
 
-    app.use('/admin', adminRoute);
+    app.use('/admin', isAdmin, adminRoute);
 
-    app.use('/manager', managerRoute);
+    app.use('/manager', isManager, managerRoute);
 
-    app.use('/user', userRoute);
+    app.use('/user', isUser, userRoute);
 
     app.use('/', authenRoute);
 }

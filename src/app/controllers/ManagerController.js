@@ -1014,10 +1014,11 @@ class ManagerController {
             css: ['ManagerPage'],
             js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
             currProduct: currProduct,
-            currPackage: currPackage,
+            currPackage: currPackage, 
             listOfPackages: Packages,
             listOfProducts: Products,
             product:product,
+            P_ID:packageID
         });
         return;
     }
@@ -1025,35 +1026,38 @@ class ManagerController {
     async packageUpdate(req, res, next) {
        // const productID = req.params.p_id;
         //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
-        let message = "";
-        let color = "";
-        req.body.Product_ID = req.params.id;
-        let product = await PackagesModel.update( req.body);
+        console.log(req.body.test);
+        // let message = "";
+        // let color = "";
+        // req.body.Product_ID = req.params.id;
+        // let product = await PackagesModel.update( req.body);
 
-        Products = await ProductsModel.all();
-        Packages = await PackagesModel.all();
-        Packages.sort(function (a, b) {
-            return a.P_ID - b.P_ID;
-        });
-        if (!product) {
-            message = "Update failed";
-            color = "danger";
-        }
-        else{
-            message = "Update successfully"
-            color="success";
-        }
-        res.render('manager/package_Edit', {
-            layout: 'manager_P',
-            css: ['ManagerPage'],
-            js: ['SearchProductsPackages', 'ManagerPage'],
-          // currProduct: product,
-            listOfPackages: Packages,
-            listOfProducts: Products,
-            message:message,
-            color:color
-        });
-        return;
+        // Products = await ProductsModel.all();
+        // Packages = await PackagesModel.all();
+        // Packages.sort(function (a, b) {
+        //     return a.P_ID - b.P_ID;
+        // });
+        // if (!product) {
+        //     message = "Update failed";
+        //     color = "danger";
+        // }
+        // else{
+        //     message = "Update successfully"
+        //     color="success";
+        // }
+        // res.render('manager/package_Edit', {
+        //     layout: 'manager_P',
+        //     css: ['ManagerPage'],
+        //     js: ['SearchProductsPackages', 'ManagerPage'],
+        //   // currProduct: product,
+        //     listOfPackages: Packages,
+        //     listOfProducts: Products,
+        //     message:message,
+        //     color:color
+        // });
+        // return;
+
+        res.send('ok')
     }
 }
 
