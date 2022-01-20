@@ -59,6 +59,7 @@ class AdminController {
 
     // [GET] admin/treatment
     async treatment(req, res, next) {
+        let del = req.query.result ?? null;
         let itemsPerPage = 7;
         let currPage = req.query.page ? req.query.page : 1;
         let pages;
@@ -96,7 +97,8 @@ class AdminController {
              treatment: treatment,
              pageList: pageList,
              first: first,
-             last: last
+             last: last,
+             del:del
         });
     }
 
@@ -134,7 +136,11 @@ class AdminController {
     // [DELETE] admin/:id
     async deleteTreatment(req, res, next){
         let response = await Treatment.delete('_id', req.params.id);
-        res.redirect('back')
+
+        if(response == null){
+            return res.redirect('/admin/treatment?result=fail');
+        }
+        return res.redirect('back')
     }
 
     // [GET] admin/treatment/:id/edit
