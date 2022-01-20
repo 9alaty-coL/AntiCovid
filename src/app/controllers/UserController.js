@@ -174,12 +174,11 @@ class UserController {
                 password: pwdHashed,
             }
 
-            const res = await Authens.update(user);
+            const _res = await Authens.update(user);
             // console.log(res)
             message = 'Đổi mật khẩu thành công';
             color = 'green';
             acc = await Authens.one('_id', req.user._id);
-
             if(password == '0'){
                 return res.redirect('/')
             }
@@ -195,10 +194,6 @@ class UserController {
             user: user,
             color: color,
             message: message,
-            notPaidBillsList: notPaidBills,
-            currPackage: currPackage,
-            listOfPackages: listOfPackages,
-            listOfProducts: listOfProducts,
         });
         return;
         
