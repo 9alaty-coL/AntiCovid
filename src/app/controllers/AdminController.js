@@ -40,14 +40,14 @@ class AdminController {
         let i = 1;
         
         req.body.role = 'manager';
-        // req.body.password = await bcrypt.hash(req.body.password, 10);
-        req.body.password = await bcrypt.hash('0', 10);
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+        // req.body.password = await bcrypt.hash('0', 10);
         req.body.isLocked = 'false';
         let newID = await UserM.nextID()
         var newManager = {
             _id:newID,
             username: req.body.username,
-            password: '0',
+            password: req.body.password,
             isLocked: 'false',
             role:'manager'
         }

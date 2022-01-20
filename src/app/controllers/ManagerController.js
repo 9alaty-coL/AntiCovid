@@ -825,17 +825,20 @@ class ManagerController {
         return;
     }
     // [GET] 
-    addProduct(req, res, next){
+    async addProduct(req, res, next){
+        let pID = await ProductsModel.nextID()
         res.render('manager/productAdd', {
             layout: 'manager', 
             css: ['ManagerPage'], 
             js: ['ManagerPage'],
+            Product_ID:pID,
         })
     }
 
     // [POST] 
     async newProduct(req, res, next){
         let place = await ProductsModel.insert(req.body);
+      //  let pID = await ProductsModel.nextID()
         let message = "";
         let color = "";
         if (place){
@@ -850,6 +853,7 @@ class ManagerController {
             layout: 'manager_P',
             css: ['ManagerPage'],
             js: ['SearchProductsPackages', 'ManagerPage'],
+            Product_ID:pID,
             message:message,
             color:color
         });
@@ -873,7 +877,23 @@ class ManagerController {
 
         res.send(Ward);
     }
+    // [DELETE] package/P_ID
+    async packageDelete(req, res, next){
+        let response = await PackagesModel.delete('P_ID', req.params.id);
+        res.redirect('back')
+    }
 
+    packageEdit(req, res, next) {
+        
+        res.render('manager/packageEdit', {
+            layout: 'manager_P',
+            Products: Products,
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages','ManagerPage'],
+            listOfPackages: Packages,
+            listOfProducts: Products,
+        });
+    }
 }
 
 module.exports = new ManagerController();
