@@ -32,14 +32,14 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Quản lý s.phẩm / n.y.phẩm
             </div>
-            <ul class="list ">
+            <ul class="list d-none">
                 <li class="list-item ">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
-                <li class="list-item active">
+                <li class="list-item">
                     <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
@@ -68,7 +68,7 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Thống kê thông tin
             </div>
-             <ul class="list d-none">
+            <ul class="list d-none">
                 <li class="list-item">
                     <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
                 </li>
@@ -78,7 +78,7 @@
                 <li class="list-item">
                     <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
                 </li>
-                <li class="list-item ">
+                <li class="list-item">
                     <a class="d-block" href="/manager/chartProduct"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
                 </li>
                 <li class="list-item">
@@ -94,16 +94,10 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/changeMinPayment"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/sendPaymentNotification"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
                 </li>
             </ul>
         </div>
