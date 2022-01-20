@@ -80,9 +80,9 @@ router.get('/packageEdit/add',ManagerController.addPackage);
 
 router.post('/packageEdit/add', ManagerController.newPackage);
 
-//router.get('/packageEdit/:p_id/edit', ManagerController.package_Edit);
+router.get('/packageEdit/:p_id/edit', ManagerController.package_Edit);
 
-//router.put('/packageEdit/:id/edit', ManagerController.packageUpdate);
+router.put('/packageEdit/:id/edit', ManagerController.packageUpdate);
 
 
 router.get('/province', ManagerController.fetchProvince)
