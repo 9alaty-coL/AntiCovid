@@ -1079,11 +1079,11 @@ class ManagerController {
     async packageUpdate(req, res, next) {
         // const productID = req.params.p_id;
         //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
-<<<<<<< HEAD
+
         // console.log(req.body.test);
-=======
+
         console.log(req.body);
->>>>>>> 5fda942dd8cbc46dfa77b5307f3ffd5092df9a60
+
         // let message = "";
         // let color = "";
         // req.body.Product_ID = req.params.id;
