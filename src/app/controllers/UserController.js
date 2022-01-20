@@ -167,7 +167,6 @@ class UserController {
         else if(newPassword !== confirm) {
             message = 'Xác nhận nhận mật khẩu mới không trùng khớp';
             color = 'red';
-
         }
         else {
             let user = {
@@ -180,23 +179,29 @@ class UserController {
             message = 'Đổi mật khẩu thành công';
             color = 'green';
             acc = await Authens.one('_id', req.user._id);
+
+            if(password == '0'){
+                return res.redirect('/')
+            }
         }
 
 
-        // res.render('user/password', {
-        //     layout: 'user',
-        //     css: ['UserPage'],
-        //     js: ['UserPage', 'password'],
-        //     user: user,
-        //     color: color,
-        //     message: message,
-        //     notPaidBillsList: notPaidBills,
-        //     currPackage: currPackage,
-        //     listOfPackages: listOfPackages,
-        //     listOfProducts: listOfProducts,
-        // });
-        // return;
-        return res.redirect('/')
+        
+
+        res.render('user/password', {
+            layout: 'user',
+            css: ['UserPage'],
+            js: ['UserPage', 'password'],
+            user: user,
+            color: color,
+            message: message,
+            notPaidBillsList: notPaidBills,
+            currPackage: currPackage,
+            listOfPackages: listOfPackages,
+            listOfProducts: listOfProducts,
+        });
+        return;
+        
     }
 
     // GET /user/:id/mHistory
