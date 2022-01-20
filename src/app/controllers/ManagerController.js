@@ -574,6 +574,7 @@ class ManagerController {
         const packageID = req.params.p_id;
         let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
         let productsInPackage = [];
+
         for (let i = 0; i < currPackage.P_ProductsID.length; i++) {
             productsInPackage[i] = Products.filter(product => product.Product_ID == currPackage.P_ProductsID[i])[0];
             productsInPackage[i].Product_Limit = currPackage.Product_Limit[i];
@@ -1034,7 +1035,8 @@ class ManagerController {
             myPD.push(newPD)
         }
 
-        
+        let TypePackage = (StringSupportUtils.nonAccentVietnamese(myPK.P_Type))
+        console.log(TypePackage);
 
         res.render('manager/package_Edit', {
             layout: 'manager_P',
@@ -1042,61 +1044,29 @@ class ManagerController {
             js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
             Package: myPK,
             Products: myPD,
-
+            TypePackage: TypePackage
         })
 
     }
     
     async packageUpdate(req, res, next) {
-        // const productID = req.params.p_id;
-        //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
-<<<<<<< HEAD
-        // console.log(req.body.test);
-=======
-        console.log(req.body);
->>>>>>> 5fda942dd8cbc46dfa77b5307f3ffd5092df9a60
-        // let message = "";
-        // let color = "";
-        // req.body.Product_ID = req.params.id;
-        // let product = await PackagesModel.update( req.body);
-        //
-        // Products = await ProductsModel.all();
-        // Packages = await PackagesModel.all();
-        // Packages.sort(function (a, b) {
-        //     return a.P_ID - b.P_ID;
-        // });
-        // if (!product) {
-        //     message = "Update failed";
-        //     color = "danger";
-        // }
-        // else{
-        //     message = "Update successfully"
-        //     color="success";
-        // }
-        // res.render('manager/package_Edit', {
-        //     layout: 'manager_P',
-        //     css: ['ManagerPage'],
-        //     js: ['SearchProductsPackages', 'ManagerPage'],
-        //   // currProduct: product,
-        //     listOfPackages: Packages,
-        //     listOfProducts: Products,
-        //     message:message,
-        //     color:color
-        // });
-        // return;
-
         let Product_Limit = req.body.Product_Limit;
         if (!Array.isArray(Product_Limit)) Product_Limit = [Product_Limit];
+        for(var i=0; i < Product_Limit.length;i++) Product_Limit[i] = parseInt(Product_Limit[i]);
 
         let Product_List = req.body.Product_List;
         if (!Array.isArray(Product_List)) Product_List = [Product_List];
 
         let P_ProductsID = req.body.P_ProductsID;
         if (!Array.isArray(P_ProductsID)) P_ProductsID = [P_ProductsID];
+        for(var i=0; i < P_ProductsID.length;i++) P_ProductsID[i] = parseInt(P_ProductsID[i]);
+        
+        let P_Image = req.body.P_Image;
+        if (!Array.isArray(P_Image)) P_Image = [P_Image];
 
 
         let PackageData = {P_ID: req.body.P_ID, P_Name: req.body.P_Name, P_Limit: req.body.P_Limit, 
-                        P_Image: req.body.P_Image, 
+                        P_Image: P_Image, 
                         Product_Limit: Product_Limit, 
                         Product_List: Product_List, 
                         P_ProductsID: P_ProductsID,
@@ -1104,7 +1074,13 @@ class ManagerController {
 
         PackagesModel.update(PackageData);
 
-        res.redirect('back')
+        Products = await ProductsModel.all();
+        Packages = await PackagesModel.all();
+        Packages.sort(function (a, b) {
+            return a.P_ID - b.P_ID;
+        });
+
+        res.redirect(`/manager/package/${req.body.P_ID}`);
     }
 }
 

@@ -133,8 +133,8 @@
             <div  style="font-size: 2rem;" class="input-group mb-5">
                   <label style="font-size: 2rem; width:15%;" class="input-group-text" for="inputGroupSelect01">Loại gói</label>
                     <select name="P_Type" style="font-size: 2rem;" class="form-select" id="inputGroupSelect01">
-                        <option selected value="Thuốc men">Thuốc men</option>
-                        <option value="Thực phẩm">Thực phẩm</option>
+                        <option {{#ifStr TypePackage 'thuoc men'}}selected{{/ifStr}} value="Thuốc men">Thuốc men</option>
+                        <option {{#ifStr TypePackage 'thuc pham'}}selected{{/ifStr}} value="Thực phẩm">Thực phẩm</option>
                     </select>
                 
             </div>
