@@ -26,21 +26,21 @@
                 </li>
             </ul>
         </div>
-        <div class="sidebar-item">
+                <div class="sidebar-item">
             <div class="title">
                 <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Quản lý s.phẩm / n.y.phẩm
             </div>
-            <ul class="list d-none">
+            <ul class="list ">
                <li class="list-item ">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
-                <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -50,15 +50,15 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Quản lý gói nhu yếu phẩm
             </div>
-            <ul class="list d-none ">
-                <li class="list-item">
+            <ul class="list d-none">
+                <li class="list-item ">
                     <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-edit"></i> Cập nhật</a>
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -125,16 +125,9 @@
                         <div class="input-group mb-3">
                             <label class="input-group-text text-form" for="password"
                                 style="width: 15%;">Password</label>
-                            <input id="password" name="password" type="password"
+                            <input id="password" name="password" 
                                 class="form-control text-form text-location-form" placeholder="Mật khẩu"
-                                style="width: 85%;" autocomplete="new-password" value="{{password}}">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-group-text text-form" for="repassword" style="width: 15%;">Repeat
-                                Password</label>
-                            <input id="repassword" name="repassword" type="password"
-                                class="form-control text-form text-location-form" placeholder="Nhập lại mật khẩu"
-                                style="width: 85%;" value="{{password}}">
+                                style="width: 85%;" autocomplete="new-password" value="0" readonly>
                         </div>
                         {{/with}}
                     </div>
@@ -170,12 +163,24 @@
                                 <option class="text-form" value="F3" {{#ifStr P_Status 'F3'}}selected{{/ifStr}}>F3</option>
                             </select>
                         </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa chỉ nơi
-                                ở</label>
-                            <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                placeholder="Tỉnh / Thành phố, Quận / Huyện và Phường / Xã" style="width: 85%;" value="{{P_Address}}">
+                        <div class="input-group">
+                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa chỉ nơi ở</label>
+                            <select class="form-select text-form" id="Province" name="Province" style="width: 28%;" onchange="changeProvince(value);" disabled>
+                                <option class="text-form" value="" selected disabled>Tỉnh Thành</option>
+                            </select>
+                            <select class="form-select text-form" id="District" name="District" style="width: 28%;" onchange="changeDistrict(value);" disabled>
+                                <option class="text-form" value="" selected>Quận Huyện</option>
+                            </select>
+                            <select class="form-select text-form" id="Ward" name="Ward" style="width: 28%;" disabled>
+                                <option class="text-form" value="" selected>Phường Xã</option>
+                            </select>
                         </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Thêm chi tiết</label>
+                            <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
+                                    placeholder="Số nhà, đường . . ." style="width: 85%;" value="{{P_Address}}">
+                        </div>
+
                         {{/with}}
                         {{#with HospitalData}}
                         <div class="input-group">
@@ -184,7 +189,7 @@
                             <div class="form-control form-control-dark text-form search-packet no-gutter"
                                 style="width: 55%;" id="inputOutline">
                                 <input name="location" autocomplete="off" type="text" id="searchBarTreatPlace"
-                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp" value="{{hospitalData}}">
+                                    class="form-control search-input" placeholder="Vị trí điều trị / thu nạp" value="{{hospitalData}}" onfocus="resetForLocationBar()">
                                 <input name="P_HospitalAddress" type="number" id="IDsearchBarTreatPlace" value="{{IDHospital}}" hidden>
                                 <ul class="search-menu" id="menuBarTreatPlace" style="z-index: 10;"></ul>
                             </div>
@@ -203,7 +208,8 @@
                                 {{#with RelateData}}
                                 <div class="d-inline-block" style="width: 100%; height: 100%; position: relative;">
                                     <input name="relate" autocomplete="off" type="text" id="searchBarRelate"
-                                        class="form-control search-input" placeholder="Người liên đới" value="{{relateData}}">
+                                        class="form-control search-input" placeholder="Người liên đới" value="{{relateData}}" onfocus="resetForRelateBar()"
+                                        {{#ifStr Lock 'on'}}disabled{{/ifStr}}>
                                     <input name="P_RelateGroup" type="number" id="IDsearchBarRelate" value="{{IDGroup}}" hidden>
                                 </div>
                                 {{/with}}

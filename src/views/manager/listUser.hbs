@@ -30,17 +30,17 @@
             <div class="title">
                 <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-               Quản lý s.phẩm / n.y.phẩm
+                Quản lý s.phẩm / n.y.phẩm
             </div>
-            <ul class="list d-none">
-               <li class="list-item ">
+            <ul class="list ">
+                <li class="list-item ">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
-                <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -58,7 +58,7 @@
                     <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-edit"></i> Cập nhật</a>
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -118,17 +118,22 @@
                         <div class="input-group mb-3">
                             <select class="form-select" name="sort" style="font-size: 0.8em;">
                                 <option value="" selected>Không sắp xếp...</option>
-                                <option value="P_FullName" {{#ifStr sort 'P_FullName'}}selected{{/ifStr}}>Full Name</option>
-                                <option value="P_Identity" {{#ifStr sort 'P_Identity'}}selected{{/ifStr}}>ID Card</option>
-                                <option value="P_YearOfBirth" {{#ifStr sort 'P_YearOfBirth'}}selected{{/ifStr}}>BirthYear</option>
-                                <option value="P_Address" {{#ifStr sort 'P_Address'}}selected{{/ifStr}}>Address</option>
-                                <option value="P_Status" {{#ifStr sort 'P_Status'}}selected{{/ifStr}}>Status</option>
-                                <option value="P_TreatmentPlace" {{#ifStr sort 'P_TreatmentPlace'}}selected{{/ifStr}}>Hospital</option>
+                                <option value="P_FullName" {{#ifStr sort 'P_FullName' }}selected{{/ifStr}}>Full Name
+                                </option>
+                                <option value="P_Identity" {{#ifStr sort 'P_Identity' }}selected{{/ifStr}}>ID Card
+                                </option>
+                                <option value="P_YearOfBirth" {{#ifStr sort 'P_YearOfBirth' }}selected{{/ifStr}}>
+                                    BirthYear</option>
+                                <option value="P_Address" {{#ifStr sort 'P_Address' }}selected{{/ifStr}}>Address
+                                </option>
+                                <option value="P_Status" {{#ifStr sort 'P_Status' }}selected{{/ifStr}}>Status</option>
+                                <option value="P_TreatmentPlace" {{#ifStr sort 'P_TreatmentPlace' }}selected{{/ifStr}}>
+                                    Hospital</option>
                             </select>
                             <select class="form-select" name="order" style="font-size: 0.8em;">
                                 <option value="" selected>Ngẫu nhiên...</option>
-                                <option value="ASC" {{#ifStr order 'ASC'}}selected{{/ifStr}}>Tăng dần</option>
-                                <option value="DESC" {{#ifStr order 'DESC'}}selected{{/ifStr}}>Giảm dần</option>
+                                <option value="ASC" {{#ifStr order 'ASC' }}selected{{/ifStr}}>Tăng dần</option>
+                                <option value="DESC" {{#ifStr order 'DESC' }}selected{{/ifStr}}>Giảm dần</option>
                             </select>
                             <input type="number" id="page" value="{{currentPageNumber}}" name="page" hidden>
                             <button type="submit" class="btn btn-success" style="font-size: 0.8em;">Sắp xếp</button>
@@ -163,20 +168,22 @@
             <nav aria-label="Page navigation mt-5">
                 <ul class="pagination pagination-lg justify-content-center">
                     <li class="page-item">
-                        <button type="submit" form="formList" onclick="submitPageForm(0, -1)"
-                                style="font-size: 1.5em;" class="page-link" aria-label="Previous" {{#ifStr Previous 'off'}}disabled{{/ifStr}}>
+                        <button type="submit" form="formList" onclick="submitPageForm(0, -1)" style="font-size: 1.5em;"
+                            class="page-link" aria-label="Previous" {{#ifStr Previous 'off' }}disabled{{/ifStr}}>
                             <span aria-hidden="true">&laquo;</span>
                         </button>
                     </li>
                     {{#each pages}}
                     <li class="page-item">
                         <button type="submit" form="formList" onclick="submitPageForm({{this.pageNumber}})"
-                                style="font-size: 1.5em;" class="page-link {{#ifStr isCurrentPage 'on'}}text-warning{{/ifStr}}" {{#ifStr isCurrentPage 'on'}}disabled{{/ifStr}}>{{this.pageNumber}}</button>
+                            style="font-size: 1.5em;"
+                            class="page-link {{#ifStr isCurrentPage 'on'}}text-warning{{/ifStr}}" {{#ifStr
+                            isCurrentPage 'on' }}disabled{{/ifStr}}>{{this.pageNumber}}</button>
                     </li>
                     {{/each}}
                     <li class="page-item">
-                        <button type="submit" form="formList" onclick="submitPageForm(0, 1)"
-                                style="font-size: 1.5em;" class="page-link" aria-label="Next" {{#ifStr Next 'off'}}disabled{{/ifStr}}>
+                        <button type="submit" form="formList" onclick="submitPageForm(0, 1)" style="font-size: 1.5em;"
+                            class="page-link" aria-label="Next" {{#ifStr Next 'off' }}disabled{{/ifStr}}>
                             <span aria-hidden="true">&raquo;</span>
                         </button>
                     </li>

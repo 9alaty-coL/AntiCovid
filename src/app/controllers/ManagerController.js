@@ -7,7 +7,15 @@ const LocationHistoryModel = require('../models/LocationHistory')
 const StatusHistoryModel = require('../models/StatusHistory')
 const TreatmentPlacesModel = require('../models/TreatmentPlaces')
 const TimeUtils = require('../../utils/Time')
+const StringSupportUtils = require('../../utils/stringSupport');
 const bcrypt = require('bcrypt');
+const axios = require('axios');
+const jwtHelper = require('../../helpers/jwt.helper')
+
+const ProvinceModel = require('../models/AddressProvince')
+const DistrictModel = require('../models/AddressDistrict')
+const WardModel = require('../models/AddressWard')
+
 const e = require('express')
 
 function calStatus(Status, offset) {
@@ -20,6 +28,7 @@ function calStatus(Status, offset) {
         return Status[0] + nextF;
     }
 }
+
 let Products;
 let Packages
 class ManagerController {
@@ -29,14 +38,14 @@ class ManagerController {
     async home(req, res, next) {
         Products = await ProductsModel.all();
         Packages = await PackagesModel.all();
-        Packages.sort(function(a,b){
+        Packages.sort(function (a, b) {
             return a.P_ID - b.P_ID;
         });
 
         res.render('manager/home', {
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['UserSearchBar','ManagerPage'],
+            js: ['UserSearchBar', 'ManagerPage'],
         });
     }
 
@@ -62,10 +71,10 @@ class ManagerController {
         page = Math.min(Math.floor((users.length - 1) / 10) + 1, page);
         let maxPage = Math.floor((users.length - 1) / 10) + 1;
         let pages = [];
-        for (let index = page - 2; pages.length < Math.min(maxPage,5) && index <= maxPage; index++) {
+        for (let index = page - 2; pages.length < Math.min(maxPage, 5) && index <= maxPage; index++) {
             if (index < 1) continue;
-            if (index === page) pages.push({pageNumber: index, isCurrentPage: "on"});
-            else pages.push({pageNumber: index, isCurrentPage: "off"});
+            if (index === page) pages.push({ pageNumber: index, isCurrentPage: "on" });
+            else pages.push({ pageNumber: index, isCurrentPage: "off" });
         }
         let Previous = "on";
         if (page === pages[0].pageNumber) Previous = "off";
@@ -91,7 +100,7 @@ class ManagerController {
             sort: sort,
             order: order,
             css: ['ManagerPage'],
-            js: ['UserListPage','UserSearchBar','ManagerPage'],
+            js: ['UserListPage', 'UserSearchBar', 'ManagerPage'],
         });
     }
 
@@ -116,14 +125,13 @@ class ManagerController {
             users = []
         }
 
-
         // Render
         res.render('manager/searchUser', {
             key: key,
             users: users,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['SearchUser','UserSearchBar','ManagerPage'],
+            js: ['OnFocusReset', 'AddressControlSearch', 'SearchUser', 'UserSearchBar', 'ManagerPage'],
         });
     }
 
@@ -164,7 +172,7 @@ class ManagerController {
             relates: relateInfo,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['DetailRelate','UserSearchBar','DetailUser','AddUser', 'ManagerPage'],
+            js: ['DetailRelate', 'UserSearchBar', 'DetailUser', 'AddUser', 'ManagerPage'],
         });
     }
 
@@ -174,36 +182,213 @@ class ManagerController {
             layout: 'manager',
             AccountError: '',
             UserError: '',
-            AccountData: {username: '', password: ''},
-            UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
-            HospitalData: {hospitalData: '', IDHospital: 0},
-            RelateData: {relateData: '', IDGroup: 0},
+            AccountData: { username: '' },
+            UserData: { P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: '' },
+            HospitalData: { hospitalData: '', IDHospital: 0 },
+            RelateData: { relateData: '', IDGroup: 0, Lock: 'off' },
             css: ['ManagerPage'],
-            js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
+            js: ['OnFocusReset', 'AddressControl', 'DetailUser', 'UserSearchBar', 'AddUser', 'ManagerPage'],
         });
     }
 
     // Get → /addRelate/UserID=:UserID
     async addRelate(req, res, next) {
         let user = await UserModel.one('P_ID', req.params.UserID);
-        let RelateData = {relateData: user.P_FullName + " - Status: " + user.P_Status + " - ID: " + user.P_IdentityCard, IDGroup: user.P_RelateGroup}
+        let RelateData = { relateData: user.P_FullName + " - Status: " + user.P_Status + " - ID: " + user.P_IdentityCard, IDGroup: user.P_RelateGroup, Lock: 'on' }
 
         res.render('manager/addUser', {
             layout: 'manager',
             AccountError: '',
             UserError: '',
-            AccountData: {username: '', password: ''},
-            UserData: {P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: ''},
-            HospitalData: {hospitalData: '', IDHospital: 0},
+            AccountData: { username: '' },
+            UserData: { P_FullName: '', P_IdentityCard: '', P_YearOfBirth: '', P_Status: '', P_Address: '', P_HospitalAddress: '', P_RelateGroup: '' },
+            HospitalData: { hospitalData: '', IDHospital: 0 },
             RelateData: RelateData,
             css: ['ManagerPage'],
-            js: ['DetailUser','UserSearchBar','AddUser','ManagerPage'],
+            js: ['OnFocusReset', 'AddressControl', 'DetailUser', 'UserSearchBar', 'AddUser', 'ManagerPage'],
         });
     }
 
+    // Get → /chartStatusChange
+    async chartStatusByTime(req, res, next) {
+        // Last 6 months ago
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        let labels = [];
+        let times = [];
+        for (let i = 0; i < 6; i++) {
+            labels.push({ TimeLabels: "Tháng " + month + " Năm " + year });
+            times.push({ month: month, year: year });
+            if (month === 1) { month = 12; year--; }
+            else month--;
+        }
+        times.reverse();
+        labels.reverse();
+
+        // Getting Database from User StatusHistory
+        let usersStatusHistory = await StatusHistoryModel.all();
+        let Status = {
+            F0: [0, 0, 0, 0, 0, 0],
+            F1: [0, 0, 0, 0, 0, 0],
+            F2: [0, 0, 0, 0, 0, 0],
+            F3: [0, 0, 0, 0, 0, 0],
+            KhoiBenh: [0, 0, 0, 0, 0, 0]
+        }
+
+        for (let i = 0; i < usersStatusHistory.length; i++) {
+            for (let j = 0; j < usersStatusHistory[i].Time.length; j++) {
+                // From
+                let from = new Date(usersStatusHistory[i].Time[j]);
+                // To
+                let to;
+                if (j === usersStatusHistory[i].Time.length - 1) to = new Date();
+                else to = new Date(usersStatusHistory[i].Time[j + 1]);
+
+                for (let k = 0; k < times.length; k++) {
+                    let newTime = TimeUtils.createDate(times[k].month - 1, times[k].year)
+                    if (TimeUtils.isMonthBetween(from, to, newTime)) {
+                        let StatusSlice = usersStatusHistory[i].StatusChange[j].split(' → ')[1];
+
+                        if (StatusSlice === "F0") Status.F0[k]++;
+                        else if (StatusSlice === "F1") Status.F1[k]++;
+                        else if (StatusSlice === "F2") Status.F2[k]++;
+                        else if (StatusSlice === "F3") Status.F3[k]++;
+                        else if (StringSupportUtils.nonAccentVietnamese(StatusSlice) === StringSupportUtils.nonAccentVietnamese("Khỏi bệnh")) Status.KhoiBenh[k]++;
+                    }
+                }
+            }
+        }
+
+        // Render
+        res.render('manager/chartStatusByTime', {
+            labels: labels,
+            status: Status,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['UserSearchBar', 'ManagerPage'],
+        });
+    }
+
+    // Get → /chartStatusByTime
+    async chartStatusChange(req, res, next) {
+        // Last 6 months ago
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        let labels = [];
+        let times = [];
+        for (let i = 0; i < 6; i++) {
+            labels.push({ TimeLabels: "Tháng " + month + " Năm " + year });
+            times.push(TimeUtils.createDate(month - 1, year));
+            if (month === 1) { month = 12; year--; }
+            else month--;
+        }
+        times.reverse();
+        labels.reverse();
+
+        // Getting Database from User StatusHistory
+        let usersStatusHistory = await StatusHistoryModel.all();
+        let Status = {
+            F0: [0, 0, 0, 0, 0, 0],
+            F1: [0, 0, 0, 0, 0, 0],
+            F2: [0, 0, 0, 0, 0, 0],
+            F3: [0, 0, 0, 0, 0, 0],
+            KhoiBenh: [0, 0, 0, 0, 0, 0],
+            Khong: [0, 0, 0, 0, 0, 0]
+        }
+
+        for (let i = 0; i < usersStatusHistory.length; i++) {
+            for (let j = 0; j < usersStatusHistory[i].Time.length; j++) {
+                let dataChangeStatus = new Date(usersStatusHistory[i].Time[j]);
+
+                for (let k = 0; k < times.length; k++) {
+                    if (TimeUtils.isMonthIn(dataChangeStatus, times[k])) {
+                        let StatusSlice = usersStatusHistory[i].StatusChange[j].split(' → ')[1];
+
+                        if (StatusSlice === "F0") Status.F0[k]++;
+                        else if (StatusSlice === "F1") Status.F1[k]++;
+                        else if (StatusSlice === "F2") Status.F2[k]++;
+                        else if (StatusSlice === "F3") Status.F3[k]++;
+                        else if (StringSupportUtils.nonAccentVietnamese(StatusSlice) === StringSupportUtils.nonAccentVietnamese("Khỏi bệnh")) Status.KhoiBenh[k]++;
+                        else if (StringSupportUtils.nonAccentVietnamese(StatusSlice) === StringSupportUtils.nonAccentVietnamese("Khong")) Status.Khong[k]++;
+                    }
+                }
+            }
+        }
+
+        // Render
+        res.render('manager/chartStatusChange', {
+            labels: labels,
+            status: Status,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['UserSearchBar', 'ManagerPage'],
+        });
+    }
+
+    // Get → /changeMinPayment
+    async changeMinPayment(req, res, next) {
+        // Key
+        let key = {};
+
+        for (let eachKey in req.query) {
+            if (req.query[eachKey] !== "") {
+                key[eachKey] = req.query[eachKey];
+            }
+        }
+
+        let users;
+        if (Object.keys(key).length === 0) {
+            users = await UserModel.top(10);
+        }
+        else {
+            // Search for user
+            users = await UserModel.search(key);
+            if (users === null) users = [];            
+        }
+
+        // Render
+        res.render('manager/changeMinPayment', {
+            key: key,
+            users: users,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],
+        });
+    }
+
+    // Get → /sendPaymentNotification
+    async sendPaymentNotification(req, res, next) {
+        // Key
+        let key = {};
+
+        for (let eachKey in req.query) {
+            if (req.query[eachKey] !== "") {
+                key[eachKey] = req.query[eachKey];
+            }
+        }
+
+        let users;
+        if (Object.keys(key).length === 0) {
+            users = await UserModel.top(10);
+        }
+        else {
+            // Search for user
+            users = await UserModel.search(key);
+            if (users === null) users = [];            
+        }
+
+        // Render
+        res.render('manager/sendPaymentNotification', {
+            key: key,
+            users: users,
+            layout: 'manager',
+            css: ['ManagerPage'],
+            js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],
+        });
+    }
 
     Product(req, res, next) {
-        
+
         res.render('manager/product', {
             layout: 'manager_P',
             Products: Products,
@@ -278,11 +463,19 @@ class ManagerController {
         let manager = req.user;
 
         // Form input
-        let AccountData = {username: req.body.username, password: req.body.password, role: 'user', isLocked: false};
-        let UserData = {P_FullName: req.body.P_FullName, P_IdentityCard: req.body.P_IdentityCard, P_YearOfBirth: req.body.P_YearOfBirth, 
-            P_Status: req.body.P_Status, P_Address: req.body.P_Address, P_TreatmentPlace: parseInt(req.body.P_HospitalAddress), P_RelateGroup: req.body.P_RelateGroup};
-        let HospitalData = {hospitalData: req.body.location, IDHospital: req.body.P_HospitalAddress};
-        let RelateData = {relateData: req.body.relate, IDGroup: req.body.P_RelateGroup};
+        let AccountData = { username: req.body.username, role: 'user', isLocked: false };
+        let UserData = {
+            P_FullName: req.body.P_FullName,
+            P_IdentityCard: req.body.P_IdentityCard,
+            P_YearOfBirth: req.body.P_YearOfBirth,
+            P_Status: req.body.P_Status,
+            P_Address: (await ProvinceModel.one(req.body.Province)).ProvinceName + ", "
+                + (await DistrictModel.one(req.body.Province, req.body.District)).DistrictName + ", " + req.body.Ward + ", " + req.body.P_Address,
+            P_TreatmentPlace: parseInt(req.body.P_HospitalAddress),
+            P_RelateGroup: req.body.P_RelateGroup
+        };
+        let HospitalData = { hospitalData: req.body.location, IDHospital: req.body.P_HospitalAddress };
+        let RelateData = { relateData: req.body.relate, IDGroup: req.body.P_RelateGroup };
 
         // Account data
         let existAccount = await UserM.getUserByUN(req.body.username);
@@ -296,7 +489,7 @@ class ManagerController {
                 HospitalData: HospitalData,
                 RelateData: RelateData,
                 css: ['ManagerPage'],
-                js: ['AddUser','DetailUser','UserSearchBar','ManagerPage'],
+                js: ['AddUser', 'DetailUser', 'UserSearchBar', 'ManagerPage'],
             });
         }
 
@@ -312,7 +505,7 @@ class ManagerController {
                 HospitalData: HospitalData,
                 RelateData: RelateData,
                 css: ['ManagerPage'],
-                js: ['AddUser','DetailUser','UserSearchBar','ManagerPage'],
+                js: ['AddUser', 'DetailUser', 'UserSearchBar', 'ManagerPage'],
             });
         }
 
@@ -323,6 +516,18 @@ class ManagerController {
         AccountData._id = await UserM.nextID();
         await UserM.insert(AccountData);
 
+        // Create vinabank account
+        let token = await jwtHelper.generateToken({ username: AccountData.username }, process.env.TOKEN_SECRET_KEY)
+        let resultV = await axios.get('https://vinabank.herokuapp.com/create?token=' + token)
+        resultV = await resultV.data;
+        console.log(resultV);
+        if (resultV.result == 'Success') {
+
+        } else {
+            console.log('Lỗi khi tạo tài khoản banking cho bệnh nhân');
+            console.log(resultV.result);
+        }
+
         // Create new user 
         UserData.P_ID = AccountData._id;
         if (parseInt(UserData.P_RelateGroup) === 0) {
@@ -331,11 +536,11 @@ class ManagerController {
         await UserModel.insert(UserData);
 
         // Create new user LocationHistory
-        let LocationHistoryData = {P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], HospitalLocation: [UserData.P_TreatmentPlace] , Manager_ID: [manager._id]}
+        let LocationHistoryData = { P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], HospitalLocation: [UserData.P_TreatmentPlace], Manager_ID: [manager._id] }
         await LocationHistoryModel.insert(LocationHistoryData);
 
         // Create new user StatusHistory
-        let StatusHistoryData = {P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], StatusChange: [`Không → ${UserData.P_Status}`] , Manager_ID: [manager._id]}
+        let StatusHistoryData = { P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], StatusChange: [`Không → ${UserData.P_Status}`], Manager_ID: [manager._id] }
         await StatusHistoryModel.insert(StatusHistoryData);
 
         // Redirect to User detail
@@ -355,7 +560,7 @@ class ManagerController {
             let newRelate = await UserModel.one('P_IdentityCard', relate[relate.length - 1]);
             let newRelateInfo = { P_ID: newRelate.P_ID, P_RelateGroup: user.P_RelateGroup };
             await UserModel.updateUser(newRelateInfo);
-        } 
+        }
         else {
             let newRelate = await UserModel.relate(P_RelateGroup);
             for (let i = 0; i < newRelate.length; i++) {
@@ -375,7 +580,7 @@ class ManagerController {
         // Offset:
         let from = req.body.from;
         let to = req.body.to;
-        let offset = parseInt(from[1]) - parseInt(to[1]);  
+        let offset = parseInt(from[1]) - parseInt(to[1]);
 
         // User Info:
         let user = await UserModel.one('P_ID', req.params.UserID);
@@ -395,7 +600,7 @@ class ManagerController {
                 // Report StatusHistory
                 let reportRelateStatus = { Time: TimeUtils.getNow(), StatusChange: relate[i].P_Status + " → " + calStatus(relate[i].P_Status, offset), Manager_ID: manager._id }
                 await StatusHistoryModel.append(relate[i].P_ID, reportRelateStatus);
-            }    
+            }
         }
 
         // Change User Status
@@ -414,17 +619,22 @@ class ManagerController {
         let manager = req.user;
 
         // User Info:
-        let user = await UserModel.one('P_ID', req.params.UserID);        
+        let user = await UserModel.one('P_ID', req.params.UserID);
 
         // Update User Location + Report LocationHistory
         let newUserStatus = { P_ID: user.P_ID, P_TreatmentPlace: req.body.location_id };
         await UserModel.updateUser(newUserStatus);
-        
+
         let reportLocation = { Time: TimeUtils.getNow(), HospitalLocation: req.body.location_id, Manager_ID: manager._id }
-        await LocationHistoryModel.append(user.P_ID, reportLocation);        
+        await LocationHistoryModel.append(user.P_ID, reportLocation);
 
         // Redirect
         return res.redirect(`/manager/detail/UserID=${req.params.UserID}`);
+    }
+
+    async putChangeMinPayment(req, res, next) {
+        let newUserStatus = { P_ID: req.body.P_ID, P_MinPayment: req.body.P_MinPayment };
+        await UserModel.updateUser(newUserStatus);
     }
 
     ///>> Method → <GET> + FETCH <<///
@@ -441,10 +651,10 @@ class ManagerController {
 
     async fetchRelateGroup(req, res, next) {
         const User = await UserModel.all();
-        
+
         let Relate = [];
         for (let i = 0; i < User.length; i++) {
-            Relate.push({P_FullName: User[i].P_FullName, P_Status: User[i].P_Status, P_IdentityCard: User[i].P_IdentityCard , P_RelateGroup: User[i].P_RelateGroup} )
+            Relate.push({ P_FullName: User[i].P_FullName, P_Status: User[i].P_Status, P_IdentityCard: User[i].P_IdentityCard, P_RelateGroup: User[i].P_RelateGroup })
         }
         res.send(Relate);
     }
@@ -531,6 +741,25 @@ class ManagerController {
         });
     }
     
+
+    async fetchProvince(req, res, next) {
+        const Province = await ProvinceModel.all();
+
+        res.send(Province);
+    }
+
+    async fetchDistrict(req, res, next) {
+        const District = await DistrictModel.all();
+
+        res.send(District);
+    }
+
+    async fetchWard(req, res, next) {
+        const Ward = await WardModel.all();
+
+        res.send(Ward);
+    }
+
 }
 
 module.exports = new ManagerController();

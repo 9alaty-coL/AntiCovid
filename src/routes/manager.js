@@ -34,6 +34,14 @@ router.get('/package', ManagerController.Package);
 
 router.get('/package/:p_id', ManagerController.packageDetail);
 
+router.get('/chartStatusByTime', ManagerController.chartStatusByTime);
+
+router.get('/chartStatusChange', ManagerController.chartStatusChange);
+
+router.get('/changeMinPayment', ManagerController.changeMinPayment);
+
+router.get('/sendPaymentNotification', ManagerController.sendPaymentNotification)
+
 // >> POST
 router.post('/addUser', ManagerController.postAddUser);
 
@@ -43,6 +51,8 @@ router.post('/addRelate/UserID=:UserID', ManagerController.postAddRelate);
 router.put('/detail/UserID=:UserID/changeStatus', ManagerController.changeStatus)
 
 router.put('/detail/UserID=:UserID/changeLocation', ManagerController.changeLocation)
+
+router.put('/putChangeMinPayment', ManagerController.putChangeMinPayment);
 
 // >> GET FETCH
 router.get('/username', ManagerController.fetchUserName)
@@ -56,6 +66,10 @@ router.get('/productEdit/add',ManagerController.addProduct);
 
 router.post('/productEdit/add', ManagerController.newProduct);
 
+router.get('/province', ManagerController.fetchProvince)
 
+router.get('/district', ManagerController.fetchDistrict)
+
+router.get('/ward', ManagerController.fetchWard)
 
 module.exports = router;

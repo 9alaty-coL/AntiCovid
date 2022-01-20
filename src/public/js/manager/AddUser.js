@@ -15,16 +15,6 @@ $("#addUser").submit(function () {
         return false;
     }
 
-    // Check password
-    if ($('#password').val() !== $('#repassword').val()) {
-        alert('password và repeat password không trùng khớp!');
-        return false;
-    }
-    if ($('#password').val() === "" || $('#repassword').val() === "") {
-        alert('password không được trống!');
-        return false;
-    }
-
     // Check Họ và tên
     let nonAccentHVT = nonAccentVietnamese($('#P_FullName').val());
     if (!checkVNcharOnly.test(nonAccentHVT)) {
@@ -49,8 +39,9 @@ $("#addUser").submit(function () {
     }
 
     // Không check địa chỉ
-    if ($('#P_Address').val() === "") {
-        alert('Địa chỉ không được trống!');
+    console.log($('#Province').val())
+    if ($('#Province').val() === null) {
+        alert('Địa chỉ tỉnh thành không được trống!');
         return false;
     }
 

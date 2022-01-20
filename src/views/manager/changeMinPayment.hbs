@@ -15,13 +15,13 @@
                 Quản lý người liên quan
             </div>
             <ul class="list">
-                <li class="list-item">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 <li class="list-item">
                     <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
                 </li>
-                <li class="list-item active">
+                <li class="list-item">
                     <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
                 </li>
             </ul>
@@ -109,11 +109,15 @@
 
     <div class="col-9" style="flex:1;">
         <div class="section general-information">
-            <h1 class="mx-5 mb-5"><i class="fa fa-list-ul"></i> Tìm kiếm chi tiết người liên quan đến covid-19</h1>
+            <h1 class="mx-5 mb-2 d-flex">
+                <div class="me-auto" style="width: 50%;">
+                    <i class="fa fa-list-ul"></i> Danh sách người liên quan đến covid-19
+                </div>
+            </h1>
             <div class="card card-bg mb-3 text-dark">
                 <div class="card-body w-100">
-                    <form id="searchForm" onsubmit="if (validateForm()) submitSearch();" method="get">
-                        <h1>Tìm kiếm dựa trên → Thông tin tài khoản : </h1>
+                    <form action="/manager/changeMinPayment" method="get">
+                        <h1>Tìm kiếm: </h1>
                         <div class="row">
                             {{#with key}}
                             <div class="col-10">
@@ -121,8 +125,8 @@
                                     <label class="input-group-text text-form" for="P_FullName" style="width: 15%;">Họ và
                                         tên</label>
                                     <input id="P_FullName" name="P_FullName" type="text"
-                                        class="form-control text-form text-location-form" placeholder="Họ và tên"
-                                        style="width: 40%;" value="{{P_FullName}}">
+                                        style="width: 40%;" class="form-control text-form text-location-form" placeholder="Họ và tên"
+                                        value="{{P_FullName}}">
                                     <label class="input-group-text text-form" for="P_YearOfBirth"
                                         style="width: 10%;">Năm sinh</label>
                                     <input id="P_YearOfBirth" name="P_YearOfBirth" type="number"
@@ -139,87 +143,55 @@
 
                                     <label class="input-group-text text-form" for="P_Status" style="width: 10%;">Trạng
                                         thái</label>
-                                    <select class="form-select text-form" id="P_Status" name="P_Status"
-                                        style="width: 10%;">
+                                    <select class="form-select text-form" id="P_Status" name="P_Status" style="width: 10%;">
                                         <option class="text-form" value="" selected></option>
-                                        <option class="text-form" value="F0" {{#ifStr P_Status 'F0'
-                                            }}selected{{/ifStr}}>F0</option>
-                                        <option class="text-form" value="F1" {{#ifStr P_Status 'F1'
-                                            }}selected{{/ifStr}}>F1</option>
-                                        <option class="text-form" value="F2" {{#ifStr P_Status 'F2'
-                                            }}selected{{/ifStr}}>F2</option>
-                                        <option class="text-form" value="F3" {{#ifStr P_Status 'F3'
-                                            }}selected{{/ifStr}}>F3</option>
+                                        <option class="text-form" value="F0" {{#ifStr P_Status 'F0' }}selected{{/ifStr}}>F0
+                                        </option>
+                                        <option class="text-form" value="F1" {{#ifStr P_Status 'F1' }}selected{{/ifStr}}>F1
+                                        </option>
+                                        <option class="text-form" value="F2" {{#ifStr P_Status 'F2' }}selected{{/ifStr}}>F2
+                                        </option>
+                                        <option class="text-form" value="F3" {{#ifStr P_Status 'F3' }}selected{{/ifStr}}>F3
+                                        </option>
                                     </select>
                                 </div>
-                                <div class="input-group">
-                                    <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Địa
-                                        chỉ nơi ở</label>
-                                    <select class="form-select text-form" id="Province" name="Province"
-                                        style="width: 28%;" onchange="changeProvince(value);" disabled>
-                                        <option class="text-form" value="" selected>[Chọn] Tỉnh Thành</option>
-                                    </select>
-                                    <select class="form-select text-form" id="District" name="District"
-                                        style="width: 28%;" onchange="changeDistrict(value);" disabled>
-                                        <option class="text-form" value="" selected>[Chọn] Quận Huyện</option>
-                                    </select>
-                                    <select class="form-select text-form" id="Ward" name="Ward" style="width: 28%;"
-                                        disabled>
-                                        <option class="text-form" value="" selected>[Chọn] Phường Xã</option>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text text-form" for="P_Address" style="width: 15%;">Thêm
-                                        chi tiết</label>
-                                    <input id="P_Address" name="P_Address" type="text" class="form-control text-form"
-                                        placeholder="Số nhà, đường . . ." style="width: 85%;" value="{{P_Address}}">
-                                </div>
-                                <div class="input-group">
-                                    <label class="input-group-text text-form" for="P_HospitalAddress"
-                                        style="width: 15%;">Nơi đang điều trị</label>
-                                    <div class="form-control form-control-dark text-form search-packet no-gutter"
-                                        style="width: 85%;">
-                                        <div class="d-inline-block"
-                                            style="width: 100%; height: 100%; position: relative;">
-                                            <input name="P_TreatmentPlace" autocomplete="off" type="text"
-                                                id="searchBarTreatPlace" class="form-control search-input"
-                                                placeholder="Vị trí cần tìm" value="{{P_TreatmentPlace}}"
-                                                onfocus="resetLocation()">
-                                        </div>
-                                        <ul class="search-menu" id="menuBarTreatPlace"></ul>
-                                    </div>
-                                </div>
+                                {{/with}}
                             </div>
-                            {{/with}}
+
                             <div class="col-2">
                                 <button type="submit" class="btn btn-primary w-100 h-100" style="font-size: 1.5em;">Tìm
                                     kiếm</button>
                             </div>
                         </div>
 
-                    </form>
+                    </form>                
+                </div>    
+            </div>
+            <div class="card bg-info mb-3 text-light">
+                <div class="row card-body h-100">
+                    <span class="col-4 border-end border-dark border-2"><b>Full Name</b></span>
+                    <span class="col-1 border-end border-dark border-2 text-center"><b>Id Card</b></span>
+                    <span class="col-1 border-end border-dark border-2 text-center"><b>Unpaid</b></span>
+                    <span class="col-1 border-end border-dark border-2 text-center"><b>Paid</b></span>
+                    <span class="col-1 border-end border-dark border-2 text-center"><b>MinPay</b></span>
+                    <span class="col-4 text-center"><b>Change MinPayment</b></span>
                 </div>
             </div>
-
-            <div class="card card-bg mb-3 text-dark">
-                <div class="card-body w-100">
-                    <h1>Kết quả gần nhất : </h1>
-                    {{#each users}}
-                    <div class="card mb-1 user-card" onclick="window.location='/manager/detail/UserID={{this.P_ID}}'">
-                        <div class="row card-body h-100" style="min-height: 70px;">
-                            <span class="col-2 border-end border-dark border-1"> {{this.P_FullName}}</span>
-                            <span
-                                class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
-                            <span
-                                class="col-1 border-end border-dark border-1 text-center">{{this.P_YearOfBirth}}</span>
-                            <span class="col-4 border-end border-dark border-1">{{this.P_Address}}</span>
-                            <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Status}}</span>
-                            <span class="col-3">{{this.P_TreatmentPlace}}</span>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
+            
+            {{#each users}}
+            <div class="card mb-1">
+                <form class="row card-body h-100 change-min-payment" style="min-height: 35px;" action="/manager/putChangeMinPayment?_method=PUT" method="post">
+                    <a class="col-4 border-end border-dark border-1" href="/manager/detail/UserID={{this.P_ID}}"> {{this.P_FullName}}</a>
+                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
+                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Debt}}</span>
+                    <span class="col-1 border-end border-dark border-1 text-center">{{this.P_Paid}}</span>
+                    <span class="col-1 text-center" id='{{this.P_ID}}'>{{this.P_MinPayment}}</span>
+                    <input hidden name="P_ID" value="{{this.P_ID}}"></input>
+                    <input class="col-2" name="P_MinPayment" value="{{this.P_MinPayment}}"></input>
+                    <button type="submit" class="col-2" style="z-index: 999;">ChangeMinPayment</button>
+                </form>
             </div>
+            {{/each}}
         </div>
     </div>
 </div>

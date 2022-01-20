@@ -1,0 +1,164 @@
+<div class="content row">
+    {{!-- sidebar --}}
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <a class="title" href="/manager/">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <i class="fa fa-home d-none" aria-hidden="true"></i>
+                Trang chủ
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý người liên quan
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý s.phẩm / n.y.phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item">
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý gói nhu yếu phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
+                Thống kê thông tin
+            </div>
+            <ul class="list">
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-users" aria-hidden="true"></i> Lượng
+                        người trạng thái</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu
+                        phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản
+                        phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý thanh toán
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay
+                        đổi hạn mức thanh toán tối thiểu</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-exclamation-triangle"
+                            aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{!-- end sidebar --}}
+
+    <div class="col-9" style="flex:1;">
+        <div class="row section general-information">
+            <h1>Thống kê số lượng người ở từng trạng thái theo thời gian</h1>
+            <canvas id="myChart" style="width:100%;"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script>
+        new Chart("myChart", {
+            type: 'bar',
+            data: {
+                labels: [{{#each labels}}'{{this.TimeLabels}}',{{/each}}], 
+                {{#with status}}
+                datasets: [{
+                    label: 'F0',
+                    data: [{{#each F0}}{{this}},{{/each}}],
+                    backgroundColor: '#ff0000'
+                }, {
+                    label: 'F1',
+                    data: [{{#each F1}}{{this}},{{/each}}],
+                    backgroundColor: '#fe05af'
+                }, {
+                    label: 'F2',
+                    data: [{{#each F2}}{{this}},{{/each}}],
+                    backgroundColor: '#d805fe'
+                }, {
+                    label: 'F3',
+                    data: [{{#each F3}}{{this}},{{/each}}],
+                    backgroundColor: '#7d05fe'
+                }, {
+                    label: 'Khỏi bệnh',
+                    data: [{{#each KhoiBenh}}{{this}},{{/each}}],
+                    backgroundColor: '#00e62e'
+                }]
+                {{/with}}
+            },
+            options: {
+                responsive: false,
+                legend: {
+                    position: 'right' // place legend on the right side of chart
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true // this should be set to make the bars stacked
+                    }],
+                    yAxes: [{
+                        stacked: true // this also..
+                    }]
+                }
+            }
+        });
+    </script>
+</div>

@@ -29,20 +29,30 @@ class AdminController {
         let us = await UserM.getUserByUN(req.body.username);
         if (us)
         {
-            mess = 'User already exists';
+            mess = 'Tên tài khoản đã tồn tại';
             cl = 'danger'
             return res.render('admin/create', { layout: 'admin', css: ['create'], js: ['AdminPage'], message:mess, color:cl})
         }
         
-        mess = 'Create manager account sucessfully!';
+        mess = 'Tạo tài khoản người quản lý thành công';
         cl = 'success';
 
         let i = 1;
         
         req.body.role = 'manager';
-        req.body.password = await bcrypt.hash(req.body.password, 10);
+        // req.body.password = await bcrypt.hash(req.body.password, 10);
+        req.body.password = await bcrypt.hash('0', 10);
+        req.body.isLocked = 'false';
+        let newID = await UserM.nextID()
+        var newManager = {
+            _id:newID,
+            username: req.body.username,
+            password: '0',
+            isLocked: 'false',
+            role:'manager'
+        }
 
-        await UserM.insert(req.body);
+        await UserM.insert(newManager);
 
         res.render('admin/create', { layout: 'admin', css: ['create'], js: ['AdminPage'], message:mess, color:cl})
     }

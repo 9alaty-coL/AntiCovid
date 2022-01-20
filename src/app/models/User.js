@@ -1,6 +1,10 @@
 const db = require('../../config/db');
 const strSup = require('../../utils/stringSupport')
 const TreatmentPlacesModel = require('../models/TreatmentPlaces')
+const ProvinceModel = require('../models/AddressProvince')
+const DistrictModel = require('../models/AddressDistrict')
+const WardModel = require('../models/AddressWard')
+
 
 const tbName = 'Users';
 
@@ -20,6 +24,15 @@ class Users {
             return res;
         } catch (err) {
             console.log('error in User/Order: ' + err.message);
+        }
+    }
+
+    async top(total) {
+        try {
+            const res = await db.top(tbName, total);
+            return res;
+        } catch (err) {
+            console.log('error in User/Top: ' + err.message);
         }
     }
 
@@ -47,6 +60,24 @@ class Users {
                 // Filter conditions
                 if (eachKey === "P_FullName"|| eachKey === "P_Address" ) {
                     res = await db.likes(eachKey, key[eachKey],"Users");
+                } else if (eachKey === "Province" || eachKey === "District" || eachKey === "Ward") {
+                    // Null 
+                    if (key[eachKey] === null) continue;
+                    // Province
+                    else if (eachKey === "Province") {
+                        let Province = (await ProvinceModel.one(key[eachKey])).ProvinceName;
+                        res = await db.likes("P_Address", Province,"Users");
+                    } 
+                    // District
+                    else if (eachKey === "District") {
+                        let District = (await DistrictModel.one(key.Province, key.District)).DistrictName;
+                        res = await db.likes("P_Address", District,"Users");
+                    }
+                    // Ward
+                    else {
+                        res = await db.likes("P_Address", key[eachKey],"Users");
+                    }
+                    
                 } else if (eachKey === "P_TreatmentPlace") {
                     let userTreatPlaceID = await db.all("Users")
                     for (let i = 0; i < userTreatPlaceID.length; i++) {

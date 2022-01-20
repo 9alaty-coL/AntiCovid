@@ -7,7 +7,7 @@ const path = require('path');
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
-
+const alert = require('alert');
 const app = express();
 
 // flash

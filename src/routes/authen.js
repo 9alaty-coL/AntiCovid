@@ -6,15 +6,17 @@ const authenMiddleware = require('../middleware/authen');
 const AuthenController = require('../app/controllers/AuthenController');
 const { detectRole } = require('../app/controllers/AuthenController');
 
+router.get('/initAdmin', authenMiddleware.dnHavedAdmin, AuthenController.initAdmin);
+
+router.post('/initAdmin', authenMiddleware.dnHavedAdmin, AuthenController.initAdminP);
+
 router.get(
     '/sign-in',
     authenMiddleware.isNotLoggedIn,
+    authenMiddleware.havedAdmin,
     AuthenController.signInG,
 );
 
-router.get(
-    '/sign-up', AuthenController.signUp,
-);
 
 
 router.post(

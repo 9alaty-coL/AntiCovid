@@ -33,14 +33,14 @@
                 Quản lý s.phẩm / n.y.phẩm
             </div>
             <ul class="list d-none">
-               <li class="list-item ">
+                <li class="list-item ">
                     <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
                 </li>
                 {{!-- <li class="list-item">
                     <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -58,7 +58,7 @@
                     <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
                 </li> --}}
                 <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-edit"></i> Cập nhật</a>
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
                 </li>
             </ul>
         </div>
@@ -70,16 +70,19 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
                 </li>
             </ul>
         </div>
@@ -91,16 +94,10 @@
             </div>
             <ul class="list d-none">
                 <li class="list-item">
-                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/changeMinPayment"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
                 </li>
                 <li class="list-item">
-                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                    <a class="d-block" href="/manager/sendPaymentNotification"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
                 </li>
             </ul>
         </div>
@@ -119,7 +116,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://static.thenounproject.com/png/2204677-200.png"
+                                    <img src="https://icons.iconarchive.com/icons/dtafalonso/modern-xp/512/ModernXP-15-Group-icon.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Danh sách người liên quan</h3>
@@ -134,7 +131,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/addUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://cdn.iconscout.com/icon/free/png-256/user-circle-plus-3609979-3014619.png"
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRnym8QJSxutfISwhVfBIjXGPljdnl1x1BvRdApR60vLbhGCpyQxp-w3Ybt8v_Tg5rSI&usqp=CAU"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Thêm người liên quan</h3>
@@ -148,7 +145,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/search" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://static.thenounproject.com/png/88308-200.png"
+                                    <img src="https://www.kindpng.com/picc/m/79-790958_transparent-search-icon-png-white-business-user-png.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Tìm kiếm chi tiết</h3>
@@ -172,7 +169,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/product" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190501/ourlarge/pngtree-shopping-cart-icon-design-png-image_1013402.jpg"
+                                    <img src="https://cdn-icons-png.flaticon.com/512/2934/2934085.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Danh sách </h3>
@@ -187,11 +184,11 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://media.istockphoto.com/vectors/icon-search-logo-design-universal-business-social-media-vector-id995577016?k=20&m=995577016&s=170667a&w=0&h=_kwoYxk1Hu551vgDt4sSBOLtICXGe2Ze0xl_kXlqZkI="
+                                    <img src="https://media.istockphoto.com/vectors/product-quality-control-abstract-concept-vector-illustration-vector-id1270597262?b=1&k=20&m=1270597262&s=170x170&h=oy60a-o71qWJmB9Mo2pYJlPMaKW3mvQ0K0x80BCUw8A="
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Tìm kiếm </h3>
-                                        <p class="card-text text-center">Tìm kiếm sản phẩm / nhu yếu phẩm
+                                        <p class="card-text text-center">Tìm kiếm sản phẩm <br> Tìm kiếm nhu yếu phẩm
                                         </p>
                                     </div>
                                 </div>
@@ -202,7 +199,7 @@
                             <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://thumbs.dreamstime.com/z/black-update-update-software-icon-logo-white-black-update-update-software-icon-logo-132130561.jpg"
+                                    <img src="https://cdn4.iconfinder.com/data/icons/business-model-canvas-3/512/ValueProposition-productvalue-value-qualityproduct-newproduct-512.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Cập nhật</h3>
@@ -227,7 +224,7 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/package" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190501/ourlarge/pngtree-shopping-cart-icon-design-png-image_1013402.jpg"
+                                    <img src="https://thumbs.dreamstime.com/b/grocery-bag-food-gastronomy-set-flat-icon-grocery-bag-food-gastronomy-set-flat-icon-131481091.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Danh sách gói nhu yếu phẩm</h3>
@@ -242,11 +239,11 @@
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://media.istockphoto.com/vectors/icon-search-logo-design-universal-business-social-media-vector-id995577016?k=20&m=995577016&s=170667a&w=0&h=_kwoYxk1Hu551vgDt4sSBOLtICXGe2Ze0xl_kXlqZkI="
+                                    <img src="https://previews.123rf.com/images/vectorv/vectorv1907/vectorv190724714/127791080-white-search-package-icon-isolated-with-long-shadow-parcel-tracking-symbol-magnifying-glass-and-card.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Tìm kiếm </h3>
-                                        <p class="card-text text-center">Tìm kiếm gói nhu yếu phẩm
+                                        <p class="card-text text-center">Tìm kiếm <br> gói nhu yếu phẩm
                                         </p>
                                     </div>
                                 </div>
@@ -257,11 +254,11 @@
                             <a href="/manager/listUser" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://thumbs.dreamstime.com/z/black-update-update-software-icon-logo-white-black-update-update-software-icon-logo-132130561.jpg"
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrxIOQd3WxAEEO4R3n0tu3TMqDg2HLlQzqYOLNCkZREaSbY2nzjhDs7Ry9zi2qBPDi4q0&usqp=CAU"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
                                         <h3 class="card-title text-center">Cập nhật</h3>
-                                        <p class="card-text text-center"> Thêm, xoá, sửa các gói nhu yếu phẩm </p>
+                                        <p class="card-text text-center"> Thêm, xoá, sửa <br>các gói nhu yếu phẩm </p>
                                     </div>
                                 </div>
                             </a>
@@ -279,13 +276,13 @@
 
                         {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
-                            <a href="/manager/listUser" class="text-dark">
+                            <a href="/manager/chartStatusByTime" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh4zTdcNKkZX072SYH3U51kVbeEtrOSnO0qIIkEoDfrbt1jtHCnkO8b9xCA1Gzl8fLrd0&usqp=CAU"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Danh sách người liên quan</h3>
-                                        <p class="card-text text-center">Xem chi tiết danh sách người liên quan Covid-19
+                                        <h3 class="card-title text-center">Lượng người trạng thái</h3>
+                                        <p class="card-text text-center">Thống kê số lượng người ở từng trạng thái theo thời gian
                                         </p>
                                     </div>
                                 </div>
@@ -294,13 +291,13 @@
                         {{!-- end --}}
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/manager/listUser" class="text-dark">
+                            <a href="/manager/chartStatusChange" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
+                                    <img src="https://static.vecteezy.com/system/resources/previews/004/590/572/original/people-icon-with-chart-business-symbol-simple-illustration-editable-stroke-design-template-vector.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thêm người liên quan</h3>
-                                        <p class="card-text text-center">Tạo thêm tài khoản cho người liên quan Covid-19
+                                        <h3 class="card-title text-center">Số chuyển trạng thái</h3>
+                                        <p class="card-text text-center">Thống kê : số chuyển trạng thái, khỏi bệnh,… 
                                         </p>
                                     </div>
                                 </div>
@@ -309,18 +306,42 @@
 
                         <div class="col-3 my-5 mx-5">
                             <a href="/manager/listUser" class="text-dark">
-
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
+                                    <img src="https://cdn2.iconfinder.com/data/icons/seo-internet-marketing-services/91/SEO_Internet_marketing_business_12-512.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thay dổi trạng thái</h3>
-                                        <p class="card-text text-center">Thay đổi trạng thái bệnh lý của người liên quan
-                                            Covid-19</p>
+                                        <h3 class="card-title text-center">Tiêu thụ gói nhu yếu phẩm</h3>
+                                        <p class="card-text text-center">Thống kê tiêu thụ các gói Nhu yếu phẩm</p>
                                     </div>
                                 </div>
                             </a>
-                        </div>                        
+                        </div>       
+                        
+                        <div class="col-3 my-5 mx-5">
+                            <a href="/manager/listUser" class="text-dark">
+                                <div class="card" style="width: 30rem;">
+                                    <img src="https://kingly.vn/khuyenmai/upload/images/product-combo.png"
+                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center">Tiêu thụ sản phẩm</h3>
+                                        <p class="card-text text-center">Thống kê tiêu thụ các gói Nhu yếu phẩm</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>     
+                        
+                        <div class="col-3 my-5 mx-5">
+                            <a href="/manager/listUser" class="text-dark">
+                                <div class="card" style="width: 30rem;">
+                                    <img src="https://png.pngtree.com/png-vector/20190814/ourlarge/pngtree-increase-profit-chart-vector-icon-filled-flat-sign-for-mobile-png-image_1692145.jpg"
+                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center">Dư nợ, thanh toán</h3>
+                                        <p class="card-text text-center">Thống kê dư nợ<br> Thống kê thanh toán</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>              
                     </div>
                 </div>
             </div>
@@ -331,31 +352,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row mx-auto justify-content-center">
-
-                        {{!-- 1 cái div này là 1 cục chức năng --}}
                         <div class="col-3 my-5 mx-5">
-                            <a href="/manager/listUser" class="text-dark">
+                            <a href="/manager/changeMinPayment" class="text-dark">
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://www.gamerevolution.com/assets/uploads/2020/05/cant-create-a-Google-Account-1280x720.jpg"
+                                    <img src="https://cdn-icons-png.flaticon.com/128/1999/1999259.png"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Danh sách người liên quan</h3>
-                                        <p class="card-text text-center">Xem chi tiết danh sách người liên quan Covid-19
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        {{!-- end --}}
-
-                        <div class="col-3 my-5 mx-5">
-                            <a href="/manager/listUser" class="text-dark">
-                                <div class="card" style="width: 30rem;">
-                                    <img src="https://t3.ftcdn.net/jpg/02/17/72/08/360_F_217720838_zQcOEAOU0plHYh6WWv50te1L9d7iApAz.jpg"
-                                        class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
-                                    <div class="card-body">
-                                        <h3 class="card-title text-center">Thêm người liên quan</h3>
-                                        <p class="card-text text-center">Tạo thêm tài khoản cho người liên quan Covid-19
+                                        <h3 class="card-title text-center">Thay đổi hạn mức thanh toán tối thiểu</h3>
+                                        <p class="card-text text-center">Chỉnh sửa hạn mức tối thiểu có thể thanh toán của người dùng
                                         </p>
                                     </div>
                                 </div>
@@ -363,15 +367,14 @@
                         </div>
 
                         <div class="col-3 my-5 mx-5">
-                            <a href="/manager/listUser" class="text-dark">
+                            <a href="/manager/sendPaymentNotification" class="text-dark">
 
                                 <div class="card" style="width: 30rem;">
-                                    <img src="https://png.pngtree.com/png-vector/20190711/ourlarge/pngtree-medical-suitcase-icon-png-image_1544272.jpg"
+                                    <img src="https://static.vecteezy.com/system/resources/previews/002/553/023/non_2x/mobile-banking-message-notification-money-flat-style-icon-free-vector.jpg"
                                         class="" alt="..." style="object-fit: contain;width: 100%;height: 180px;">
                                     <div class="card-body">
-                                        <h3 class="card-title text-center">Thay dổi trạng thái</h3>
-                                        <p class="card-text text-center">Thay đổi trạng thái bệnh lý của người liên quan
-                                            Covid-19</p>
+                                        <h3 class="card-title text-center">Duyệt danh sách và gửi thông báo nhắc thanh toán</h3>
+                                        <p class="card-text text-center">Duyệt danh sách thanh toán <br> Gửi thông báo nhắc thanh toán</p>
                                     </div>
                                 </div>
                             </a>
