@@ -969,7 +969,7 @@ class ManagerController {
 
     // [POST] 
     async newPackage(req, res, next){
-        let p = await ProductsModel.insert(req.body);
+        let p = await PackagesModel.insert(req.body);
         Products = await ProductsModel.all();
         Packages = await PackagesModel.all();
         Packages.sort(function (a, b) {
