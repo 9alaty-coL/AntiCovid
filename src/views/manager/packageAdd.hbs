@@ -101,66 +101,74 @@
     </div>
  {{!-- end sidebar --}}
 
- <div class="col-9" style="flex:1;">
-        <div class="card-header bg text-black m-auto w-100">
-             Thêm nhu yếu phẩm
-        </div>
-                <div class="col-1">
-                    <a href="/manager/packageEdit" class="btn btn-danger">back</a>
-                </div>
-         <div class="input">
-   
-          <form class="col g-5 mt-5 form-control-lg" onSubmit="fixProductLink()" action="/manager/packageEdit/add" method="post">
-                <div class="form-group mb-2 col-md-4">
-                    <label for="staticEmail2" class="sr-only">ID</label>
-                    <input type="text" readonly class="form-control-plaintext" name="P_ID" id="staticEmail2" value={{P_ID}}>
-                </div>
-                <div class="col-md-4  ">
-                    <label for="validationDefault01" class="form-label">Package's Name</label>
-                    <input type="text" class="form-control" name="P_Name" id="validationDefault01" placeholder="Tên nhu yếu  phẩm" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="validationDefault02" class="form-label">Link Main image</label>
-                    <input type="text" class="form-control" name="P_Image" id="fixProductLink" placeholder="Link  ảnh " required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Limit </label>
-                    <input type="number" class="form-control" name="P_Limit" id="validationDefault01" placeholder="Giới hạn gói" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Product Limit</label>
-                    <input type="text" class="form-control" name="Product_Limit" id="validationDefault01" placeholder="Giới hạn nhu yếu phẩm" required>
-                </div>
-                <div class="col-md-4 row-9">
-                    <label for="validationDefault01" class="form-label">Danh sách gói</label>
-                    <input type="text" class="form-control" name="Product_List" id="validationDefault01" placeholder="Giới thiệu" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Giới hạn thời gian</label>
-                    <input type="text" class="form-control" name="P_expire" id="validationDefault01" placeholder="Giới hạn thời gian" required>
-                </div>
-                <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Số lượng đã bán</label>
-                    <input type="text" class="form-control" name="P_SoldQuantity" id="validationDefault01" placeholder="Số lượng đã bán" required>
-                </div>
-                
-                <div class="col-md-4 ">
-                     <label for="validationDefault01" class="form-label">Loại gói nhu yếu phẩm</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="validationDefault01" name="P_Type" required>
-                        <option selected>Loại gói nhu yếu phẩm</option>        
-                        <option value="Thực phẩm">Thực phẩm</option>
-                        <option value="Thuốc men">Thuốc men</option>
-                    </select> 
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-success" type="submit">Add product</button>
-                </div>
-                </form>
-                {{#if message}}
-                        <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
-                                    {{message}}
+    <div class="col-9" style="flex:1;">
+        <div class="section general-information">
+                    <div class="section-title">
+                        Thêm gói nhu yếu phẩm mới
+                    </div>
+                    <div class="section-content mt-4">
+                        <div class="information">
+                            <form action="/manager/packageEdit/add" method="post">
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="username" class="form-label" style="font-weight: 500;">Tên gói nhu yếu phẩm</label>
+                                    <input type="text" class="form-control" name="P_Name" id="username" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="fullname" class="form-label" style="font-weight: 500;">Giới hạn</label>
+                                    <input type="number" min="1" onkeydown="return false" class="form-control" name="P_Limit" id="fullname" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="idcard" class="form-label" style="font-weight: 500;">Link hình ảnh của gói</label>
+                                    <input type="text" class="form-control" name="P_Image" id="idcard" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="birthdate" class="form-label" style="font-weight: 500;">Loại gói </label>
+                                    <input type="text" class="form-control" id="birthdate" name="P_Type" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-3" style="margin-bottom: 2rem!important;">
+                                    <label for="P_Quantity" class="form-label" style="font-weight: 500;">Số lượng sản phẩm trong gói</label>
+                                    <input type="number" min="1" value="1" onkeydown="return false" class="form-control" name="P_Quantity" id="P_Quantity" style="padding:.6rem; font-size:1.4rem">
+                                </div>
+                                <div class="mb-5" style="margin-bottom: 2rem!important;">
+                                    <label for="relatedpeople" class="form-label" style="font-weight: 500;">Danh sách sản phẩm</label>
+                                    <!-- <input type="text" class="form-control" name="quarantineaddress" id="quarantineaddress" value="123 Đường 456, P. 789, Q10, TP HCM" readonly style="padding:.6rem; font-size:1.4rem"> -->
+                                    <div class="products">
+                                        <div class="d-flex my-3">
+                                            <select type="text" class="form-select d-inline-block me-3" name="P_ProductsID"  style="padding:.6rem; font-size:1.3rem; flex:3;">
+                                                {{#each Products}}
+                                                <option value="{{this.Product_ID}}">{{this.Product_Name}}</option>
+                                                {{/each}}
+                                            </select>
+                                            <input type="number" min="1" class="form-control d-inline-block" name="P_ProductsLimit" placeholder="Số sản phẩm tối đa" onkeydown="return false" style="padding:.6rem; font-size:1.4rem; flex:1;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3" style="margin-top: 2rem!important;">
+                                    <button type="submit" class="btn submit" style="float: right; width:20rem;">Thêm </button>
+                                </div>
+                            </form>
                         </div>
-                {{/if}}
+                    </div>
+        </div>
+   
+        {{#if message}}
+            <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
         
  </div>
  </div>
+
+ <script>
+    let listProducts = [];
+    {{#each Products}}
+            temp = {
+                    Product_ID : `{{this.Product_ID}}`,
+                    Product_Name: `{{this.Product_Name}}`,
+                    Product_Price: `{{this.Product_Price}}`,
+                    Product_Unit: `{{this.Product_Unit}}`,
+                }
+            listProducts.push(temp)
+    {{/each}}
+ </script>
