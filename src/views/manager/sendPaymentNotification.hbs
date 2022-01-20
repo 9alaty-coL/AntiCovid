@@ -121,9 +121,8 @@
                 <div class="row card-body h-100">
                     <span class="col-4 border-end border-dark border-2"><b>Full Name</b></span>
                     <span class="col-1 border-end border-dark border-2 text-center"><b>Id Card</b></span>
-                    <span class="col-2 border-end border-dark border-2 text-center"><b>Paid</b> < <b>Unpaid</b></span>
-                    <span class="col-2 text-center"><b>Paid</b> < <b>MinPayment</b></span>
-                    <button class="col-3 text-center btn btn-lg btn-danger" style="font-size: 0.85em;"><b>Send All Notifications</b></button>
+                    <span class="col-2 border-end border-dark border-2 text-center"><b>Paid</b> < <b>MinPayment</b></span>
+                    <span class="col-2 text-center"><b>MinPayment</b> < <b>UnPaid</b></span>
                 </div>
             </div>
             
@@ -132,14 +131,12 @@
                 <form class="row card-body h-100 change-min-payment" style="min-height: 35px;" action="" method="post">
                     <a class="col-4 border-end border-dark border-1" href="/manager/detail/UserID={{this.P_ID}}"> {{this.P_FullName}}</a>
                     <span class="col-1 border-end border-dark border-1 text-center">{{this.P_IdentityCard}}</span>
-                    <span class="col-2 border-end border-dark border-1 text-center">{{this.P_Paid}} < {{this.P_Debt}}</span>
-                    <span class="col-2 text-center">{{this.P_Paid}} < {{this.P_MinPayment}}</span>
+                    <span class="col-2 border-end border-dark border-1 text-center">{{this.P_Paid}} < {{this.P_MinPayment}}</span>
+                    <span class="col-2 text-center">{{this.P_MinPayment}} < {{this.P_Debt}}</span>
                     <input hidden name="P_ID" value="{{this.P_ID}}"></input>
-                    <button type="submit" class="col-3 btn btn-lg btn-warning" style="font-size: 0.85em;">Send Payment Notifications</button>
                 </form>
             </div>
             {{/each}}
-
 
         </div>
     </div>

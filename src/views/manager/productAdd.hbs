@@ -119,7 +119,7 @@
                 </div>
          <div class="input">
    
-          <form class="col g-5 mt-5" action="/manager/productEdit/add" method="post">
+          <form class="col g-5 mt-5 form-control-lg" onSubmit="fixProductLink()" action="/manager/productEdit/add" method="post">
                 <div class="form-group mb-2 col-md-4">
                     <label for="staticEmail2" class="sr-only">ID</label>
                     <input type="text" readonly class="form-control-plaintext" name="Product_ID" id="staticEmail2" value={{Product_ID}}>
@@ -130,11 +130,11 @@
                 </div>
                 <div class="col-md-4">
                     <label for="validationDefault02" class="form-label">Link Main image</label>
-                    <input type="text" class="form-control" name="Product_MainImage" id="validationDefault02" placeholder="Link  ảnh chính" required>
+                    <input type="text" class="form-control" name="Product_MainImage" id="link_main" placeholder="Link  ảnh chính" required>
                 </div>
                 <div class="col-md-4 row-9">
                     <label for="validationDefault01" class="form-label">Link ảnh </label>
-                    <input type="text" class="form-control" name="Product_Image" id="validationDefault01" placeholder=" ảnh chi tiết" required>
+                    <input type="text" class="form-control" name="Product_Image" id="link_image" placeholder=" ảnh chi tiết" required>
                 </div>
                 <div class="col-md-4 ">
                     <label for="validationDefault01" class="form-label">Price (vnđ)</label>
@@ -153,8 +153,14 @@
                     <input type="text" class="form-control" name="Product_SoldQuantity" id="validationDefault01" placeholder="Số lượng đã bán" required>
                 </div>
                 <div class="col-md-4 ">
-                    <label for="validationDefault01" class="form-label">Loại nhu yếu phẩm</label>
-                    <input type="text" class="form-control" name="Product_Type" id="validationDefault01" placeholder="Số lượng đã bán" required>
+                     <label for="validationDefault01" class="form-label">Loại nhu yếu phẩm</label>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="validationDefault01" name="Product_Type" required>
+                         <option selected>Loại nhu yếu phẩm</option>
+                        <option value="Thực phẩm">Thực phẩm</option>
+                        <option value="Thuốc men">Thuốc men</option>
+                        <option value="Nước giải khát">Nước giải khát</option>
+                        <option value="Nước giải khát">Nước rửa tay </option>
+                    </select> 
                 </div>
                 <div class="col-12">
                     <button class="btn btn-success" type="submit">Add product</button>

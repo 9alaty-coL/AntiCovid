@@ -1,0 +1,173 @@
+<div class="content row">
+    {{!-- sidebar --}}
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <a class="title" href="/manager/">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <i class="fa fa-home d-none" aria-hidden="true"></i>
+                Trang chủ
+            </a>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right d-none"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down"><i class="fas fa-angle-down"></i> </span>
+                Quản lý người liên quan
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý s.phẩm / n.y.phẩm
+            </div>
+            <ul class="list ">
+               <li class="list-item ">
+                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item active">
+                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý gói nhu yếu phẩm
+            </div>
+            <ul class="list d-none">
+                <li class="list-item ">
+                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
+                </li>
+                {{!-- <li class="list-item">
+                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                </li> --}}
+                <li class="list-item">
+                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Thống kê thông tin
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-item">
+            <div class="title">
+                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                Quản lý thanh toán
+            </div>
+            <ul class="list d-none">
+                <li class="list-item">
+                    <a class="d-block" href="/admin"><i class="fas fa-home"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/create"><i class="fas fa-user"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/manage"><i class="fas fa-cog"></i> Chưa phân công</a>
+                </li>
+                <li class="list-item">
+                    <a class="d-block" href="/admin/treatment"><i class="fas fa-hospital"></i> Chưa phân công</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+ {{!-- end sidebar --}}
+
+ <div class="col-9" style="flex:1;">
+        <div class="card-header bg text-black m-auto w-100">
+             Thêm nhu yếu phẩm
+        </div>
+                <div class="col-1">
+                    <a href="/manager/productEdit" class="btn btn-danger">back</a>
+                </div>
+         <div class="input">
+   
+          <form class="col g-5 mt-5 form-control-lg" action="/manager/productEdit/add" method="post">
+                <div class="form-group mb-2 col-md-4">
+                    <label for="staticEmail2" class="sr-only">ID</label>
+                    <input type="text" readonly class="form-control-plaintext" name="Product_ID" id="staticEmail2" value={{Product_ID}}>
+                </div>
+                <div class="col-md-4  ">
+                    <label for="validationDefault01" class="form-label">Product's Name</label>
+                    <input type="text" class="form-control" name="Product_Name" id="validationDefault01" placeholder="Tên nhu yếu  phẩm" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="validationDefault02" class="form-label">Link Main image</label>
+                    <input type="text" class="form-control" name="Product_MainImage" id="validationDefault02" placeholder="Link  ảnh chính" required>
+                </div>
+                <div class="col-md-4 row-9">
+                    <label for="validationDefault01" class="form-label">Link ảnh </label>
+                    <input type="text" class="form-control" name="Product_Image" id="validationDefault01" placeholder=" ảnh chi tiết" required>
+                </div>
+                <div class="col-md-4 ">
+                    <label for="validationDefault01" class="form-label">Price (vnđ)</label>
+                    <input type="number" class="form-control" name="Product_Price" id="validationDefault01" placeholder="Giá tiền" required>
+                </div>
+                <div class="col-md-4 ">
+                    <label for="validationDefault01" class="form-label">Đơn vị định lượng</label>
+                    <input type="text" class="form-control" name="Product_Unit" id="validationDefault01" placeholder="Đơn vị định lượng" required>
+                </div>
+                <div class="col-md-4 row-9">
+                    <label for="validationDefault01" class="form-label">Intro</label>
+                    <input type="text" class="form-control" name="Product_Intro" id="validationDefault01" placeholder="Giới thiệu" required>
+                </div>
+                <div class="col-md-4 ">
+                    <label for="validationDefault01" class="form-label">Đã bán</label>
+                    <input type="text" class="form-control" name="Product_SoldQuantity" id="validationDefault01" placeholder="Số lượng đã bán" required>
+                </div>
+                <div class="col-md-4 ">
+                     <label for="validationDefault01" class="form-label">Loại nhu yếu phẩm</label>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="validationDefault01" name="Product_Type" required>
+                         <option selected>Loại nhu yếu phẩm</option>
+                        {{#each Products}}
+                            <option value="{{this.Product_Name}}">{{this.Product_Name}} </option>
+                        {{/each}}
+                        
+                    </select> 
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success" type="submit">Add product</button>
+                </div>
+                </form>
+                {{#if message}}
+                        <div class="alert alert-{{color}} col-auto p-2 m-3 flash" role="alert">
+                                    {{message}}
+                        </div>
+                {{/if}}
+        
+ </div>
+ </div>
