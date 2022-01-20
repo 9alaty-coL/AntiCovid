@@ -46,6 +46,8 @@ let Packages
 let listOfBills;
 let paidBills;
 let notPaidBills;
+let Users ;
+           
 class ManagerController {
     ///>> Method → <GET> <<///
 
@@ -69,7 +71,7 @@ class ManagerController {
         });
         paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)      
         notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
-
+        // Users = await UserModel.all();
 
         res.render('manager/home', {
             layout: 'manager',
@@ -477,7 +479,54 @@ class ManagerController {
             js: ['SearchProductsPackages', 'ManagerPage'],
         });
     }
+    
+    async chartDept_Payment(req, res, next) {
+        // Last 6 months ago
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        let labels = [];
+        let times = [];
+        for (let i = 0; i < 6; i++) {
+            labels.push({ TimeLabels: "Tháng " + month + " Năm " + year });
+            times.push(TimeUtils.createDate(month - 1, year));
+            if (month === 1) { month = 12; year--; }
+            else month--;
+        }
+        times.reverse();
+        labels.reverse();
 
+        let status = [0,0,0,0,0,0];
+        let colors2 = ['#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D', '#80B300'];
+        for(let j = 0; j<notPaidBills.length; j++) {
+            let dateTime = new Date(notPaidBills[j].B_Datetime);
+            for (let k = 0; k < times.length; k++) {   
+                if (TimeUtils.isMonthIn(times[k], dateTime)) {
+                    status[k] = status[k] + parseInt(notPaidBills[j].B_Totalpayment);
+                }
+            }
+        }
+        let status2 = [0,0,0,0,0,0];
+        for(let j = 0; j<paidBills.length; j++) {
+            let dateTime = new Date(paidBills[j].B_PaymentDatetime);
+            for (let k = 0; k < times.length; k++) {   
+                if (TimeUtils.isMonthIn(times[k], dateTime)) {
+                    status2[k] = status2[k] + parseInt(paidBills[j].B_Totalpayment);
+                   
+                }
+            }
+        }
+       
+        // Render
+        res.render('manager/chartDept_Payment', {
+            labels: labels,
+            status: status,
+            status2: status2,
+            colors: colors2,
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+        });
+    }
     async chartProduct(req, res, next) {
         // Last 6 months ago
         

@@ -153,19 +153,19 @@
         {{#each labels2}}
             lb2.push('{{this}}')
         {{/each}}
-        console.log(lb2);
+       
 
         let c2 = []; 
         {{#each colors2}}
             c2.push('{{this}}')
         {{/each}}
-        console.log(c2);
+      
 
         let dt2 = []; 
         {{#each status2}}
             dt2.push(parseInt({{this}}));
         {{/each}}
-        console.log(dt2)
+       
 
         new Chart("packageQuantity", {
             type: 'bar',
