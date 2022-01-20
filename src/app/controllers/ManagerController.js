@@ -958,42 +958,62 @@ class ManagerController {
         });
     }
     async addPackage(req, res, next){
-        let pID = await PackagesModel.nextID()
+        let pID = await PackagesModel.nextID();
+
         res.render('manager/packageAdd', {
-            layout: 'manager', 
+            layout: 'manager_P', 
             css: ['ManagerPage'], 
-            js: ['fixProductLink','ManagerPage'],
+            js: ['SearchProductsPackages','ManagerPage', 'packageAdd'],
             P_ID:pID,
+            Products: Products,
         })
     }
 
     // [POST] 
     async newPackage(req, res, next){
-        let p = await PackagesModel.insert(req.body);
-        Products = await ProductsModel.all();
+        let P_ID = await PackagesModel.nextID();
+        let P_Name = req.body.P_Name;
+        let P_Limit = req.body.P_Limit;
+        let P_Image = req.body.P_Image;
+        let P_Type = req.body.P_Type;
+        let P_ProductsID = req.body.P_ProductsID;
+        let P_ProductsLimit = req.body.P_ProductsLimit;
+        let product_name = [];
+
+        P_Limit = parseInt(P_Limit);
+        P_Image = '{' + P_Image + '}';
+        for(let i = 0; i < P_ProductsID.length; i++){
+            P_ProductsID[i] = parseInt(P_ProductsID[i]);
+            P_ProductsLimit[i] = parseInt(P_ProductsLimit[i]);
+            let temp = Products.filter( (p) => {
+                return p.Product_ID == P_ProductsID[i];
+            })[0];
+            product_name[i] = temp.Product_Name;
+        }
+       
+
+        let pack = {
+            P_ID: P_ID,
+            P_Name: P_Name,
+            P_Limit: P_Limit,
+            P_Type: P_Type,
+            P_Image: P_Image,
+            P_Expire: null,
+            P_ProductsID: P_ProductsID,
+            Product_Limit: P_ProductsLimit,
+            Product_List: product_name,
+            P_SoldQuantity: 0,
+        }
+        console.log(pack);
+
+        let results = await PackagesModel.insert(pack);
         Packages = await PackagesModel.all();
         Packages.sort(function (a, b) {
             return a.P_ID - b.P_ID;
         });
-        //  let pID = await ProductsModel.nextID()
-        let message = "";
-        let color = "";
-        if (p){
-            message = "Thêm thành công";
-            color = "success";
-        }
-        else{
-            message = "Có lỗi xảy ra :("
-            color = "danger";
-        }
-        res.render('manager/packageAdd', {
-            layout: 'manager_P',
-            css: ['ManagerPage'],
-            js: ['SearchProductsPackages', 'ManagerPage'],
-           // Product_ID:pID,
-            message:message,
-            color:color
-        });
+        console.log(results);
+
+        res.redirect('/manager/packageEdit');
     }
 
     async package_Edit(req, res, next) {
