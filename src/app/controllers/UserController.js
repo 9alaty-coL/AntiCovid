@@ -718,12 +718,9 @@ class UserController {
     }
 
     async paymentResult(req, res, next) {
-
         let token = req.query.token ?? null
-
         let success = null, fail = null
         
-
         try {
             let decoded = await jwt.verifyToken(token, process.env.TOKEN_SECRET_KEY)
             if(decoded?.data?.result == 'success'){
