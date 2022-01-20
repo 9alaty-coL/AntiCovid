@@ -62,7 +62,6 @@ class Users {
                     res = await db.likes(eachKey, key[eachKey],"Users");
                 } else if (eachKey === "P_YearOfBirth") {
                     res = await db.rows(eachKey, key[eachKey], tbName);
-                    console.log(res);
                 } else if (eachKey === "Province" || eachKey === "District" || eachKey === "Ward") {
                     // Null 
                     if (key[eachKey] === null) continue;
@@ -92,7 +91,7 @@ class Users {
                 }
 
                 // Null mean no result
-                if (res === null) return [];
+                if (res === null || res.length === 0) return [];
 
                 if (users.length > 0) {
                     users = users.filter(user => res.some(re => re.P_ID === user.P_ID));
