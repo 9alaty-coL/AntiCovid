@@ -16,10 +16,10 @@ class Time {
         let newFrom = from.setDate(1);
         // set to to max date in month format
         let newTo = new Date(to.getFullYear(), to.getMonth() + 1, 0);
-
         // Compare date between from and to
         return (newFrom <= date && date <= newTo);
     }
+    
     isMonthIn(month, date) {
         return (month.getMonth() === date.getMonth());
     }

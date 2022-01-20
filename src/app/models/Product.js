@@ -74,12 +74,15 @@ class Products {
             return null;
         }
     }
+
+
     async nextID() {
         try{
-            const res = await db.maximum('Product_ID', tbName);
+            const res = await db.maximum('P_ID', tbName);
             return res + 1;
         }catch(err){
-            console.log('error in account next: ' + err.message);
+            console.log('error in product next: ' + err.message);
+
             return null;
         }
     }

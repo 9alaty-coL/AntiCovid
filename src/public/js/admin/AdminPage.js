@@ -33,14 +33,14 @@ const loadNovels = async () => {
 
 loadNovels();
 
-searchBar.addEventListener('keyup', (e) => {
-    const searchString = e.target.value.toLowerCase();
-    const filteredNovels = novels.filter((novel) => {
-        return novel.name.toLowerCase().includes(searchString);
-    });
-    novelLists.innerHTML = '';
-    if (searchString.length !== 0) displayNovels(filteredNovels);
-});
+// searchBar.addEventListener('keyup', (e) => {
+//     const searchString = e.target.value.toLowerCase();
+//     const filteredNovels = novels.filter((novel) => {
+//         return novel.name.toLowerCase().includes(searchString);
+//     });
+//     novelLists.innerHTML = '';
+//     if (searchString.length !== 0) displayNovels(filteredNovels);
+// });
 
 // show 10 results
 const displayNovels = (novels) => {

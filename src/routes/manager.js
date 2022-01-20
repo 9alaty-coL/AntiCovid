@@ -50,6 +50,8 @@ router.get('/chartPackage', ManagerController.chartPackage);
 
 router.get('/chartProduct', ManagerController.chartProduct);
 
+router.get('/chartDept_Payment', ManagerController.chartDept_Payment);
+
 // >> POST
 router.post('/addUser', ManagerController.postAddUser);
 

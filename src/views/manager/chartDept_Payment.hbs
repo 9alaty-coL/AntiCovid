@@ -1,111 +1,110 @@
 <div class="content row">
-    {{!-- sidebar --}}
-    <div class="sidebar">
-        <div class="sidebar-item">
-            <a class="title" href="/manager/">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                <i class="fa fa-home d-none" aria-hidden="true"></i>
-                Trang chủ
-            </a>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý người liên quan
+
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <a class="title" href="/manager/">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <i class="fa fa-home d-none" aria-hidden="true"></i>
+                        Trang chủ
+                    </a>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                        Quản lý người liên quan
+                    </div>
+                    <ul class="list d-none">
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
+                        </li>
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
+                        </li>
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                        Quản lý s.phẩm / n.y.phẩm
+                    </div>
+                    <ul class="list d-none">
+                        <li class="list-item ">
+                            <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
+                        </li>
+                        {{!-- <li class="list-item">
+                            <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                        </li> --}}
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                        Quản lý gói nhu yếu phẩm
+                    </div>
+                    <ul class="list d-none">
+                        <li class="list-item ">
+                            <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
+                        </li>
+                        {{!-- <li class="list-item">
+                            <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
+                        </li> --}}
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                        Thống kê thông tin
+                    </div>
+                    <ul class="list">
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
+                        </li>
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
+                        </li>
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
+                        </li>
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/chartProduct"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
+                        </li>
+                        <li class="list-item active">
+                            <a class="d-block" href="/manager/chartDept_Payment"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-item">
+                    <div class="title">
+                        <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
+                        <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
+                        Quản lý thanh toán
+                    </div>
+                    <ul class="list d-none">
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/listUser"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
+                        </li>
+                        <li class="list-item">
+                            <a class="d-block" href="/manager/listUser"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <ul class="list d-none">
-                <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-ul"></i> Danh sách</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/addUser"><i class="fas fa-user"></i> Thêm tài khoản</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/search"><i class="fa fa-search-plus"></i> Tìm kiếm chi tiết</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý s.phẩm / n.y.phẩm
-            </div>
-            <ul class="list d-none">
-                <li class="list-item ">
-                    <a class="d-block" href="/manager/product"><i class="fa fa-list-ul"></i> Danh sách</a>
-                </li>
-                {{!-- <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
-                </li> --}}
-                <li class="list-item">
-                    <a class="d-block" href="/manager/productEdit"><i class="fa fa-edit"></i> Cập nhật</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý gói nhu yếu phẩm
-            </div>
-            <ul class="list d-none">
-                <li class="list-item ">
-                    <a class="d-block" href="/manager/package"><i class="fa fa-list-ul"></i> Danh sách</a>
-                </li>
-                {{!-- <li class="list-item">
-                    <a class="d-block" href="/manager/sanpham"><i class="fas fa-search-plus"></i> Tìm kiếm</a>
-                </li> --}}
-                <li class="list-item">
-                    <a class="d-block" href="/manager/"><i class="fa fa-edit"></i> Cập nhật</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Thống kê thông tin
-            </div>
-            <ul class="list d-none">
-                <li class="list-item">
-                    <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/chartProduct"><i class="fa fa-shopping-basket"></i> Tiêu thụ sản phẩm</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/chartDept_Payment"><i class="fa fa-credit-card"></i> Dư nợ, thanh toán</a>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-item">
-            <div class="title">
-                <span class="angle-right"><i class="fas fa-angle-right"></i> </span>
-                <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
-                Quản lý thanh toán
-            </div>
-            <ul class="list d-none">
-                <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-list-alt" aria-hidden="true"></i> Thay đổi hạn mức thanh toán tối thiểu</a>
-                </li>
-                <li class="list-item">
-                    <a class="d-block" href="/manager/listUser"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Duyệt danh sách và gửi thông báo nhắc thanh toán</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    {{!-- end sidebar --}}
 
             <div class="col-9" style="flex:1;">
-                <div class="section d-none">
+                <div class="section">
                     <div class="section-title">
                         <div class="tabs">
                             <div class="tab-item active">
@@ -118,129 +117,96 @@
                         </div>
                     </div>
                     <div class="section-content mt-4">
-                            <div class="tab-content">
-                                <div class="tab-pane active">
-                                    <h2 class="text-center">Biểu đồ thống kê dư nợ theo thời gian</h2>
-                                    <canvas id="debt" class="my-5" style="width:100%;"></canvas>
-                                </div>
-                                <div class="tab-pane">
-                                    <h2 class="text-center">Biểu đồ thống kê thanh toán theo thời gian</h2>
-                                    <canvas id="payment" class="my-5" style="width:100%;"></canvas>
-                                </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active">      
+                                <h2 class="text-center">Biểu đồ thống kê dư nợ theo thời gian</h2>   
+                                <h4 class="text-center text-muted">(Đơn vị: VNĐ)</h4>                          
+                                <canvas id="debt" class="my-5" style="width:100%;"></canvas>
                             </div>
+                            <div class="tab-pane">
+                                <h2 class="text-center">Biểu đồ thống kê thanh toán theo thời gian</h2>
+                                <h4 class="text-center text-muted">(Đơn vị: VNĐ)</h4>    
+                                <canvas id="payment" class="my-5" style="width:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- Thống kê tiêu thụ các gói nhu yếu phẩm
+                    </div>
+                    <div class="information">
+                        <div class="section-content mt-4 me-2">
+                            <div class="row">
+                                <h2 class="text-center">Biểu đồ thống kê số lượng tiêu thụ gói nhu yếu phẩm theo thời gian</h2>
+                                <canvas id="debt" class="my-5" style="width:100%;"></canvas>
+                                <h2 class="text-center mt-5">Biểu đồ thống kê tổng số lượng tiêu thụ từng loại gói đến thời điểm hiện tại</h2>
+                                <canvas id="payment" class="my-5" style="width:100%;"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div> --}}
             </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
 <script>
-     new Chart("debt", {
-            type: 'line',
+        let c1 = []; 
+        {{#each colors}}
+            c1.push('{{this}}')
+        {{/each}}
+       
+        let dt1 = []; 
+        {{#each status}}
+            dt1.push({{this}});
+        {{/each}}
+       
+        
+
+        // Initialize a Line chart in the container with the ID chart2
+        new Chart("debt", {
+            type: 'bar',
             data: {
-                labels: [ 'August/2021', 'September/2021', 'October/2021', 'November/2021', 'December/2021', 'January/2022'],
-                
+                labels: [{{#each labels}} '{{this.TimeLabels}}', {{/each}}], 
                 datasets: [{
-                    label: 'chuyển thành F0',
-                    data: [12, 9, 7, 8, 5, 10],
-                    borderColor: '#ff0000',
-                    fill:false,
-                }, {
-                    label: 'chuyển thành F1',
-                    data: [2, 1, 3.5, 7, 3, 10],
-                    borderColor: '#fe05af',
-                    fill:false,
-                }, {
-                    label: 'chuyển thành F2',
-                    data: [1, 3, 4, 5, 6, 10],
-                    fill:false,
-                    borderColor: '#d805fe'
-                }, {
-                    label: 'chuyển thành F3',
-                    data:  [12, 9, 7, 8, 5, 10],
-                    fill:false,
-                    borderColor: '#7d05fe'
-                }, {
-                    label: 'Khỏi bệnh',
-                    data:  [12, 4, 7, 4, 6, 13],
-                    fill:false,
-                    borderColor: '#00e62e'
-                }, {
-                    label: 'Không liên quan do F0 khỏi bệnh',
-                    data:  [15, 4, 7, 8, 5, 17],
-                    fill:false,
-                    borderColor: '#00a6ff'
-                }]
+                    label: 'thống kê tổng số dư nợ theo thời gian',
+                    data: dt1,
+                    backgroundColor: c1, 
+                }], 
             },
             options: {
-                responsive: false,
-                legend: {
-                    position: 'right' // place legend on the right side of chart
-                },
                 scales: {
-                    xAxes: [{
-                        stacked: true // this should be set to make the bars stacked
-                    }],
-                    yAxes: [{
-                        stacked: true // this also..
-                    }]
-                }
+                   
+                },
             }
         });
 
-
-         new Chart("payment", {
-            type: 'line',
+        let c2 = []; 
+        {{#each colors}}
+            c2.push('{{this}}')
+        {{/each}}
+        
+        let dt2 = []; 
+        {{#each status2}}
+            dt2.push({{this}});
+        {{/each}}
+       
+        // Initialize a Line chart in the container with the ID chart2
+        new Chart("payment", {
+            type: 'bar',
             data: {
-                labels: [ 'August/2021', 'September/2021', 'October/2021', 'November/2021', 'December/2021', 'January/2022'],
-                
+                labels: [{{#each labels}} '{{this.TimeLabels}}', {{/each}}], 
                 datasets: [{
-                    label: 'chuyển thành F0',
-                    data: [12, 9, 7, 8, 5, 10],
-                    borderColor: '#ff0000',
-                    fill:false,
-                }, {
-                    label: 'chuyển thành F1',
-                    data: [2, 1, 3.5, 7, 3, 10],
-                    borderColor: '#fe05af',
-                    fill:false,
-                }, {
-                    label: 'chuyển thành F2',
-                    data: [1, 3, 4, 5, 6, 10],
-                    fill:false,
-                    borderColor: '#d805fe'
-                }, {
-                    label: 'chuyển thành F3',
-                    data:  [12, 9, 7, 8, 5, 10],
-                    fill:false,
-                    borderColor: '#7d05fe'
-                }, {
-                    label: 'Khỏi bệnh',
-                    data:  [12, 4, 7, 4, 6, 13],
-                    fill:false,
-                    borderColor: '#00e62e'
-                }, {
-                    label: 'Không liên quan do F0 khỏi bệnh',
-                    data:  [15, 4, 7, 8, 5, 17],
-                    fill:false,
-                    borderColor: '#00a6ff'
-                }]
+                    label: 'thống kê tổng số tiền người dùng đã thanh toán theo thời gian',
+                    data: dt2,
+                    backgroundColor: c2, 
+                }], 
             },
             options: {
-                responsive: false,
-                legend: {
-                    position: 'right' // place legend on the right side of chart
-                },
                 scales: {
-                    xAxes: [{
-                        stacked: true // this should be set to make the bars stacked
-                    }],
-                    yAxes: [{
-                        stacked: true // this also..
-                    }]
-                }
+                   
+                },
             }
         });
 

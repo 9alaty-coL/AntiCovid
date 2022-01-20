@@ -670,18 +670,6 @@ a:hover {
     font-weight: bold;
 }
 
-.line .ct-label {
-    font-size: 14px;
-    margin-left: -4rem;
-    color: #333;
-}
-
-.column .ct-label {
-    font-size: 16px;
-    color: #333;
-}
-
-
 
 .tabs {
     display: flex;

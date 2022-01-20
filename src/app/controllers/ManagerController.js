@@ -46,6 +46,8 @@ let Packages
 let listOfBills;
 let paidBills;
 let notPaidBills;
+let Users ;
+           
 class ManagerController {
     ///>> Method → <GET> <<///
 
@@ -69,7 +71,7 @@ class ManagerController {
         });
         paidBills = listOfBills.filter(bill => bill.B_IsPaid == true)      
         notPaidBills = listOfBills.filter(bill => bill.B_IsPaid == false)
-
+        // Users = await UserModel.all();
 
         res.render('manager/home', {
             layout: 'manager',
@@ -387,29 +389,13 @@ class ManagerController {
 
     // Get → /sendPaymentNotification
     async sendPaymentNotification(req, res, next) {
-        // Key
-        let key = {};
-
-        for (let eachKey in req.query) {
-            if (req.query[eachKey] !== "") {
-                key[eachKey] = req.query[eachKey];
-            }
-        }
-
-        let users;
-        if (Object.keys(key).length === 0) {
-            users = await UserModel.top(10);
-        }
-        else {
-            // Search for user
-            users = await UserModel.search(key);
-            if (users === null) users = [];            
-        }
+        let users = await UserModel.all();
+        let NeedNotification = users.filter(g => (g.P_Paid < g.P_MinPayment && g.P_Paid < g.P_Debt));
+        NeedNotification = NeedNotification.slice(0, 50);
 
         // Render
         res.render('manager/sendPaymentNotification', {
-            key: key,
-            users: users,
+            users: NeedNotification,
             layout: 'manager',
             css: ['ManagerPage'],
             js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],
@@ -431,21 +417,31 @@ class ManagerController {
         times.reverse();
         labels.reverse();
 
-       
         let Status = [];
         for(let i = 0; i < Packages.length; i++) {
             Status[i] = {
                 "name": Packages[i].P_Name,
-                "data": [0,0,0,0,0,0,0],
+                "data": [0,0,0,0,0,0],
                 "borderColor": colors[i],
             }
         }
 
-        // for (let i = 0; i < listOfBills.length; i++) {
-           
-        // }
+        for (let i = 0; i < Packages.length; i++) {
+            let packageId = Packages[i].P_ID;
+            let billList = listOfBills.filter((bill) => bill.B_PackageID == packageId);
 
-     
+            for(let j = 0; j<billList.length; j++) {
+                let dateTime = new Date(billList[j].B_Datetime);
+                for (let k = 0; k < times.length; k++) {   
+                    if (TimeUtils.isMonthIn(times[k], dateTime)) {
+                        Status[i].data[k] = Status[i].data[k] + 1;
+                    }
+                }
+            }
+        }
+        
+        console.log(Status)
+      
         let labels2 = [];
         let status2 = [];
         let colors2 = [];
@@ -467,7 +463,54 @@ class ManagerController {
             js: ['SearchProductsPackages', 'ManagerPage'],
         });
     }
+    
+    async chartDept_Payment(req, res, next) {
+        // Last 6 months ago
+        let month = (new Date()).getMonth() + 1;
+        let year = (new Date()).getFullYear();
+        let labels = [];
+        let times = [];
+        for (let i = 0; i < 6; i++) {
+            labels.push({ TimeLabels: "Tháng " + month + " Năm " + year });
+            times.push(TimeUtils.createDate(month - 1, year));
+            if (month === 1) { month = 12; year--; }
+            else month--;
+        }
+        times.reverse();
+        labels.reverse();
 
+        let status = [0,0,0,0,0,0];
+        let colors2 = ['#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D', '#80B300'];
+        for(let j = 0; j<notPaidBills.length; j++) {
+            let dateTime = new Date(notPaidBills[j].B_Datetime);
+            for (let k = 0; k < times.length; k++) {   
+                if (TimeUtils.isMonthIn(times[k], dateTime)) {
+                    status[k] = status[k] + parseInt(notPaidBills[j].B_Totalpayment);
+                }
+            }
+        }
+        let status2 = [0,0,0,0,0,0];
+        for(let j = 0; j<paidBills.length; j++) {
+            let dateTime = new Date(paidBills[j].B_PaymentDatetime);
+            for (let k = 0; k < times.length; k++) {   
+                if (TimeUtils.isMonthIn(times[k], dateTime)) {
+                    status2[k] = status2[k] + parseInt(paidBills[j].B_Totalpayment);
+                   
+                }
+            }
+        }
+       
+        // Render
+        res.render('manager/chartDept_Payment', {
+            labels: labels,
+            status: status,
+            status2: status2,
+            colors: colors2,
+            layout: 'manager_P',
+            css: ['ManagerPage'],
+            js: ['SearchProductsPackages', 'ManagerPage'],
+        });
+    }
     async chartProduct(req, res, next) {
         // Last 6 months ago
         
@@ -648,6 +691,9 @@ class ManagerController {
         let StatusHistoryData = { P_ID: AccountData._id, Time: [`${TimeUtils.getNow()}`], StatusChange: [`Không → ${UserData.P_Status}`], Manager_ID: [manager._id] }
         await StatusHistoryModel.insert(StatusHistoryData);
 
+        // Add one to TreatmentPlaces
+        await TreatmentPlacesModel.add(UserData.P_TreatmentPlace);
+
         // Redirect to User detail
         res.redirect(`/manager/detail/UserID=${AccountData._id}`);
     }
@@ -725,10 +771,14 @@ class ManagerController {
 
         // User Info:
         let user = await UserModel.one('P_ID', req.params.UserID);
+        // Old hospital location info
+        await TreatmentPlacesModel.minus(user.P_TreatmentPlace);
+
 
         // Update User Location + Report LocationHistory
         let newUserStatus = { P_ID: user.P_ID, P_TreatmentPlace: req.body.location_id };
         await UserModel.updateUser(newUserStatus);
+        await TreatmentPlacesModel.add(req.body.location_id);
 
         let reportLocation = { Time: TimeUtils.getNow(), HospitalLocation: req.body.location_id, Manager_ID: manager._id }
         await LocationHistoryModel.append(user.P_ID, reportLocation);

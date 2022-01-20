@@ -68,14 +68,14 @@
                 <span class="angle-down d-none"><i class="fas fa-angle-down"></i> </span>
                 Thống kê thông tin
             </div>
-            <ul class="list d-none">
+            <ul class="list">
                 <li class="list-item">
                     <a class="d-block" href="/manager/chartStatusByTime"><i class="fa fa-users" aria-hidden="true"></i> Lượng người trạng thái</a>
                 </li>
                 <li class="list-item">
                     <a class="d-block" href="/manager/chartStatusChange"><i class="fa fa-random"></i> Số chuyển trạng thái</a>
                 </li>
-                <li class="list-item">
+                <li class="list-item active">
                     <a class="d-block" href="/manager/chartPackage"><i class="fa fa-shopping-cart"></i> Tiêu thụ gói nhu yếu phẩm</a>
                 </li>
                 <li class="list-item">
@@ -134,16 +134,17 @@
                 datasets:[
                 {{#each status}}
                     {
-                        label: `{{this.Name}}`,
+                        label: `{{this.name}}`,
                         data: [{{#each this.data}} '{{this}}',{{/each}}],
-                        backgroundColor: `{{this.borderColor}}`,
+                        borderColor: `{{this.borderColor}}`,
+                        fill: false,
                     },
                 {{/each}}
                 ]
             },options: {
                 responsive: false,
                 legend: {
-                    position: 'right' // place legend on the right side of chart
+                    position: 'right' 
                 }
             }
         });
@@ -152,19 +153,19 @@
         {{#each labels2}}
             lb2.push('{{this}}')
         {{/each}}
-        console.log(lb2);
+       
 
         let c2 = []; 
         {{#each colors2}}
             c2.push('{{this}}')
         {{/each}}
-        console.log(c2);
+      
 
         let dt2 = []; 
         {{#each status2}}
             dt2.push(parseInt({{this}}));
         {{/each}}
-        console.log(dt2)
+       
 
         new Chart("packageQuantity", {
             type: 'bar',
