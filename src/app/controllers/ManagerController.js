@@ -367,9 +367,15 @@ class ManagerController {
             }
         }
 
-        // Search for user
-        let users = await UserModel.search(key);
-        if (users === null) users = [];
+        let users;
+        if (Object.keys(key).length === 0) {
+            users = await UserModel.top(10);
+        }
+        else {
+            // Search for user
+            users = await UserModel.search(key);
+            if (users === null) users = [];            
+        }
 
         // Render
         res.render('manager/sendPaymentNotification', {
@@ -377,7 +383,7 @@ class ManagerController {
             users: users,
             layout: 'manager',
             css: ['ManagerPage'],
-            js: ['OnFocusReset', 'AddressControlSearch', 'SearchUser', 'UserSearchBar', 'ManagerPage'],
+            js: ['changeMinPayment','SearchUser', 'UserSearchBar', 'ManagerPage'],
         });
     }
 
