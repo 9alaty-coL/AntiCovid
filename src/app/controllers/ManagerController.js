@@ -997,36 +997,64 @@ class ManagerController {
     }
 
     async package_Edit(req, res, next) {
-        const productID = req.params.p_id;
-        let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
-        const packageID = req.params.p_id;
-        let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
-        req.body._id = req.params.id;
-        let product = await ProductsModel.update( req.body);
-        let message = "";
-        let color = "";
-        if (!currPackage) {
-            message = "P no found";
-            color = "danger";
+        // const productID = req.params.p_id;
+        // let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+        // const packageID = req.params.p_id;
+        // let currPackage = Packages.filter(pack => pack.P_ID == packageID)[0];
+        // req.body._id = req.params.id;
+        // let product = await ProductsModel.update( req.body);
+        // let message = "";
+        // let color = "";
+        // if (!currPackage) {
+        //     message = "P no found";
+        //     color = "danger";
+        // }
+        // res.render('manager/package_Edit', {
+        //     layout: 'manager_P',
+        //     css: ['ManagerPage'],
+        //     js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
+        //     currProduct: currProduct,
+        //     currPackage: currPackage, 
+        //     listOfPackages: Packages,
+        //     listOfProducts: Products,
+        //     product:product,
+        //     P_ID:packageID
+        // });
+        // return;
+
+        let pk_id = req.params.p_id
+        let myPK = await PackagesModel.one('P_ID', pk_id)
+
+        let myPD = [];
+        for (let i = 0; i < myPK.P_ProductsID.length; i++) {
+            let newPD = {}
+            newPD.Product_Limit = myPK.Product_Limit[i]
+            newPD.Product_List = myPK.Product_List[i]
+            newPD.P_ProductsID = myPK.P_ProductsID[i]
+            myPD.push(newPD)
         }
+
+        
+
         res.render('manager/package_Edit', {
             layout: 'manager_P',
             css: ['ManagerPage'],
             js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
-            currProduct: currProduct,
-            currPackage: currPackage, 
-            listOfPackages: Packages,
-            listOfProducts: Products,
-            product:product,
-            P_ID:packageID
-        });
-        return;
+            Package: myPK,
+            Products: myPD,
+
+        })
+
     }
     
     async packageUpdate(req, res, next) {
         // const productID = req.params.p_id;
         //let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
+<<<<<<< HEAD
         // console.log(req.body.test);
+=======
+        console.log(req.body);
+>>>>>>> 5fda942dd8cbc46dfa77b5307f3ffd5092df9a60
         // let message = "";
         // let color = "";
         // req.body.Product_ID = req.params.id;
