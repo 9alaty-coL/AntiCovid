@@ -830,14 +830,11 @@ class ManagerController {
         const productID = req.params.p_id;
         let currProduct = Products.filter(product => product.Product_ID == productID)[0];;
         req.body._id = req.params.id;
-        let product = await ProductsModel.update( req.body);
-        let message = "";
-        let color = "";
-        if (!currProduct) {
-            message = "P no found";
-            color = "danger";
-        }
-        res.render('manager/product_Edit', {
+
+
+        let product = await ProductsModel.one('Product_ID',productID);
+
+        res.render('manager/product_edit', {
             layout: 'manager_P',
             css: ['ManagerPage'],
             js: ['fixProductLink','SearchProductsPackages', 'ManagerPage'],
@@ -855,7 +852,7 @@ class ManagerController {
         let message = "";
         let color = "";
         req.body.Product_ID = req.params.id;
-        let product = await ProductsModel.update( req.body);
+        let product = await ProductsModel.update(req.body);
 
         Products = await ProductsModel.all();
         Packages = await PackagesModel.all();
