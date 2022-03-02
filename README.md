@@ -23,7 +23,7 @@ AntiCovid is a management system for people who are suspected or infected with C
 * Statistics, charts
 
 ## Screenshot
-#### Patient
+Patient
 <p display="flex">
     <img src="./screenshots/user_packages.PNG" width="380px">
     <img src="./screenshots/user_payment.PNG" width="380px">
@@ -42,7 +42,7 @@ Admin
 ## Run
 
 In the project directory, you can run:
-
+## `npm install`
 ## `npm start`
 
 Runs the app in the development mode.\
