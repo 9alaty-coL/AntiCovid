@@ -23,18 +23,18 @@ AntiCovid is a management system for people who are suspected or infected with C
 * Statistics, charts
 
 ## Screenshot
-* Patient
-<p float="left">
+#### Patient
+<p display="flex">
     <img src="./screenshots/user_packages.PNG" width="380px">
     <img src="./screenshots/user_payment.PNG" width="380px">
 </p>
-* Manager
-<p float="left">
-    <img src="./screenshots/user_packages.PNG" width="380px">
-    <img src="./screenshots/user_payment.PNG" width="380px">
+Manager
+<p display="flex">
+    <img src="./screenshots/manager_add.PNG" width="380px">
+    <img src="./screenshots/manager_chart.PNG" width="380px">
 </p>
-* Admin
-<p float="left">
+Admin
+<p display="flex">
     <img src="./screenshots/admin_treatments.PNG" width="380px">
     <img src="./screenshots/admin_manager.PNG" width="380px">
 </p>
